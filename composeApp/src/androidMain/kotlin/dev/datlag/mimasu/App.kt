@@ -24,6 +24,7 @@ import dev.datlag.tooling.async.ioDispatcher
 import dev.datlag.tooling.scopeCatching
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.FirebaseOptions
+import dev.gitlive.firebase.app
 import dev.gitlive.firebase.initialize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -100,6 +101,25 @@ class App : MultiDexApplication(), DIAware {
             }
         } else {
             false
+        }
+
+        // FirebaseAuthService and FirebaseFirestoreWrapper default their `app`
+        // parameter to Firebase.app, which throws when Firebase was never
+        // initialized. AccountViewModel builds both while the very first frame
+        // composes, so without an app the process dies right after startup.
+        // Register a placeholder app so those constructors always resolve; the
+        // requests it makes simply fail and are handled as signed-out.
+        if (scopeCatching { Firebase.app }.getOrNull() == null) {
+            scopeCatching {
+                Firebase.initialize(
+                    context = this,
+                    options = FirebaseOptions(
+                        projectId = "mimasu-offline",
+                        applicationId = "1:000000000000:android:0000000000000000000000",
+                        apiKey = "AIzaSyOfflinePlaceholderKey0000000000000"
+                    )
+                )
+            }
         }
 
         if (firebaseReady && !BuildConfig.DEBUG) {
