@@ -93,6 +93,15 @@ jobs:
       - name: Show built APKs
         run: find composeApp/build/outputs -name "*.apk" -print -exec ls -lh {} \;
 
+      # Upload before verifying so a quirk in the check can never withhold the
+      # APK. The verification below still fails the run if something is wrong.
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimasu-adfree-debug-apk
+          path: composeApp/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
       - name: Verify APK is ad-free and carries the TMDB key
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || 'a705cb078d8b503259cbad8396755c4b' }}
@@ -100,35 +109,33 @@ jobs:
           APK=$(find composeApp/build/outputs/apk/debug -name "*.apk" | head -n 1)
           echo "Inspecting $APK"
           mkdir -p /tmp/apkcheck && unzip -o -q "$APK" -d /tmp/apkcheck
+          cat /tmp/apkcheck/classes*.dex | strings > /tmp/apkcheck/dex.txt
 
-          echo "--- ad SDK classes ---"
-          # Note: com.google.android.gms.ads.identifier (Advertising ID) ships
-          # transitively with Firebase and is not an ad-serving SDK, so it is
-          # excluded. Everything that actually loads or renders ads is not.
-          FOUND=$(cat /tmp/apkcheck/classes*.dex | strings \
-            | grep -oiE "com\.google\.android\.gms\.ads\.[a-z.]*|com\.jet\.ads[a-z.]*|com\.google\.android\.ump[a-z.]*|admob" \
+          echo "--- ad-serving SDK classes ---"
+          # Match only qualified class/package references, never the bare word
+          # "AdMob": Firebase's analytics code carries that string on its own.
+          # com.google.android.gms.ads.identifier (Advertising ID) is excluded
+          # too - it reads an identifier and cannot request or render ads.
+          FOUND=$(grep -oiE "com\.google\.android\.gms\.ads\.[a-z0-9.]+|com\.jet\.ads[a-z0-9.]*|com\.google\.android\.ump[a-z0-9.]*" \
+            /tmp/apkcheck/dex.txt \
             | grep -viE "^com\.google\.android\.gms\.ads\.identifier" | sort -u || true)
           if [ -n "$FOUND" ]; then
-            echo "FAIL: ad SDK references found in dex:"
+            echo "FAIL: ad-serving SDK references found in dex:"
             echo "$FOUND"
             exit 1
           fi
-          echo "OK: no advertising SDK in the APK"
-          echo "(advertising-id references, if any:)"
-          cat /tmp/apkcheck/classes*.dex | strings \
-            | grep -oiE "com\.google\.android\.gms\.ads\.identifier[a-z.]*" | sort -u || true
+          echo "OK: no ad-serving SDK in the APK"
+
+          echo "--- context for any bare 'admob' strings (informational) ---"
+          grep -i "admob" /tmp/apkcheck/dex.txt | sort -u | head -n 20 || true
+          echo "--- advertising-id classes (informational, not ad serving) ---"
+          grep -oiE "com\.google\.android\.gms\.ads\.identifier[a-z0-9.]*" /tmp/apkcheck/dex.txt \
+            | sort -u | head -n 10 || true
 
           echo "--- TMDB key ---"
-          if cat /tmp/apkcheck/classes*.dex | strings | grep -qF "$TMDB_API_KEY"; then
+          if grep -qF "$TMDB_API_KEY" /tmp/apkcheck/dex.txt; then
             echo "OK: TMDB key is baked into the APK"
           else
             echo "FAIL: TMDB key missing from the APK"
             exit 1
           fi
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: mimasu-adfree-debug-apk
-          path: composeApp/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
