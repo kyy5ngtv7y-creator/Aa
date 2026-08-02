@@ -1,0 +1,94 @@
+name: Build ad-free APK
+
+on:
+  push:
+    branches:
+      - claude/remove-google-ads-apk-n1a01v
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Create Google-Services config
+        env:
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_BASE64 }}
+        run: |
+          if [ -n "$GOOGLE_SERVICES" ]; then
+            echo "Using google-services.json from repository secret."
+            echo "${GOOGLE_SERVICES// /}" | base64 -d > composeApp/google-services.json
+          else
+            echo "::warning::No GOOGLE_SERVICES_BASE64 secret set - using a placeholder."
+            echo "::warning::The APK will build and install, but cannot load any content."
+            cat > composeApp/google-services.json <<'JSON'
+          {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "mimasu-placeholder",
+              "storage_bucket": "mimasu-placeholder.appspot.com"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+                  "android_client_info": {
+                    "package_name": "dev.datlag.mimasu"
+                  }
+                },
+                "oauth_client": [],
+                "api_key": [
+                  { "current_key": "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                ],
+                "services": {
+                  "appinvite_service": { "other_platform_oauth_client": [] }
+                }
+              }
+            ],
+            "configuration_version": "1"
+          }
+          JSON
+          fi
+
+      - name: Create Sekret config
+        env:
+          YAML: ${{ secrets.SEKRET_YAML_BASE64 }}
+        run: |
+          if [ -n "$YAML" ]; then
+            echo "${YAML// /}" | base64 -d > composeApp/sekret.yaml
+          else
+            echo "{}" > composeApp/sekret.yaml
+          fi
+
+      - name: Generate Sekret sources
+        run: ./gradlew composeApp:generateSekret --stacktrace
+
+      - name: Build Sekret native binaries
+        run: ./gradlew composeApp:createAndCopySekretNativeBinary --stacktrace
+
+      - name: Build debug APK
+        run: ./gradlew composeApp:assembleDebug --stacktrace
+
+      - name: Show built APKs
+        run: find composeApp/build/outputs -name "*.apk" -print -exec ls -lh {} \;
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mimasu-adfree-debug-apk
+          path: composeApp/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
