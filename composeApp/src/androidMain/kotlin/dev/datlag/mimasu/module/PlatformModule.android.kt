@@ -6,8 +6,6 @@ import androidx.media3.common.util.UnstableApi
 import com.appmattus.certificatetransparency.cache.AndroidDiskCache
 import com.appmattus.certificatetransparency.certificateTransparencyInterceptor
 import com.google.net.cronet.okhttptransport.CronetInterceptor
-import dev.datlag.mimasu.BuildKonfig
-import dev.datlag.mimasu.Sekret
 import dev.datlag.mimasu.common.firebaseDataSource
 import dev.datlag.mimasu.firebase.auth.provider.github.FirebaseGitHubAuthProvider
 import dev.datlag.mimasu.firebase.auth.provider.github.FirebaseGitHubAuthProviderAndroid
@@ -78,8 +76,11 @@ actual object PlatformModule {
             }
         }
         bindProvider<GoogleProvider> {
-            // Use provider as initial Sekret call may fail -> bindSingleton always null
-            GoogleProvider.basedOn(Sekret.firebaseWebOrAuthId(BuildKonfig.packageName)) { serverClientId ->
+            // Google Sign-In needs a web client id that is only present with the
+            // upstream Sekret secrets. This ad-free build does not ship them, so
+            // Google auth is disabled (GoogleProvider.Null). Browsing content
+            // does not require it.
+            GoogleProvider.basedOn<String>(null) { serverClientId ->
                 FirebaseGoogleAuthProviderAndroid(
                     firebaseAuthDataSource = firebaseDataSource(),
                     serverClientId = serverClientId
