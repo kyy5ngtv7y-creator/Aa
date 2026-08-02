@@ -75,35 +75,56 @@ class App : MultiDexApplication(), DIAware {
 
         CronetProviderInstaller.installProvider(this)
 
-        if (AppInitializer.isSekretLoaded(appContext)) {
+        // A TMDB key baked into the build lets the app show content without a
+        // Firebase project. When present, use it directly and treat Firebase
+        // (auth, firestore, remote config) as an optional best-effort extra.
+        val usedStaticKey = Network.applyStaticKey(BuildKonfig.tmdbApiKey)
+
+        val firebaseReady = if (AppInitializer.isSekretLoaded(appContext)) {
             val appId = Sekret.firebaseAppId(BuildKonfig.packageName)
             val apiKey = Sekret.firebaseApiKey(BuildKonfig.packageName)
 
             if (appId.isNullOrBlank() || apiKey.isNullOrBlank()) {
+                false
+            } else {
+                scopeCatching {
+                    Firebase.initialize(
+                        context = this,
+                        options = FirebaseOptions(
+                            projectId = Sekret.projectId(BuildKonfig.packageName),
+                            applicationId = appId,
+                            apiKey = apiKey
+                        )
+                    )
+                }.isSuccess
+            }
+        } else {
+            false
+        }
+
+        if (firebaseReady && !BuildConfig.DEBUG) {
+            Logger.setLogWriters(CrashlyticsLogWriter())
+        }
+
+        when {
+            firebaseReady -> {
+                val config by di.instance<FirebaseRemoteConfigService>()
+                applicationScope.launch(Dispatchers.VirtualIO) {
+                    // Prefer the live remote config; fall back to the baked-in
+                    // key (already applied above) if the fetch cannot succeed.
+                    Network.fetchConfig(config)
+                    if (Network.config.value is Network.Config.Failure && usedStaticKey) {
+                        Network.applyStaticKey(BuildKonfig.tmdbApiKey)
+                    }
+                }
+            }
+            usedStaticKey -> {
+                // No Firebase, but we have a baked-in key: content is available.
+            }
+            else -> {
                 Network.initializeFailure()
                 return
             }
-
-            Firebase.initialize(
-                context = this,
-                options = FirebaseOptions(
-                    projectId = Sekret.projectId(BuildKonfig.packageName),
-                    applicationId = appId,
-                    apiKey = apiKey
-                )
-            )
-
-            if (!BuildConfig.DEBUG) {
-                Logger.setLogWriters(CrashlyticsLogWriter())
-            }
-        } else {
-            Network.initializeFailure()
-            return
-        }
-
-        val config by di.instance<FirebaseRemoteConfigService>()
-        applicationScope.launch(Dispatchers.VirtualIO) {
-            Network.fetchConfig(config)
         }
     }
 

@@ -85,6 +85,10 @@ jobs:
 
       - name: Build debug APK
         run: ./gradlew composeApp:assembleDebug --stacktrace
+        env:
+          # TMDB key baked into the build so the app shows content without a
+          # Firebase project. A repository secret overrides this literal value.
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || 'a705cb078d8b503259cbad8396755c4b' }}
 
       - name: Show built APKs
         run: find composeApp/build/outputs -name "*.apk" -print -exec ls -lh {} \;

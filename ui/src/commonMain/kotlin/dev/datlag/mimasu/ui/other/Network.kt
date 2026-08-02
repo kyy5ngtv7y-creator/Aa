@@ -58,6 +58,16 @@ data object Network {
         _config.update { Config.Failure.Initialize }
     }
 
+    /**
+     * Use a TMDB key that was baked into the build instead of fetching it from
+     * Firebase Remote Config. Returns true when a usable key was applied.
+     */
+    fun applyStaticKey(key: String?): Boolean {
+        val trimmed = key?.trim()?.ifBlank { null } ?: return false
+        _config.update { Config.Success(tmdb = trimmed) }
+        return true
+    }
+
     @Serializable
     sealed interface Config {
 
