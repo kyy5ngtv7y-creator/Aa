@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CREDENTIAL_MANAGER_SET_ALLOWED_PROVIDERS" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="dev.datlag.mimasu.extension.permission.MANAGE_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.ethernet"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false"/>
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false"/>
+
+    <application
+        android:icon="@mipmap/ic_channel"
+        android:banner="@drawable/ic_banner"
+        android:label="Mimasu"
+        android:supportsRtl="true"
+        android:appCategory="video"
+        android:allowAudioPlaybackCapture="false"
+        android:enableOnBackInvokedCallback="true"
+        android:name=".App"
+        android:manageSpaceActivity=".SpaceActivity"
+        android:resizeableActivity="true"
+        android:networkSecurityConfig="@xml/network_security"
+        android:largeHeap="true"
+        android:theme="@style/SplashScreenTheme"
+        android:localeConfig="@xml/locales_config">
+
+        <!-- TV Activity at top! I do not know why, but else it launches MainActivity -->
+        <activity
+            android:name=".TVActivity"
+            android:launchMode="singleInstance"
+            android:icon="@mipmap/ic_channel"
+            android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout|keyboardHidden"
+            android:resizeableActivity="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:name=".MainActivity"
+            android:visibleToInstantApps="true"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout|keyboardHidden"
+            android:supportsPictureInPicture="true"
+            android:resizeableActivity="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" android:host="mimasu.datlag.dev" android:pathPrefix="/auth" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SpaceActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout|keyboardHidden"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme"
+            android:exported="true">
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="dev.datlag.mimasu.other.CastOptionsProvider" />
+
+        <meta-data
+            android:name="instantapps.clients.allowed"
+            android:value="true" />
+
+        <meta-data
+            android:name="open_source"
+            android:value="true" />
+
+        <meta-data
+            android:name="open_source_license"
+            android:value="GNU GENERAL PUBLIC LICENSE Version 3" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${admob_app_id}"/>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+            android:value="true"/>
+        
+        <provider
+            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data android:name="dev.datlag.mimasu.ui.AppInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data android:name="dev.datlag.mimasu.extension.ExtensionInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="ru.solrudev.ackpine.AckpineInitializer"
+                tools:node="remove" />
+        </provider>
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider"
+            tools:node="remove" />
+
+        <receiver android:name=".extension.AppInstallReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

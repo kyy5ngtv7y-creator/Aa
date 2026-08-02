@@ -1,0 +1,162 @@
+<resources>
+    <string name="app_name">Mimasu</string>
+    <string name="profile">Profil</string>
+    <string name="movies">Filme</string>
+    <string name="home">Start</string>
+    <string name="series">Serien</string>
+    <string name="search">Suche</string>
+    <string name="home_trending">Im Trend</string>
+    <string name="home_today">Heute</string>
+    <string name="home_week">Woche</string>
+
+    <string name="home_people">Personen</string>
+    <string name="home_series">Serien</string>
+    <string name="home_movies">Filme</string>
+    <string name="home_your_series">Deine Serien</string>
+    <string name="home_your_movies">Deine Filme</string>
+
+    <string name="home_extension_update_title">Neues Update</string>
+    <string name="home_extension_update_text">Ein Update für die Erweiterung ist verfügbar, klicke zum installieren oder ansehen.</string>
+    <string name="home_extension_update_open_app">App öffnen</string>
+    <string name="home_extension_update_view">Ansehen</string>
+
+    <string name="movies_now_playing">Jetzt im Kino</string>
+    <string name="movies_popular">Beliebt</string>
+    <string name="movies_top_rated">Top Bewertet</string>
+    <string name="movies_upcoming">Bald verfügbar</string>
+
+    <string name="series_airing_today">Heute zu sehen</string>
+    <string name="series_on_the_air">Auf Sendung</string>
+    <string name="series_popular">Beliebt</string>
+    <string name="series_top_rated">Top Bewertet</string>
+
+    <string name="search_people">Personen</string>
+    <string name="search_series">Serien</string>
+    <string name="search_movies">Filme</string>
+    <string name="search_info_default">Suche nach Personen, Serien oder Filmen.</string>
+    <string name="search_info_empty">Zu deiner Eingabe konnte nichts gefunden werden.</string>
+    <string name="search_info_error">Etwas ist schiefgelaufen, bitte versuche es später noch einmal.</string>
+
+    <string name="movie_status_rumored">Gerücht</string>
+    <string name="movie_status_planned">Geplant</string>
+    <string name="movie_status_in_production">In Produktion</string>
+    <string name="movie_status_post_production">Post-Produktion</string>
+    <string name="movie_status_released">Veröffentlicht</string>
+    <string name="movie_status_canceled">Eingestellt</string>
+
+    <string name="movie_release_date_format">dd.MM.yyyy</string>
+    <string name="movie_overview">Handlung</string>
+    <string name="movie_budget">Budget</string>
+    <string name="movie_rating">Wertung</string>
+    <string name="movie_rating_placeholder">%1$d%</string>
+    <string name="movie_revenue">Einnahmen</string>
+    <string name="movie_cast">Besetzung</string>
+    <string name="movie_crew">Crew</string>
+    <string name="movie_production">Produktion</string>
+    <string name="movie_countries">Länder: </string>
+    <string name="movie_companies">Firmen: </string>
+    <string name="movie_watch">Ansehen</string>
+    <string name="movie_justwatch_attribution">Diese Liste von verfügbaren Quellen wird von JustWatch bereitgestellt.</string>
+    <string name="movie_justwatch_flatrate">Flatrate</string>
+    <string name="movie_justwatch_buy">Kaufen</string>
+    <string name="movie_justwatch_rent">Ausleihen</string>
+    <string name="movie_justwatch_free">Kostenlos</string>
+    <string name="movie_justwatch_ads">Werbung</string>
+
+    <string name="currency_thousand">K</string>
+    <string name="currency_million">Mio</string>
+    <string name="currency_billion">Mrd</string>
+
+    <string name="person_known_for">Bekannt für:</string>
+    <string name="person_gender">Geschlecht:</string>
+    <string name="person_birthday">Geburtstag:</string>
+    <string name="person_deathday">Todestag:</string>
+    <string name="person_place_of_birth">Geburtsort:</string>
+    <string name="person_gender_female">Frau</string>
+    <string name="person_gender_male">Mann</string>
+    <string name="person_gender_non_binary">Nicht-binär</string>
+    <string name="person_gender_unknown">Unbekannt</string>
+    <string name="person_biography">Biografie</string>
+    <string name="person_birthday_date_format">dd.MM.yyyy</string>
+    <string name="person_deathday_date_format">dd.MM.yyyy</string>
+    <string name="person_also_known_as">Auch bekannt als</string>
+
+    <string name="justwatch">JustWatch</string>
+
+    <string name="profile_connect">Verbinden</string>
+    <string name="profile_connected">Verbunden</string>
+    <string name="profile_sign_out">Ausloggen</string>
+    <string name="profile_sign_out_text">Bist du sicher, dass du dich von deinem Account abmelden willst?</string>
+    <string name="profile_sign_out_yes">Ja</string>
+    <string name="profile_sign_out_cancel">Abbrechen</string>
+    <string name="profile_about">Über Mimasu</string>
+    <string name="profile_about_text">Mimasu (みます) ist ein Open-Source Projekt um deine Lieblingsfilme und Serien zu verwalten.</string>
+    <string name="profile_open_source">Open-Source</string>
+    <string name="profile_open_source_licenses">Open-Source Lizenzen</string>
+    <string name="profile_open_source_licenses_text">Das ist eine Liste von Bibliotheken, die in diesem Projekt verwendet werden und deren Lizenzen.</string>
+    <string name="profile_open_source_text">Das Projekt ist Open-Source, damit jeder den Code einsehen, verbessern und zur Weiterentwicklung beitragen kann.</string>
+    <string name="profile_extension_header">Erweiterungen</string>
+    <string name="profile_extension_text">Die App unterstützt Erweiterungen und ermöglicht so Integrationen mit Inhaltsanbietern. Dadurch können Filme und Serien von unterstützten Plattformen direkt in der App abgerufgen werden.</string>
+    <string name="profile_owner">Entwickelt von Jeff Retz</string>
+    <string name="profile_github_repository">GitHub Repository</string>
+    <string name="profile_extension">Erweiterung</string>
+    <string name="profile_extension_open">Öffnen</string>
+    <string name="profile_extension_info">Mehr</string>
+    <string name="profile_extension_info_close">Schließen</string>
+
+    <string name="show_air_date_format">dd.MM.yyyy</string>
+    <string name="show_rating_placeholder">%1$d%</string>
+    <string name="show_overview">Handlung</string>
+    <string name="show_rating">Wertung</string>
+    <string name="show_episodes">Folgen</string>
+    <string name="show_seasons">Staffeln</string>
+    <string name="show_production">Produktion</string>
+    <string name="show_countries">Länder: </string>
+    <string name="show_watch">Ansehen</string>
+    <string name="show_season_placeholder">Staffel %1$d%</string>
+    <string name="show_season_next">Nächste</string>
+    <string name="show_season_select_info">Wähle die Staffel aus, die du gerade schaust oder an der du interessiert bist und bestätige, um die Details anzuzeigen.</string>
+
+    <string name="show_status_returning">Wiederkehrend</string>
+    <string name="show_status_planned">Geplant</string>
+    <string name="show_status_pilot">Pilot</string>
+    <string name="show_status_in_production">In Produktion</string>
+    <string name="show_status_ended">Beendet</string>
+    <string name="show_status_canceled">Eingestellt</string>
+    <string name="show_justwatch_attribution">Diese Liste von verfügbaren Quellen wird von JustWatch bereitgestellt.</string>
+    <string name="show_justwatch_flatrate">Flatrate</string>
+    <string name="show_justwatch_buy">Kaufen</string>
+    <string name="show_justwatch_rent">Ausleihen</string>
+    <string name="show_justwatch_free">Kostenlos</string>
+    <string name="show_justwatch_ads">Werbung</string>
+
+    <string name="show_episode_dialog_title">Wiedergabe nicht möglich</string>
+    <string name="show_episode_dialog_text">Keine Streaming-Erweiterung gefunden oder die Episode konnte nicht geladen werden.</string>
+    <string name="show_episode_dialog_close">Schließen</string>
+    <string name="show_episode_dialog_more">Mehr erfahren</string>
+
+    <string name="account_verification">Kontobestätigung</string>
+    <string name="account_verification_text">Bitte bestätige dein Konto innerhalb von 30 Tagen oder es wird gelöscht, der Vorgang kann eine Weile dauern.</string>
+    <string name="account_verification_send">Bestätigung senden</string>
+    <string name="account_verification_check">Status überprüfen</string>
+
+    <string name="feature_temporarily_disabled">Funktion vorübergehend deaktiviert.</string>
+
+    <string name="space_extension">Erweiterung</string>
+    <string name="space_app_text">Gib Speicherplatz frei, indem du den Cache leerst oder alle Daten dauerhaft löschst.</string>
+    <string name="space_extension_text">Verwalte den Erweiterungsspeicher, indem du den Cache leerst oder Daten löschst.</string>
+    <string name="space_clear_space">Speicher löschen</string>
+    <string name="space_clear_cache">Cache leeren</string>
+    <string name="space_sizes_app">App</string>
+    <string name="space_sizes_user">Nutzer</string>
+    <string name="space_sizes_cache">Cache</string>
+    <string name="space_bytes_format">%1$d%2$s</string>
+    <string-array name="space_bytes_format_sizes">
+        <item>B</item>
+        <item>KB</item>
+        <item>MB</item>
+        <item>GB</item>
+        <item>TB</item>
+        <item>PB</item>
+    </string-array>
+</resources>

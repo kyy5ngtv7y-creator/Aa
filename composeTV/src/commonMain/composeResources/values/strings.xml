@@ -1,0 +1,50 @@
+<resources>
+    <string name="tv_tab_profile">Profile</string>
+    <string name="tv_tab_home">Home</string>
+    <string name="tv_tab_search">Search</string>
+    <string name="tv_tab_movies">Movies</string>
+    <string name="tv_tab_shows">Shows</string>
+
+    <string name="tv_home_trending_series_today">Daily TV Shows</string>
+    <string name="tv_home_trending_series_weekly">Weekly TV Shows</string>
+    <string name="tv_home_trending_movies_today">Daily Movies</string>
+    <string name="tv_home_trending_movies_weekly">Weekly Movies</string>
+    <string name="tv_home_your_series">Your Shows</string>
+    <string name="tv_home_your_movies">Your Movies</string>
+
+    <string name="tv_movies_now_playing">Now Playing</string>
+    <string name="tv_movies_popular">Popular</string>
+    <string name="tv_movies_top_rated">Top Rated</string>
+    <string name="tv_movies_upcoming">Upcoming</string>
+
+    <string name="tv_series_airing_today">Airing Today</string>
+    <string name="tv_series_on_the_air">On the Air</string>
+    <string name="tv_series_popular">Popular</string>
+    <string name="tv_series_top_rated">Top Rated</string>
+
+    <string name="tv_movie_release_date">Release Date</string>
+    <string name="tv_movie_release_date_format">MM.dd.yyyy</string>
+    <string name="tv_movie_runtime">Runtime</string>
+    <string name="tv_movie_rating">Rating</string>
+    <string name="tv_movie_rating_placeholder">%1$d%</string>
+    <string name="tv_movie_watch_trailer">Watch Trailer</string>
+    <string name="tv_movie_cast">Cast</string>
+
+    <string name="tv_show_first_air_date">First Air Date</string>
+    <string name="tv_show_first_air_date_format">MM.dd.yyyy</string>
+    <string name="tv_show_average_runtime">Average Runtime</string>
+    <string name="tv_show_rating">Rating</string>
+    <string name="tv_show_rating_placeholder">%1$d%</string>
+    <string name="tv_show_bookmark">Bookmark</string>
+    <string name="tv_show_bookmarked">Bookmarked</string>
+    <plurals name="tv_show_episodes_count">
+        <item quantity="one">%1$d Episode</item>
+        <item quantity="other">%1$d Episodes</item>
+    </plurals>
+    <string name="tv_show_episode_placeholder">Episode %1$d</string>
+
+    <string name="tv_search_start_typing">Search for...</string>
+    <string name="tv_search_info_default">Search for series or movies.</string>
+    <string name="tv_search_info_empty">Could not find anything for your query.</string>
+    <string name="tv_search_info_error">Something went wrong, please try again later.</string>
+</resources>

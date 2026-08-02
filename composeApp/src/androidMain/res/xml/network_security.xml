@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <certificateTransparency enabled="true" />
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">themoviedb.org</domain>
+        <domain includeSubdomains="true">tmdb.org</domain>
+
+        <domain includeSubdomains="true">googleapis.com</domain>
+        <domain includeSubdomains="true">google.com</domain>
+        <domain includeSubdomains="true">googleusercontent.com</domain>
+        <domain includeSubdomains="true">gstatic.com</domain>
+
+        <domain includeSubdomains="true">datlag.dev</domain>
+
+        <domain includeSubdomains="true">github.com</domain>
+        <domain includeSubdomains="true">githubusercontent.com</domain>
+
+        <domain includeSubdomains="false">disposable.debounce.io</domain>
+
+        <domain includeSubdomains="true">tolgee.io</domain>
+        <domain includeSubdomains="true">tolg.ee</domain>
+    </domain-config>
+</network-security-config>
