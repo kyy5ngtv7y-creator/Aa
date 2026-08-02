@@ -64,6 +64,9 @@ class App : MultiDexApplication(), DIAware {
     override fun onCreate() {
         super.onCreate()
 
+        // Install first so it also captures failures in the setup below.
+        CrashReporter.install(appContext)
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA && !Platform.isTelevision(this)) {
             installCertificateTransparencyProvider {
                 logger = BasicAndroidCTLogger(BuildConfig.DEBUG)
