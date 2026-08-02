@@ -15,7 +15,6 @@ import dev.datlag.kast.UnselectReason
 import dev.datlag.mimasu.common.isInPiPMode
 import dev.datlag.mimasu.common.toExpressiveTypography
 import dev.datlag.mimasu.firebase.auth.FirebaseAuthService
-import dev.datlag.mimasu.other.AdManager
 import dev.datlag.mimasu.other.PiPHelper
 import dev.datlag.mimasu.ui.other.Network
 import dev.datlag.mimasu.ui.theme.Font
@@ -28,7 +27,7 @@ import org.kodein.di.DIAware
 import org.kodein.di.instanceOrNull
 import kotlin.reflect.safeCast
 
-class MainActivity : AdActivity() {
+class MainActivity : MimasuActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         fun exit(reason: String?) {
@@ -54,8 +53,6 @@ class MainActivity : AdActivity() {
         enableEdgeToEdge()
 
         val di = this.di() ?: return exit("Could not find dependency injection.")
-        val nullableAdManager by di.instanceOrNull<AdManager>()
-        (nullableAdManager ?: AdManager(this)).requestConsentUpdate(this)
         bindExtension { !Platform.isTelevision(this) }
         PiPHelper.setActive(this.isInPiPMode())
         Kast.setup(this)

@@ -4,12 +4,10 @@ import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import com.mikepenz.aboutlibraries.plugin.DuplicateMode
 import com.mikepenz.aboutlibraries.plugin.DuplicateRule
 import dev.datlag.tooling.existsSafely
-import dev.datlag.tooling.scopeCatching
 import dev.datlag.tooling.systemEnv
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -29,7 +27,6 @@ plugins {
 }
 
 val artifact = "dev.datlag.mimasu"
-val ADMOB_ANDROID_TESTING = "ca-app-pub-3940256099942544~3347511713"
 group = artifact
 
 composeCompiler {
@@ -129,7 +126,6 @@ kotlin {
             implementation(libs.android.startup)
             implementation(libs.splashscreen)
             implementation(libs.certificate.transparency.android)
-            implementation(libs.bundles.android.ads)
             implementation(libs.kermit.crashlytics)
             implementation(libs.youtube.player)
             compileOnly(libs.tv.material)
@@ -204,7 +200,6 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            manifestPlaceholders["admob_app_id"] = getAdmobAppId() ?: ADMOB_ANDROID_TESTING
             signingConfig = signingConfigs.findByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -218,7 +213,6 @@ android {
             }
         }
         debug {
-            manifestPlaceholders["admob_app_id"] = ADMOB_ANDROID_TESTING
             ndk {
                 debugSymbolLevel = NdkOptions.DebugSymbolLevel.FULL.name
             }
@@ -269,27 +263,4 @@ aboutLibraries {
         prettyPrint.set(true)
         outputPath.set(project.layout.projectDirectory.file("src/commonMain/composeResources/files/aboutlibraries.json"))
     }
-}
-
-private fun getAdmobAppId(): String? {
-    var propFile = rootProject.file("local.properties")
-    if (!propFile.existsSafely()) {
-        propFile = project.file("local.properties")
-    }
-
-    if (propFile.existsSafely()) {
-        val props = Properties()
-
-        scopeCatching {
-            propFile.inputStream().use {
-                props.load(it)
-            }
-        }.onSuccess {
-            return props.getProperty("admob.app.id")?.ifBlank {
-                null
-            } ?: systemEnv("ADMOB_APP_ID")?.ifBlank { null }?.trim()
-        }
-    }
-
-    return systemEnv("ADMOB_APP_ID")?.ifBlank { null }?.trim()
 }

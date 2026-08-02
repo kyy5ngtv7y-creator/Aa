@@ -12,7 +12,6 @@ import dev.datlag.mimasu.common.firebaseDataSource
 import dev.datlag.mimasu.firebase.auth.provider.github.FirebaseGitHubAuthProvider
 import dev.datlag.mimasu.firebase.auth.provider.github.FirebaseGitHubAuthProviderAndroid
 import dev.datlag.mimasu.firebase.auth.provider.google.FirebaseGoogleAuthProviderAndroid
-import dev.datlag.mimasu.other.AdManager
 import dev.datlag.mimasu.ui.Cronet
 import dev.datlag.mimasu.ui.GoogleProvider
 import dev.datlag.mimasu.ui.common.cronetEngine
@@ -89,9 +88,6 @@ actual object PlatformModule {
         }
         bindSingleton<FirebaseGitHubAuthProvider> {
             FirebaseGitHubAuthProviderAndroid(firebaseAuthDataSource = firebaseDataSource())
-        }
-        bindSingleton<AdManager> {
-            AdManager(context = instance())
         }
     }
 }

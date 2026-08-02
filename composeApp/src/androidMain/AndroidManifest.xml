@@ -104,14 +104,6 @@
             android:name="open_source_license"
             android:value="GNU GENERAL PUBLIC LICENSE Version 3" />
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="${admob_app_id}"/>
-
-        <meta-data
-            android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
-            android:value="true"/>
-        
         <provider
             android:authorities="${applicationId}.androidx-startup"
             android:name="androidx.startup.InitializationProvider"
