@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - claude/remove-google-ads-apk-n1a01v
+    paths-ignore:
+      - '**.md'
+      - '**.MD'
   workflow_dispatch:
 
 permissions:
