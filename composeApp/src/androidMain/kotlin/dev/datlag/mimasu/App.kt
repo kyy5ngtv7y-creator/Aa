@@ -107,19 +107,17 @@ class App : MultiDexApplication(), DIAware {
         }
 
         when {
+            // With a baked-in key the config is already Success and must stay
+            // that way. Fetching remote config would move it back through
+            // Fetching/Failure, and Network.tmdbApiKey throws in those states
+            // (NetworkModule reads it when building the TMDB client), which
+            // crashes the app. So skip the fetch entirely.
+            usedStaticKey -> Unit
             firebaseReady -> {
                 val config by di.instance<FirebaseRemoteConfigService>()
                 applicationScope.launch(Dispatchers.VirtualIO) {
-                    // Prefer the live remote config; fall back to the baked-in
-                    // key (already applied above) if the fetch cannot succeed.
                     Network.fetchConfig(config)
-                    if (Network.config.value is Network.Config.Failure && usedStaticKey) {
-                        Network.applyStaticKey(BuildKonfig.tmdbApiKey)
-                    }
                 }
-            }
-            usedStaticKey -> {
-                // No Firebase, but we have a baked-in key: content is available.
             }
             else -> {
                 Network.initializeFailure()

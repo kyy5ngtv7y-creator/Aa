@@ -102,15 +102,21 @@ jobs:
           mkdir -p /tmp/apkcheck && unzip -o -q "$APK" -d /tmp/apkcheck
 
           echo "--- ad SDK classes ---"
-          if unzip -l "$APK" | grep -qiE "com/google/android/gms/ads|com/jet/ads|com/google/android/ump"; then
-            echo "FAIL: ad SDK classes present in the APK"
-            exit 1
-          fi
-          if cat /tmp/apkcheck/classes*.dex | strings | grep -qiE "com\.google\.android\.gms\.ads|com\.jet\.ads|admob"; then
-            echo "FAIL: ad SDK references found in dex"
+          # Note: com.google.android.gms.ads.identifier (Advertising ID) ships
+          # transitively with Firebase and is not an ad-serving SDK, so it is
+          # excluded. Everything that actually loads or renders ads is not.
+          FOUND=$(cat /tmp/apkcheck/classes*.dex | strings \
+            | grep -oiE "com\.google\.android\.gms\.ads\.[a-z.]*|com\.jet\.ads[a-z.]*|com\.google\.android\.ump[a-z.]*|admob" \
+            | grep -viE "^com\.google\.android\.gms\.ads\.identifier" | sort -u || true)
+          if [ -n "$FOUND" ]; then
+            echo "FAIL: ad SDK references found in dex:"
+            echo "$FOUND"
             exit 1
           fi
           echo "OK: no advertising SDK in the APK"
+          echo "(advertising-id references, if any:)"
+          cat /tmp/apkcheck/classes*.dex | strings \
+            | grep -oiE "com\.google\.android\.gms\.ads\.identifier[a-z.]*" | sort -u || true
 
           echo "--- TMDB key ---"
           if cat /tmp/apkcheck/classes*.dex | strings | grep -qF "$TMDB_API_KEY"; then

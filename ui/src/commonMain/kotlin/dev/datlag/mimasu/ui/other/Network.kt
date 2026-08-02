@@ -19,6 +19,7 @@ data object Network {
     val config: StateFlow<Config> = _config.asStateFlow()
 
     private var startedFetching = 0L
+    private var staticKey: String? = null
 
     val showSplashscreen: Boolean
         get() {
@@ -34,6 +35,10 @@ data object Network {
 
     suspend fun fetchConfig(remoteService: FirebaseRemoteConfigService) {
         if ((config.firstOrNull() ?: config.value) is Config.Failure.Initialize) {
+            return
+        }
+        // A baked-in key already provides a usable config; never downgrade it.
+        if (staticKey != null) {
             return
         }
         startedFetching = LocalDateTime.now().toEpochMilliseconds()
@@ -55,15 +60,24 @@ data object Network {
     }
 
     fun initializeFailure() {
+        staticKey?.let {
+            _config.update { _ -> Config.Success(tmdb = it) }
+            return
+        }
         _config.update { Config.Failure.Initialize }
     }
 
     /**
      * Use a TMDB key that was baked into the build instead of fetching it from
      * Firebase Remote Config. Returns true when a usable key was applied.
+     *
+     * Once set, the config can no longer fall back to Fetching/Failure:
+     * [tmdbApiKey] throws outside of Success, so a downgrade would crash any
+     * caller building the TMDB client.
      */
     fun applyStaticKey(key: String?): Boolean {
         val trimmed = key?.trim()?.ifBlank { null } ?: return false
+        staticKey = trimmed
         _config.update { Config.Success(tmdb = trimmed) }
         return true
     }
