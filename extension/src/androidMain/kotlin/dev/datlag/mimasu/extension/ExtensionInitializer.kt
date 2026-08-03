@@ -19,11 +19,6 @@ class ExtensionInitializer : Initializer<ExtensionInitializer.State> {
                 GlobalScope.launch {
                     it.initialize()
                 }
-            },
-            movieProviderAndroid = MovieProviderAndroid(context).also {
-                GlobalScope.launch {
-                    it.initialize()
-                }
             }
         ).also { result ->
             state.update { result }
@@ -36,8 +31,7 @@ class ExtensionInitializer : Initializer<ExtensionInitializer.State> {
 
     data class State(
         val updateProvider: UpdateProviderAndroid,
-        val showProviderAndroid: ShowProviderAndroid,
-        val movieProviderAndroid: MovieProviderAndroid
+        val showProviderAndroid: ShowProviderAndroid
     )
 
     companion object {
@@ -57,40 +51,27 @@ class ExtensionInitializer : Initializer<ExtensionInitializer.State> {
                 .showProviderAndroid
         }
 
-        fun getMovieProvider(context: Context): MovieProviderAndroid {
-            return state.value?.movieProviderAndroid ?: androidx.startup.AppInitializer
-                .getInstance(context)
-                .initializeComponent(ExtensionInitializer::class.java)
-                .movieProviderAndroid
-        }
-
         private fun nullableUpdateProvider(): UpdateProviderAndroid? = state.value?.updateProvider
 
         private fun nullableShowProvider(): ShowProviderAndroid? = state.value?.showProviderAndroid
 
-        private fun nullableMovieProvider(): MovieProviderAndroid? = state.value?.movieProviderAndroid
-
         fun unbindAll(context: Context) {
             nullableUpdateProvider()?.unbind(context)
             nullableShowProvider()?.unbind(context)
-            nullableMovieProvider()?.unbind(context)
         }
 
         suspend fun initialize(context: Context) {
             getShowProvider(context).initialize()
-            getMovieProvider(context).initialize()
         }
 
         suspend fun rebindAll(context: Context) {
             nullableUpdateProvider()?.rebind(context)
             nullableShowProvider()?.rebind(context)
-            nullableMovieProvider()?.rebind(context)
         }
 
         suspend fun rebindIfNoneAvailable(context: Context) {
             nullableUpdateProvider()?.rebindIfUnavailable(context)
             nullableShowProvider()?.rebindIfNoneAvailable(context)
-            nullableMovieProvider()?.rebindIfNoneAvailable(context)
         }
 
         fun rebindIfNoneAvailable(scope: CoroutineScope, context: Context) = scope.launch {

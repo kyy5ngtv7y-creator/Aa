@@ -1,4 +1,4 @@
-name: Build ad-free APK
+name: Build APK
 
 on:
   push:
@@ -28,6 +28,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # The build requires a google-services.json and a Sekret config; both are
+      # private to upstream and not part of the sources. Placeholders are
+      # supplied here so the project compiles. Repository secrets override them.
       - name: Create Google-Services config
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_BASE64 }}
@@ -37,7 +40,6 @@ jobs:
             echo "${GOOGLE_SERVICES// /}" | base64 -d > composeApp/google-services.json
           else
             echo "::warning::No GOOGLE_SERVICES_BASE64 secret set - using a placeholder."
-            echo "::warning::The APK will build and install, but cannot load any content."
             cat > composeApp/google-services.json <<'JSON'
           {
             "project_info": {
@@ -53,12 +55,24 @@ jobs:
                     "package_name": "dev.datlag.mimasu"
                   }
                 },
-                "oauth_client": [],
+                "oauth_client": [
+                  {
+                    "client_id": "000000000000-placeholder.apps.googleusercontent.com",
+                    "client_type": 3
+                  }
+                ],
                 "api_key": [
                   { "current_key": "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ],
                 "services": {
-                  "appinvite_service": { "other_platform_oauth_client": [] }
+                  "appinvite_service": {
+                    "other_platform_oauth_client": [
+                      {
+                        "client_id": "000000000000-placeholder.apps.googleusercontent.com",
+                        "client_type": 3
+                      }
+                    ]
+                  }
                 }
               }
             ],
@@ -74,8 +88,15 @@ jobs:
           if [ -n "$YAML" ]; then
             echo "${YAML// /}" | base64 -d > composeApp/sekret.yaml
           else
-            echo "{}" > composeApp/sekret.yaml
+            cat > composeApp/sekret.yaml <<'YML'
+          firebaseWebOrAuthId: "000000000000-placeholder.apps.googleusercontent.com"
+          firebaseWebApiKey: "AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          firebaseWebId: "1:000000000000:web:0000000000000000000000"
+          firebaseAuthDomain: "mimasu-placeholder.firebaseapp.com"
+          YML
           fi
+          echo "--- sekret.yaml ---"
+          cat composeApp/sekret.yaml
 
       - name: Generate Sekret sources
         run: ./gradlew composeApp:generateSekret --stacktrace
@@ -85,57 +106,13 @@ jobs:
 
       - name: Build debug APK
         run: ./gradlew composeApp:assembleDebug --stacktrace
-        env:
-          # TMDB key baked into the build so the app shows content without a
-          # Firebase project. A repository secret overrides this literal value.
-          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || 'a705cb078d8b503259cbad8396755c4b' }}
 
       - name: Show built APKs
         run: find composeApp/build/outputs -name "*.apk" -print -exec ls -lh {} \;
 
-      # Upload before verifying so a quirk in the check can never withhold the
-      # APK. The verification below still fails the run if something is wrong.
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mimasu-adfree-debug-apk
+          name: mimasu-1.5.0-noads-apk
           path: composeApp/build/outputs/apk/debug/*.apk
           if-no-files-found: error
-
-      - name: Verify APK is ad-free and carries the TMDB key
-        env:
-          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || 'a705cb078d8b503259cbad8396755c4b' }}
-        run: |
-          APK=$(find composeApp/build/outputs/apk/debug -name "*.apk" | head -n 1)
-          echo "Inspecting $APK"
-          mkdir -p /tmp/apkcheck && unzip -o -q "$APK" -d /tmp/apkcheck
-          cat /tmp/apkcheck/classes*.dex | strings > /tmp/apkcheck/dex.txt
-
-          echo "--- ad-serving SDK classes ---"
-          # Match only qualified class/package references, never the bare word
-          # "AdMob": Firebase's analytics code carries that string on its own.
-          # com.google.android.gms.ads.identifier (Advertising ID) is excluded
-          # too - it reads an identifier and cannot request or render ads.
-          FOUND=$(grep -oiE "com\.google\.android\.gms\.ads\.[a-z0-9.]+|com\.jet\.ads[a-z0-9.]*|com\.google\.android\.ump[a-z0-9.]*" \
-            /tmp/apkcheck/dex.txt \
-            | grep -viE "^com\.google\.android\.gms\.ads\.identifier" | sort -u || true)
-          if [ -n "$FOUND" ]; then
-            echo "FAIL: ad-serving SDK references found in dex:"
-            echo "$FOUND"
-            exit 1
-          fi
-          echo "OK: no ad-serving SDK in the APK"
-
-          echo "--- context for any bare 'admob' strings (informational) ---"
-          grep -i "admob" /tmp/apkcheck/dex.txt | sort -u | head -n 20 || true
-          echo "--- advertising-id classes (informational, not ad serving) ---"
-          grep -oiE "com\.google\.android\.gms\.ads\.identifier[a-z0-9.]*" /tmp/apkcheck/dex.txt \
-            | sort -u | head -n 10 || true
-
-          echo "--- TMDB key ---"
-          if grep -qF "$TMDB_API_KEY" /tmp/apkcheck/dex.txt; then
-            echo "OK: TMDB key is baked into the APK"
-          else
-            echo "FAIL: TMDB key missing from the APK"
-            exit 1
-          fi

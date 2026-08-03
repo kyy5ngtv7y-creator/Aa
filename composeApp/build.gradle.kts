@@ -238,7 +238,6 @@ buildkonfig {
 
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "packageName", artifact)
-        buildConfigField(FieldSpec.Type.STRING, "tmdbApiKey", tmdbApiKey())
     }
 }
 
@@ -266,11 +265,3 @@ aboutLibraries {
     }
 }
 
-// TMDB API key baked into the build so the app does not depend on Firebase
-// Remote Config to obtain it. Resolved from the "tmdb.api.key" Gradle property
-// or the TMDB_API_KEY environment variable; empty when neither is set.
-fun tmdbApiKey(): String {
-    return (findProperty("tmdb.api.key") as? String)?.ifBlank { null }
-        ?: systemEnv("TMDB_API_KEY")?.ifBlank { null }?.trim()
-        ?: ""
-}

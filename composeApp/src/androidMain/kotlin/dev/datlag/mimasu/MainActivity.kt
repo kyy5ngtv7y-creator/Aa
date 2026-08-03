@@ -1,17 +1,9 @@
 package dev.datlag.mimasu
 
 import android.app.PictureInPictureUiState
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -44,13 +36,6 @@ class MainActivity : MimasuActivity() {
         }
 
         super.onCreate(savedInstanceState)
-
-        // If the previous run died, show the trace instead of starting the app
-        // again - otherwise the same crash would repeat before it can be read.
-        CrashReporter.consume(this)?.let { report ->
-            showCrashReport(report)
-            return
-        }
 
         if (Platform.isTelevision(this)) {
             val intent = Intent(this, TVActivity::class.java)
@@ -166,49 +151,5 @@ class MainActivity : MimasuActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             PiPHelper.setActive(pipState.isTransitioningToPip || this.isInPiPMode())
         }
-    }
-
-    /**
-     * Renders a stored crash trace with plain views - no Compose, no theming,
-     * no dependency injection - so displaying it cannot fail for the same
-     * reason the app just did.
-     */
-    private fun showCrashReport(report: String) {
-        val padding = (16 * resources.displayMetrics.density).toInt()
-
-        val title = TextView(this).apply {
-            text = "Letzter Absturz"
-            textSize = 20f
-            setPadding(padding, padding, padding, padding / 2)
-        }
-        val copyButton = Button(this).apply {
-            text = "Fehlertext kopieren"
-            setOnClickListener {
-                val clipboard = getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
-                clipboard?.setPrimaryClip(ClipData.newPlainText("Mimasu crash", report))
-                Toast.makeText(this@MainActivity, "Kopiert", Toast.LENGTH_SHORT).show()
-            }
-        }
-        val trace = TextView(this).apply {
-            text = report
-            textSize = 11f
-            setTextIsSelectable(true)
-            setPadding(padding, padding / 2, padding, padding)
-        }
-
-        val root = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(title)
-            addView(copyButton)
-            addView(
-                ScrollView(this@MainActivity).apply { addView(trace) },
-                LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    0
-                ).apply { weight = 1f }
-            )
-        }
-
-        setContentView(root)
     }
 }

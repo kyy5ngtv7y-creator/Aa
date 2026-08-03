@@ -24,7 +24,6 @@ import dev.datlag.tooling.async.ioDispatcher
 import dev.datlag.tooling.scopeCatching
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.FirebaseOptions
-import dev.gitlive.firebase.app
 import dev.gitlive.firebase.initialize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,9 +63,6 @@ class App : MultiDexApplication(), DIAware {
     override fun onCreate() {
         super.onCreate()
 
-        // Install first so it also captures failures in the setup below.
-        CrashReporter.install(appContext)
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA && !Platform.isTelevision(this)) {
             installCertificateTransparencyProvider {
                 logger = BasicAndroidCTLogger(BuildConfig.DEBUG)
@@ -79,73 +75,35 @@ class App : MultiDexApplication(), DIAware {
 
         CronetProviderInstaller.installProvider(this)
 
-        // A TMDB key baked into the build lets the app show content without a
-        // Firebase project. When present, use it directly and treat Firebase
-        // (auth, firestore, remote config) as an optional best-effort extra.
-        val usedStaticKey = Network.applyStaticKey(BuildKonfig.tmdbApiKey)
-
-        val firebaseReady = if (AppInitializer.isSekretLoaded(appContext)) {
+        if (AppInitializer.isSekretLoaded(appContext)) {
             val appId = Sekret.firebaseAppId(BuildKonfig.packageName)
             val apiKey = Sekret.firebaseApiKey(BuildKonfig.packageName)
 
             if (appId.isNullOrBlank() || apiKey.isNullOrBlank()) {
-                false
-            } else {
-                scopeCatching {
-                    Firebase.initialize(
-                        context = this,
-                        options = FirebaseOptions(
-                            projectId = Sekret.projectId(BuildKonfig.packageName),
-                            applicationId = appId,
-                            apiKey = apiKey
-                        )
-                    )
-                }.isSuccess
-            }
-        } else {
-            false
-        }
-
-        // FirebaseAuthService and FirebaseFirestoreWrapper default their `app`
-        // parameter to Firebase.app, which throws when Firebase was never
-        // initialized. AccountViewModel builds both while the very first frame
-        // composes, so without an app the process dies right after startup.
-        // Register a placeholder app so those constructors always resolve; the
-        // requests it makes simply fail and are handled as signed-out.
-        if (scopeCatching { Firebase.app }.getOrNull() == null) {
-            scopeCatching {
-                Firebase.initialize(
-                    context = this,
-                    options = FirebaseOptions(
-                        projectId = "mimasu-offline",
-                        applicationId = "1:000000000000:android:0000000000000000000000",
-                        apiKey = "AIzaSyOfflinePlaceholderKey0000000000000"
-                    )
-                )
-            }
-        }
-
-        if (firebaseReady && !BuildConfig.DEBUG) {
-            Logger.setLogWriters(CrashlyticsLogWriter())
-        }
-
-        when {
-            // With a baked-in key the config is already Success and must stay
-            // that way. Fetching remote config would move it back through
-            // Fetching/Failure, and Network.tmdbApiKey throws in those states
-            // (NetworkModule reads it when building the TMDB client), which
-            // crashes the app. So skip the fetch entirely.
-            usedStaticKey -> Unit
-            firebaseReady -> {
-                val config by di.instance<FirebaseRemoteConfigService>()
-                applicationScope.launch(Dispatchers.VirtualIO) {
-                    Network.fetchConfig(config)
-                }
-            }
-            else -> {
                 Network.initializeFailure()
                 return
             }
+
+            Firebase.initialize(
+                context = this,
+                options = FirebaseOptions(
+                    projectId = Sekret.projectId(BuildKonfig.packageName),
+                    applicationId = appId,
+                    apiKey = apiKey
+                )
+            )
+
+            if (!BuildConfig.DEBUG) {
+                Logger.setLogWriters(CrashlyticsLogWriter())
+            }
+        } else {
+            Network.initializeFailure()
+            return
+        }
+
+        val config by di.instance<FirebaseRemoteConfigService>()
+        applicationScope.launch(Dispatchers.VirtualIO) {
+            Network.fetchConfig(config)
         }
     }
 

@@ -1,12 +1,15 @@
 package dev.datlag.mimasu.ui.ads
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
+// Ads have been removed from this build. Rewarded content is granted directly.
 @Serializable
-actual class RewardAdManager {
-
+actual class RewardAdManager(
+    @Transient private val activity: Activity? = null
+) {
     actual fun showRewardAd(onRewarded: () -> Unit) {
         onRewarded()
     }
@@ -14,5 +17,5 @@ actual class RewardAdManager {
 
 @Composable
 actual fun rememberAdManager(): RewardAdManager {
-    return remember { RewardAdManager() }
+    return RewardAdManager()
 }

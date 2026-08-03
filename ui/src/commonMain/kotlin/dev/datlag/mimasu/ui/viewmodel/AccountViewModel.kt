@@ -13,7 +13,6 @@ import dev.datlag.mimasu.firebase.firestore.FirebaseFirestoreWrapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import org.kodein.di.DI
@@ -24,9 +23,7 @@ class AccountViewModel(
     private val firestoreWrapper: FirebaseFirestoreWrapper,
 ) : ViewModel() {
 
-    // Without a usable Firebase project the auth stream fails instead of
-    // emitting; treat any error as "signed out" so startup cannot crash.
-    val user = service.user.catch { emit(null) }.stateIn(
+    val user = service.user.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = currentUser
@@ -39,7 +36,7 @@ class AccountViewModel(
         } else {
             return@transformLatest emit(firestoreWrapper.getUserData())
         }
-    }.catch { emit(null) }.stateIn(
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = null
