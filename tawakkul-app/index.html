@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Tawakkul">
+<meta name="theme-color" content="#1E5F55">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Tawakkul</title>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#F6F1E6; --surface:#FFFDF7; --surface2:#EFE8D7;
+    --ink:#21302B; --ink-soft:#5C6B63; --line:#E0D7C2;
+    --teal:#1E5F55; --teal-strong:#17493F; --on-teal:#F6F1E6;
+    --gold:#A98443; --gold-line:#CBB27E;
+    --chip:#EDE5D2; --danger:#9C4A38;
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+    --arabic:'Geeza Pro','Damascus','Al Nile','Traditional Arabic',serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#131D1A; --surface:#1B2723; --surface2:#212F2A;
+      --ink:#EDE7D6; --ink-soft:#9CABA1; --line:#2C3B35;
+      --teal:#63B5A3; --teal-strong:#82C9B8; --on-teal:#0F1917;
+      --gold:#D3B476; --gold-line:#8A7448;
+      --chip:#22302B; --danger:#D98D7B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#131D1A; --surface:#1B2723; --surface2:#212F2A;
+    --ink:#EDE7D6; --ink-soft:#9CABA1; --line:#2C3B35;
+    --teal:#63B5A3; --teal-strong:#82C9B8; --on-teal:#0F1917;
+    --gold:#D3B476; --gold-line:#8A7448;
+    --chip:#22302B; --danger:#D98D7B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{max-width:640px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+
+  /* ---------- Header ---------- */
+  header.top{
+    padding:calc(env(safe-area-inset-top,0px) + 14px) 20px 12px;
+    display:flex;align-items:baseline;gap:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .star{color:var(--gold);font-size:20px;line-height:1}
+  h1.brand{font-family:var(--serif);font-size:22px;font-weight:600;margin:0;letter-spacing:.3px}
+  .motto{margin-left:auto;font-size:11.5px;color:var(--ink-soft);text-align:right;max-width:52%}
+
+  main{flex:1;padding:16px 16px 210px}
+  .view{display:none}
+  .view.active{display:block;animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){
+    .view.active{animation:none}
+    *{transition:none !important}
+  }
+
+  h2.sect{font-family:var(--serif);font-size:19px;margin:20px 0 10px;font-weight:600}
+  h2.sect:first-child{margin-top:4px}
+  .sub{color:var(--ink-soft);font-size:14px;margin:0 0 14px}
+
+  /* ---------- Chat ---------- */
+  .chatlog{display:flex;flex-direction:column;gap:14px}
+  .msg-user{
+    align-self:flex-end;max-width:85%;
+    background:var(--teal);color:var(--on-teal);
+    padding:10px 14px;border-radius:16px 16px 4px 16px;
+    white-space:pre-wrap;overflow-wrap:anywhere;
+  }
+  .msg-app{
+    align-self:stretch;background:var(--surface);
+    border:1px solid var(--line);border-radius:14px;
+    padding:16px 16px 14px;
+  }
+  .msg-app .korrektur{
+    font-family:var(--serif);font-size:17.5px;font-weight:600;
+    color:var(--teal);margin:0 0 10px;text-wrap:balance;
+  }
+  .msg-app .einfach{margin:0 0 14px;font-size:15.5px}
+  .label{
+    display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:4px;
+  }
+  blockquote.quelle{
+    margin:0 0 14px;padding:2px 0 2px 14px;
+    border-left:2px solid var(--gold-line);
+    font-family:var(--serif);font-size:15.5px;font-style:italic;
+  }
+  blockquote.quelle .ref{
+    display:block;margin-top:4px;font-family:var(--sans);font-style:normal;
+    font-size:12px;color:var(--ink-soft);
+  }
+  .tu{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    border-top:1px solid var(--line);padding-top:12px;margin-top:2px;
+  }
+  .tu .tu-text{font-size:14px;color:var(--ink-soft);flex:1;min-width:180px}
+  .btn{
+    font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+    background:var(--teal);color:var(--on-teal);
+    border:none;border-radius:10px;padding:9px 14px;
+  }
+  .btn:active{background:var(--teal-strong)}
+  .btn:focus-visible,.chip:focus-visible,.tab:focus-visible,.linkbtn:focus-visible{
+    outline:2px solid var(--gold);outline-offset:2px;
+  }
+  .btn.ghost{background:transparent;color:var(--teal);border:1px solid var(--line)}
+  .linkbtn{
+    font:inherit;font-size:13px;background:none;border:none;cursor:pointer;
+    color:var(--ink-soft);text-decoration:underline;padding:4px;
+  }
+
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .chips-titel{width:100%;font-size:12px;color:var(--ink-soft);margin:0}
+  .chip{
+    font:inherit;font-size:13.5px;cursor:pointer;
+    background:var(--chip);color:var(--ink);
+    border:1px solid var(--line);border-radius:999px;padding:7px 13px;
+  }
+  .chip:active{border-color:var(--gold)}
+
+  .composer{
+    position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 62px);
+    background:var(--bg);border-top:1px solid var(--line);
+    padding:10px 12px;display:none;z-index:5;
+  }
+  .composer.active{display:block}
+  .composer-inner{max-width:640px;margin:0 auto;display:flex;gap:8px;align-items:flex-end}
+  .composer textarea{
+    flex:1;font:inherit;font-size:16px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:10px 12px;resize:none;min-height:44px;max-height:120px;
+  }
+  .composer textarea::placeholder{color:var(--ink-soft)}
+  .composer textarea:focus{outline:none;border-color:var(--teal)}
+
+  /* ---------- Dhikr ---------- */
+  .presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .counter-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:22px 16px 18px;text-align:center;
+  }
+  .dhikr-ar{
+    font-family:var(--arabic);font-size:30px;line-height:1.6;direction:rtl;margin:0 0 2px;
+  }
+  .dhikr-lat{font-family:var(--serif);font-style:italic;font-size:15.5px;margin:0}
+  .dhikr-de{font-size:13.5px;color:var(--ink-soft);margin:4px 0 18px}
+  .tap{
+    width:170px;height:170px;border-radius:50%;margin:0 auto;display:block;
+    border:none;cursor:pointer;position:relative;
+    background:conic-gradient(var(--teal) calc(var(--p,0)*1%), var(--surface2) 0);
+    padding:10px;
+  }
+  .tap-inner{
+    width:100%;height:100%;border-radius:50%;
+    background:var(--surface);border:1px solid var(--line);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  }
+  .tap-count{font-size:44px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+  .tap-ziel{font-size:12.5px;color:var(--ink-soft)}
+  .counter-tools{display:flex;justify-content:center;gap:14px;margin-top:16px}
+  .heute{margin-top:14px;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+
+  /* ---------- Erinnerung ---------- */
+  .remind-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:20px 18px;text-align:center;
+  }
+  .remind-card .r-orn{color:var(--gold);font-size:18px}
+  .remind-card .r-text{
+    font-family:var(--serif);font-size:18.5px;line-height:1.5;margin:8px 0 6px;text-wrap:balance;
+  }
+  .remind-card .r-ref{font-size:12.5px;color:var(--ink-soft);margin:0 0 16px}
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;margin-top:14px;
+  }
+  .panel-row{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+  .panel h3{font-size:15px;margin:0}
+  .panel .hint{font-size:13px;color:var(--ink-soft);margin:8px 0 0}
+  select.iv{
+    font:inherit;font-size:14px;color:var(--ink);background:var(--surface2);
+    border:1px solid var(--line);border-radius:8px;padding:6px 8px;
+  }
+
+  /* ---------- Wissen ---------- */
+  .wcard{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:16px;margin-bottom:14px;
+  }
+  .wcard h3{font-family:var(--serif);font-size:17px;margin:0 0 8px}
+  .wcard p{margin:0 0 10px;font-size:14.5px}
+  .wcard p:last-child{margin-bottom:0}
+  .wcard ol,.wcard ul{margin:0 0 10px;padding-left:20px;font-size:14.5px}
+  .wcard li{margin-bottom:6px}
+  .wcard .quelle-klein{font-size:12px;color:var(--ink-soft)}
+  .adhkar-item{border-top:1px solid var(--line);padding:10px 0}
+  .adhkar-item:first-of-type{border-top:none;padding-top:2px}
+  .adhkar-ar{font-family:var(--arabic);font-size:21px;direction:rtl;display:block;margin-bottom:2px}
+  .adhkar-de{font-size:13.5px;color:var(--ink-soft)}
+
+  /* ---------- Tabbar ---------- */
+  nav.tabbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:6;
+    background:var(--surface);border-top:1px solid var(--line);
+    padding:6px 8px calc(env(safe-area-inset-bottom,0px) + 6px);
+  }
+  .tabbar-inner{max-width:640px;margin:0 auto;display:flex}
+  .tab{
+    flex:1;font:inherit;font-size:11px;font-weight:600;cursor:pointer;
+    background:none;border:none;color:var(--ink-soft);
+    display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 2px;
+  }
+  .tab svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .tab.active{color:var(--teal)}
+</style>
+
+<div class="app">
+  <header class="top">
+    <span class="star" aria-hidden="true">۞</span>
+    <h1 class="brand">Tawakkul</h1>
+    <p class="motto">„Wer sich auf Allah verlässt, dem ist Er genug.“ — 65:3</p>
+  </header>
+
+  <main>
+    <!-- ================= REDEN ================= -->
+    <section id="view-chat" class="view active">
+      <div id="chatlog" class="chatlog" aria-live="polite"></div>
+      <div class="chips" id="chips">
+        <p class="chips-titel">Oder tippe auf einen Gedanken, der dich gerade plagt:</p>
+        <button class="chip">Allah gibt mir nicht, was ich will</button>
+        <button class="chip">Ich habe Geldsorgen</button>
+        <button class="chip">Ich habe Angst vor der Zukunft</button>
+        <button class="chip">Meine Dua wird nicht erhört</button>
+        <button class="chip">Ich habe schlimme Blitzgedanken</button>
+        <button class="chip">Ich fühle mich allein</button>
+        <button class="chip">Ich habe Fehler gemacht</button>
+        <button class="chip">Warum passiert mir das?</button>
+      </div>
+      <p style="text-align:center;margin-top:18px">
+        <button class="linkbtn" id="clearChat">Verlauf löschen</button>
+      </p>
+    </section>
+
+    <!-- ================= DHIKR ================= -->
+    <section id="view-dhikr" class="view">
+      <h2 class="sect">Dhikr &amp; Istighfar</h2>
+      <p class="sub">Wähle ein Dhikr und tippe auf den Kreis. Dein Zähler bleibt gespeichert.</p>
+      <div class="presets" id="presets"></div>
+      <div class="counter-card">
+        <p class="dhikr-ar" id="dAr"></p>
+        <p class="dhikr-lat" id="dLat"></p>
+        <p class="dhikr-de" id="dDe"></p>
+        <button class="tap" id="tap" aria-label="Zählen">
+          <span class="tap-inner">
+            <span class="tap-count" id="count">0</span>
+            <span class="tap-ziel" id="ziel"></span>
+          </span>
+        </button>
+        <div class="counter-tools">
+          <button class="btn ghost" id="reset">Zurücksetzen</button>
+        </div>
+        <p class="heute" id="heute"></p>
+      </div>
+    </section>
+
+    <!-- ================= ERINNERUNG ================= -->
+    <section id="view-remind" class="view">
+      <h2 class="sect">Erinnerung an Allah</h2>
+      <p class="sub">Für den Moment, in dem das Herz eng wird.</p>
+      <div class="remind-card">
+        <span class="r-orn" aria-hidden="true">۞</span>
+        <p class="r-text" id="rText"></p>
+        <p class="r-ref" id="rRef"></p>
+        <button class="btn" id="rNext">Neue Erinnerung</button>
+      </div>
+      <div class="panel">
+        <div class="panel-row">
+          <h3>Benachrichtigungen</h3>
+          <button class="btn ghost" id="notifBtn">Aktivieren</button>
+        </div>
+        <div class="panel-row" style="margin-top:10px">
+          <label for="iv" style="font-size:14px">Erinnere mich alle</label>
+          <select class="iv" id="iv">
+            <option value="15">15 Minuten</option>
+            <option value="30" selected>30 Minuten</option>
+            <option value="60">60 Minuten</option>
+            <option value="120">2 Stunden</option>
+          </select>
+        </div>
+        <p class="hint" id="notifHint">
+          Hinweis: Auf dem iPhone funktionieren Benachrichtigungen erst, wenn du die App
+          zum Home-Bildschirm hinzugefügt hast (Safari → Teilen → „Zum Home-Bildschirm“)
+          und sie geöffnet ist.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= WISSEN ================= -->
+    <section id="view-wissen" class="view">
+      <h2 class="sect">Träume — was die Sunnah sagt</h2>
+      <div class="wcard">
+        <h3>Der Prophet ﷺ lehrte drei Arten von Träumen</h3>
+        <p>Ein guter Traum ist von Allah, ein schlechter Traum ist vom Shaytan, und manche
+        Träume sind nur das, womit sich die Seele tagsüber beschäftigt hat.</p>
+        <p class="quelle-klein">Sahih al-Bukhari 7017, Sahih Muslim 2263</p>
+      </div>
+      <div class="wcard">
+        <h3>Wenn du etwas Schönes geträumt hast</h3>
+        <ol>
+          <li>Lobe Allah dafür (sag „Alhamdulillah“).</li>
+          <li>Erzähle ihn nur Menschen, die dich lieben und dir wohlgesinnt sind.</li>
+        </ol>
+        <p class="quelle-klein">Sahih al-Bukhari 6985, 7044</p>
+      </div>
+      <div class="wcard">
+        <h3>Wenn du etwas Schlimmes geträumt hast</h3>
+        <ol>
+          <li>Suche Zuflucht bei Allah vor dem Shaytan („A&#8217;udhu billahi minash-shaytanir-rajim“).</li>
+          <li>Hauche dreimal leicht über deine linke Schulter.</li>
+          <li>Dreh dich auf die andere Seite.</li>
+          <li>Erzähle ihn <strong>niemandem</strong> — dann schadet er dir nicht, so hat es der Prophet ﷺ versprochen.</li>
+        </ol>
+        <p class="quelle-klein">Sahih Muslim 2261–2262, Sahih al-Bukhari 3292</p>
+        <p>Ein schlechter Traum ist <em>kein</em> Zeichen, dass Allah dich nicht mag, und
+        er sagt <em>nicht</em> deine Zukunft voraus. Er ist ein Ärgern des Shaytan — mehr nicht.</p>
+      </div>
+      <div class="wcard">
+        <h3>Wichtig</h3>
+        <p>Diese App deutet keine Träume. Echte Traumdeutung ist ein Wissen, das nur wenige
+        Gelehrte haben — wie bei Yusuf (Friede sei mit ihm). Wenn dich ein Traum stark
+        beschäftigt, sprich mit einem vertrauenswürdigen Imam oder Gelehrten.</p>
+      </div>
+
+      <h2 class="sect">Morgen- und Abend-Adhkar (kurz)</h2>
+      <div class="wcard">
+        <div class="adhkar-item">
+          <span class="adhkar-ar">حَسْبِيَ اللهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</span>
+          <em>Hasbiyallahu la ilaha illa huwa, ʿalayhi tawakkaltu wa huwa rabbul-ʿarschil-ʿazim</em> — 7× morgens und abends.
+          <span class="adhkar-de">„Allah genügt mir, es gibt keinen Gott außer Ihm. Auf Ihn verlasse ich mich, und Er ist der Herr des gewaltigen Throns.“ (Abu Dawud 5081)</span>
+        </div>
+        <div class="adhkar-item">
+          <span class="adhkar-ar">بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</span>
+          <em>Bismillahil-ladhi la yadurru maʿa-smihi schay'un fil-ardi wa la fis-sama'i wa huwas-samiʿul-ʿalim</em> — 3× morgens und abends.
+          <span class="adhkar-de">„Im Namen Allahs — mit Seinem Namen kann nichts auf der Erde und nichts im Himmel schaden.“ (Tirmidhi 3388, Abu Dawud 5088)</span>
+        </div>
+        <div class="adhkar-item">
+          Ayat al-Kursi (Koran 2:255) nach jedem Gebet und vor dem Schlafen, dazu die drei
+          Schutzsuren (al-Ikhlas, al-Falaq, an-Nas) je 3× morgens und abends.
+          <span class="adhkar-de">(Sahih al-Bukhari 2311, Tirmidhi 3575)</span>
+        </div>
+        <div class="adhkar-item">
+          Sayyid al-Istighfar — die beste Art, Allah um Vergebung zu bitten, morgens und abends.
+          <span class="adhkar-de">(Sahih al-Bukhari 6306)</span>
+        </div>
+      </div>
+
+      <h2 class="sect">Über diese App</h2>
+      <div class="wcard">
+        <p><strong>Deine Daten bleiben bei dir.</strong> Alles, was du schreibst, wird nur auf
+        deinem Gerät gespeichert. Nichts wird irgendwohin gesendet.</p>
+        <p><strong>Diese App ersetzt keine Gelehrten.</strong> Sie erinnert dich mit Koran und
+        authentischer Sunnah (sunnitisch), aber sie gibt keine Fatwas. Bei religiösen Fragen
+        wende dich an einen vertrauenswürdigen Imam. Und wenn Sorgen oder Traurigkeit sehr
+        schwer werden und lange bleiben, ist es <em>kein</em> Zeichen von schwachem Iman,
+        sich auch einem Arzt oder Therapeuten anzuvertrauen — Medizin zu suchen gehört zur Sunnah.</p>
+        <p><strong>Auf dem iPhone installieren:</strong> Öffne die App in Safari → Teilen-Symbol
+        → „Zum Home-Bildschirm“. Dann ist sie wie eine normale App bei dir.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <div class="tabbar-inner">
+      <button class="tab active" data-view="chat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16v11H9l-4.5 3.5v-3.5H4z"/></svg>
+        Reden
+      </button>
+      <button class="tab" data-view="dhikr">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><circle cx="6" cy="8.5" r="2"/><circle cx="18" cy="8.5" r="2"/><circle cx="4.5" cy="14.5" r="2"/><circle cx="19.5" cy="14.5" r="2"/><circle cx="12" cy="19" r="2.6"/></svg>
+        Dhikr
+      </button>
+      <button class="tab" data-view="remind">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c-3.2 0-5 2.3-5 5v4l-1.8 3h13.6L17 12.5v-4c0-2.7-1.8-5-5-5z"/><path d="M10 18.5a2 2 0 0 0 4 0"/></svg>
+        Erinnerung
+      </button>
+      <button class="tab" data-view="wissen">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.5c-1.5-1.3-3.5-2-6.5-2v14c3 0 5 .7 6.5 2 1.5-1.3 3.5-2 6.5-2v-14c-3 0-5 .7-6.5 2z"/><path d="M12 5.5v14"/></svg>
+        Wissen
+      </button>
+    </div>
+  </nav>
+
+  <div class="composer active" id="composer">
+    <div class="composer-inner">
+      <textarea id="input" rows="1" placeholder="Schreib mir deinen Gedanken …" aria-label="Dein Gedanke"></textarea>
+      <button class="btn" id="send">Senden</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* =============================================================
+   Inhalt: Antworten des Begleiters (sunnitische Quellen)
+   ============================================================= */
+const DB = {
+  nichtgeben: {
+    prio: 10,
+    phrasen: ['gibt mir nicht','will mir nicht geben','gibt mir nichts','bekomme nicht','bekomme nie','kriege nicht','kriege nie','nie etwas','hat mich vergessen','vergisst mich','andere haben alles','warum habe ich nicht','gibt mir nie'],
+    worte: ['benachteiligt','übergangen','leer aus'],
+    antworten: [
+      {
+        t: 'Nein — Allah hält nichts zurück, weil Er dich nicht mag. Er wählt für dich den besseren Zeitpunkt oder das bessere Geschenk.',
+        e: 'Stell dir einen guten Vater vor. Sein Kind will unbedingt Süßigkeiten vor dem Essen. Der Vater sagt nein — nicht weil er das Kind nicht liebt, sondern WEIL er es liebt. Das Kind sieht nur die Süßigkeit. Der Vater sieht die Bauchschmerzen. Genau so: Du siehst nur das Heute. Allah sieht dein ganzes Leben und das Paradies dahinter. „Noch nicht“ ist nicht „nein“.',
+        q: { x: '… Aber vielleicht ist euch etwas zuwider, während es gut für euch ist, und vielleicht ist euch etwas lieb, während es schlecht für euch ist. Allah weiß, ihr aber wisst nicht.', r: 'Koran 2:216' },
+        h: { x: 'Allah sagt: „Ich bin so, wie Mein Diener von Mir denkt.“', r: 'Hadith Qudsi — Sahih al-Bukhari 7405' },
+        a: { text: 'Denk jetzt bewusst GUT von Allah: Nenne 3 Dinge, die Er dir schon gegeben hat, und sag für jedes „Alhamdulillah“.', dhikr: 'alhamdu', btn: '33× Alhamdulillah' }
+      },
+      {
+        t: 'Deine Hände gehen bei Allah niemals leer aus. Niemals.',
+        e: 'Der Prophet ﷺ hat gesagt, dass Allah Sich schämt, die erhobenen Hände Seines Dieners leer zurückzuweisen. Das heißt: Jedes Mal, wenn du Dua machst, bekommst du GARANTIERT etwas — entweder genau das, was du willst, oder etwas Besseres, oder Allah räumt ein Unglück aus deinem Weg, das du nie gesehen hättest, oder Er spart dir eine riesige Belohnung fürs Jenseits auf. Du verlierst nie. Es fühlt sich nur manchmal so an.',
+        q: { x: 'Und euer Herr sagt: Ruft Mich an, so erhöre Ich euch.', r: 'Koran 40:60' },
+        h: { x: 'Euer Herr ist voller Scham und Großzügigkeit: Er schämt Sich, die Hände Seines Dieners leer zurückzuweisen, wenn dieser sie zu Ihm erhebt.', r: 'Abu Dawud 1488, Tirmidhi 3556 — sahih' },
+        a: { text: 'Heb jetzt deine Hände und mach eine kleine, ehrliche Dua — auf Deutsch reicht völlig.', dhikr: 'hasbuna', btn: '33× Hasbunallah' }
+      }
+    ]
+  },
+
+  rizq: {
+    prio: 6,
+    phrasen: ['kein geld','wenig geld','geld verdienen','keine arbeit','job verloren'],
+    worte: ['geld','franken','euro','lohn','gehalt','arbeit','job','arbeitslos','schulden','miete','rechnung','rechnungen','arm','armut','verdienen','verdiene','geschäft','business','firma','kunden','finanzen','finanziell','pleite'],
+    antworten: [
+      {
+        t: 'Dein Rizq ist längst aufgeschrieben. Kein Mensch auf der Welt kann dir wegnehmen, was Allah für dich bestimmt hat.',
+        e: 'Bevor du geboren wurdest, hat Allah schon aufgeschrieben, was du bekommst — jedes Brot, jeden Franken. Schau die Vögel an: Sie haben kein Konto, keinen Chef, keinen Plan. Sie fliegen morgens einfach los — und Allah macht sie satt. Deine Aufgabe ist nur das Losfliegen: arbeiten, ehrlich bleiben, Dua machen. Das Satt-Machen ist Allahs Aufgabe. Die war nie deine.',
+        q: { x: 'Und es gibt kein Lebewesen auf der Erde, dessen Versorgung nicht Allah obliegt.', r: 'Koran 11:6' },
+        h: { x: 'Würdet ihr euch auf Allah verlassen, wie es Ihm wirklich gebührt, würde Er euch versorgen, wie Er die Vögel versorgt: Sie fliegen morgens mit leerem Magen los und kehren abends satt zurück.', r: 'Tirmidhi 2344 — hasan sahih' },
+        a: { text: 'Tu beides: Binde dein Kamel an (arbeite, bewirb dich, plane) UND vertraue. Und mach heute viel Istighfar — es öffnet Türen der Versorgung.', dhikr: 'istighfar', btn: '70× Istighfar' }
+      },
+      {
+        t: 'Enge im Geldbeutel heißt nicht, dass Allah dich vergessen hat. Auch die Enge hat Ar-Razzaq — der Versorger — genau abgemessen.',
+        e: 'Allah verspricht im Koran etwas Erstaunliches: Wer Ihn fürchtet und Ihm vertraut, dem schafft Er einen Ausweg — und Versorgung von dort, wo man es NIE erwartet hätte. Nicht von wo du es planst. Von wo du es nicht erwartest. Das heißt: Dein Rizq hängt nicht nur an deinem Job oder deinem Konto. Allahs Wege sind mehr als deine Rechnungen.',
+        q: { x: 'Und wer Allah fürchtet, dem schafft Er einen Ausweg und versorgt ihn von dort, womit er nicht rechnet. Und wer sich auf Allah verlässt, dem ist Er genug.', r: 'Koran 65:2–3' },
+        h: { x: 'Wer beständig um Vergebung bittet (Istighfar), dem macht Allah aus jeder Bedrängnis einen Ausweg, aus jeder Sorge eine Erleichterung, und Er versorgt ihn, von wo er nicht damit rechnet.', r: 'Abu Dawud 1518' },
+        a: { text: 'Nuh (Friede sei mit ihm) sagte seinem Volk: Macht Istighfar — dann schickt Allah Regen, Vermögen und Kinder (Koran 71:10–12). Fang jetzt an.', dhikr: 'istighfar', btn: '70× Istighfar' }
+      }
+    ]
+  },
+
+  dua: {
+    prio: 9,
+    phrasen: ['dua wird nicht erhört','dua nicht erhört','bete seit','nicht erhört','wird nicht beantwortet'],
+    worte: ['dua','bittgebet','erhört','duas'],
+    antworten: [
+      {
+        t: 'Deine Dua ist nicht abgelehnt. Sie ist in Bearbeitung — bei Dem, der keine Fehler macht.',
+        e: 'Keine einzige Dua geht bei Allah verloren. Keine. Jede wird beantwortet — aber auf eine von drei Arten: Entweder bekommst du es jetzt, oder Allah wehrt dafür ein Unglück von dir ab, oder Er hebt es dir als Schatz für den Tag auf, an dem du es am meisten brauchst — den Tag des Gerichts. An dem Tag werden Menschen sich wünschen, KEINE ihrer Duas wäre auf der Welt beantwortet worden, weil die Belohnung so gewaltig ist.',
+        q: { x: 'Und wenn dich Meine Diener nach Mir fragen: Ich bin nahe. Ich erhöre den Ruf des Rufenden, wenn er Mich anruft.', r: 'Koran 2:186' },
+        h: { x: 'Es gibt keinen Muslim, der eine Dua macht, in der keine Sünde und kein Abbruch der Verwandtschaftsbande liegt, ohne dass Allah ihm dafür eines von dreien gibt: Er erhört sie bald, oder Er hebt sie ihm fürs Jenseits auf, oder Er wendet dafür ein gleich großes Übel von ihm ab.', r: 'Musnad Ahmad 11133 — sahih' },
+        a: { text: 'Der Prophet ﷺ warnte nur vor einem: der Ungeduld — „Ich habe Dua gemacht, und es wurde nicht erhört“ (Bukhari 6340). Hör nicht auf. Klopf weiter an die Tür.', dhikr: 'lahawla', btn: '33× La hawla' }
+      }
+    ]
+  },
+
+  waswas: {
+    prio: 8,
+    phrasen: ['blitzgedanken','blitzgedanke','schlechte gedanken','schlimme gedanken','böse gedanken','gedanken über allah','komische gedanken'],
+    worte: ['waswas','wiswas','einflüsterung','einflüsterungen','shaytan','scheytan','schaitan','teufel','zweifel','zweifle'],
+    antworten: [
+      {
+        t: 'Stopp. Dieser Blitzgedanke ist nicht DEINER — und du bist nicht schuldig dafür.',
+        e: 'Solche Gedanken sind wie Vögel, die über dein Haus fliegen. Dass sie fliegen, kannst du nicht verhindern. Aber ob sie ein Nest bauen — das entscheidest du. Und jetzt das Wichtigste: Als die Gefährten dem Propheten ﷺ von solchen Gedanken erzählten und sagten, sie würden lieber verbrennen als sie auszusprechen, antwortete er: „Das ist der klare Iman.“ Dass dich der Gedanke STÖRT, beweist, dass dein Herz lebendig und dein Glaube echt ist. Der Shaytan bemüht sich nur bei Herzen, in denen etwas Wertvolles ist.',
+        q: { x: 'Und wenn dich vom Satan eine Einflüsterung aufstachelt, dann suche Zuflucht bei Allah. Er ist der Allhörende, der Allwissende.', r: 'Koran 7:200' },
+        h: { x: 'Allah hat meiner Ummah das vergeben, was ihre Seelen ihnen einflüstern, solange sie nicht danach handeln oder darüber sprechen.', r: 'Sahih al-Bukhari 2528, Sahih Muslim 127' },
+        a: { text: 'Mach es genau wie befohlen: Sag „Aʿudhu billahi minash-shaytanir-rajim“, hör auf, mit dem Gedanken zu diskutieren, und beschäftige dich mit etwas anderem.', dhikr: 'lahawla', btn: '33× La hawla' }
+      },
+      {
+        t: 'Der Gedanke lügt. Und dass er dir weh tut, ist ein Zeichen von Iman — nicht von Schwäche.',
+        e: 'Die Gefährten des Propheten ﷺ — die besten Menschen nach den Propheten — hatten GENAU dieselben Blitzgedanken. Sie schämten sich so sehr, dass sie kaum darüber reden konnten. Der Prophet ﷺ hat sie nicht ausgeschimpft. Er sagte: „Alhamdulillah, Der die List des Shaytan auf bloßes Flüstern zurückgeworfen hat.“ Ein Flüstern. Mehr hat der Shaytan nicht gegen dich. Er kann dich nicht zwingen — er kann nur flüstern und hoffen, dass du erschrickst.',
+        q: { x: 'Gewiss, die List des Satans ist schwach.', r: 'Koran 4:76' },
+        h: { x: 'Der Shaytan kommt zu einem von euch und flüstert … Wer so etwas bemerkt, der soll Zuflucht bei Allah suchen und davon ablassen.', r: 'Sahih al-Bukhari 3276' },
+        a: { text: 'Nicht diskutieren, nicht analysieren, nicht erschrecken. Zuflucht suchen, Thema wechseln, weitermachen. So hat es der Prophet ﷺ gelehrt.', dhikr: 'istighfar', btn: 'Istighfar starten' }
+      }
+    ]
+  },
+
+  angst: {
+    prio: 5,
+    phrasen: ['angst vor der zukunft','was wenn','mache mir sorgen'],
+    worte: ['angst','sorge','sorgen','panik','stress','zukunft','nervös','druck','prüfung','überfordert','unsicher'],
+    antworten: [
+      {
+        t: 'Atme. Dich trifft nur, was Allah für dich geschrieben hat — und Er schreibt für die Gläubigen nur Gutes.',
+        e: 'Deine Sorgen tun so, als müsstest DU die ganze Welt tragen. Musst du nicht. Ein Kind auf dem Rücksitz hat keine Angst vor dem Weg — weil der Vater fährt. Du sitzt nicht am Steuer des Lebens, Allah sitzt dort. Und der Prophet ﷺ hat einem jungen Mann etwas gesagt, das du auswendig lernen solltest: Wenn sich die GANZE Menschheit versammeln würde, um dir zu schaden — sie könnte dir nur schaden, was Allah bereits für dich geschrieben hat. Die Stifte sind gehoben, die Tinte ist trocken.',
+        q: { x: 'Sag: Uns wird nur das treffen, was Allah für uns bestimmt hat. Er ist unser Beschützer. Und auf Allah sollen sich die Gläubigen verlassen.', r: 'Koran 9:51' },
+        h: { x: 'Wisse: Wenn sich die ganze Gemeinschaft versammelte, um dir zu nützen, würden sie dir nur nützen, was Allah bereits für dich geschrieben hat. Und wenn sie sich versammelte, um dir zu schaden, würden sie dir nur schaden, was Allah bereits über dich geschrieben hat.', r: 'Tirmidhi 2516 — hasan sahih' },
+        a: { text: 'Gib die Last jetzt ab: Sag 33× „La hawla wa la quwwata illa billah“ — es gibt keine Kraft außer durch Allah.', dhikr: 'lahawla', btn: '33× La hawla' }
+      },
+      {
+        t: 'Mit deiner Schwere hat Allah die Erleichterung schon mitgeschickt. Sie ist unterwegs.',
+        e: 'Allah sagt im Koran ZWEIMAL direkt hintereinander: „Mit der Erschwernis kommt Erleichterung.“ Die Gelehrten sagen dazu: Eine Schwere kann niemals zwei Erleichterungen besiegen. Deine Situation hat ein Ablaufdatum — Allahs Barmherzigkeit hat keins. Und für den Gläubigen gibt es sogar ein Geheimnis: Bei ihm wird ALLES zu Gutem. Läuft es gut und er dankt — gut für ihn. Läuft es schwer und er hält geduldig aus — auch gut für ihn. Du kannst gar nicht verlieren.',
+        q: { x: 'Denn mit der Erschwernis kommt Erleichterung. Gewiss, mit der Erschwernis kommt Erleichterung.', r: 'Koran 94:5–6' },
+        h: { x: 'Wunderbar ist die Angelegenheit des Gläubigen! Alles an ihr ist gut für ihn — und das gibt es bei niemandem außer dem Gläubigen: Trifft ihn Freude, dankt er, und es ist gut für ihn. Trifft ihn Schaden, ist er geduldig, und es ist gut für ihn.', r: 'Sahih Muslim 2999' },
+        a: { text: 'Beruhige dein Herz mit dem, womit Herzen ruhig werden: dem Gedenken Allahs (Koran 13:28).', dhikr: 'subhan', btn: '33× SubhanAllah' }
+      }
+    ]
+  },
+
+  verzweiflung: {
+    prio: 7,
+    phrasen: ['keine hoffnung','will aufgeben','kann nicht mehr','fühle mich allein','ganz allein','niemand ist da','niemand hilft'],
+    worte: ['verzweifelt','verzweiflung','verzweifle','hoffnungslos','aufgeben','aufgegeben','sinnlos','müde','erschöpft','deprimiert','depressiv','traurig','weine','weinen','allein','einsam','kaputt','leer'],
+    antworten: [
+      {
+        t: '„Verzweifelt nicht an der Barmherzigkeit Allahs“ — das ist ein direkter Befehl von Allah. Aus Liebe.',
+        e: 'Weißt du, zu wem Allah diesen Satz sagt? Zu den Menschen mit den MEISTEN Fehlern — „die ihr gegen euch selbst maßlos wart“. Wenn sogar für sie die Tür sperrangelweit offen steht, wie weit steht sie dann für dich offen? Ein dunkler Tag ist ein Tag — nicht dein Leben. Und Allah sagt: „Ich bin so, wie Mein Diener von Mir denkt.“ Erwarte Gutes von Ihm, dann findest du Gutes.',
+        q: { x: 'Sag: O Meine Diener, die ihr gegen euch selbst maßlos gewesen seid, verzweifelt nicht an Allahs Barmherzigkeit. Gewiss, Allah vergibt die Sünden alle.', r: 'Koran 39:53' },
+        h: { x: 'Allah sagt: „Ich bin so, wie Mein Diener von Mir denkt, und Ich bin bei ihm, wenn er Meiner gedenkt.“', r: 'Hadith Qudsi — Sahih al-Bukhari 7405' },
+        a: { text: 'Wenn das Herz schwer ist, hat der Prophet ﷺ viel Salawat empfohlen — sie nimmt Sorgen weg.', dhikr: 'salawat', btn: '10× Salawat' }
+      },
+      {
+        t: 'Du bist nicht allein. Al-Qarib — der Nahe — ist dir näher, als dein Gefühl es dir gerade sagt.',
+        e: 'Als der Prophet ﷺ selbst traurig war und lange keine Offenbarung kam, sagten die Leute: „Sein Herr hat ihn verlassen.“ Da schickte Allah eine ganze Sure herab, nur um zu sagen: „Dein Herr hat dich nicht verlassen und verabscheut dich nicht.“ Wenn du dich verlassen fühlst, ist das ein GEFÜHL — keine Tatsache. Die Tatsache steht im Koran: Allah ist dir näher als deine Halsschlagader. Er sieht dich gerade jetzt, während du das liest.',
+        q: { x: 'Dein Herr hat dich nicht verlassen, und Er verabscheut dich nicht. Und das Jenseits ist wahrlich besser für dich als das Diesseits. Und dein Herr wird dir geben, und du wirst zufrieden sein.', r: 'Koran 93:3–5' },
+        h: { x: 'Allah sagt: „… Ich bin bei ihm, wenn er Meiner gedenkt. Gedenkt er Meiner in sich, gedenke Ich seiner in Mir. Und nähert er sich Mir eine Handspanne, nähere Ich mich ihm eine Armlänge.“', r: 'Hadith Qudsi — Sahih al-Bukhari 7405' },
+        a: { text: 'Mach den ersten kleinen Schritt auf Ihn zu — Er macht den größeren auf dich zu. Versprochen, im Hadith.', dhikr: 'alhamdu', btn: '33× Alhamdulillah' }
+      }
+    ]
+  },
+
+  familie: {
+    prio: 4,
+    phrasen: ['streit mit','probleme mit meiner familie','probleme in der familie'],
+    worte: ['familie','frau','mann','ehe','ehefrau','ehemann','heirat','heiraten','kinder','kind','sohn','tochter','eltern','mutter','vater','bruder','schwester','streit','scheidung','verwandte','schwiegermutter'],
+    antworten: [
+      {
+        t: 'Familie ist Prüfung und Segen zur gleichen Zeit — und deine Geduld dort ist Ibadah, keine Niederlage.',
+        e: 'Allah sagt selbst im Koran, dass in Familie und Kindern eine Prüfung liegt. Das heißt: Wenn es zuhause schwer ist, machst du nicht automatisch etwas falsch — du bist mitten in einer Prüfung, die Allah kennt und benotet. Und der Maßstab des Propheten ﷺ ist klar: Nicht der ist der Beste, der draußen glänzt, sondern der, der ZUHAUSE am besten ist. Jedes freundliche Wort, jedes Runterschlucken von Wut zählt bei Allah.',
+        q: { x: 'Unser Herr, schenke uns an unseren Gattinnen und unseren Nachkommen Frohsinn der Augen, und mache uns zu einem Vorbild für die Gottesfürchtigen.', r: 'Koran 25:74 — als Dua' },
+        h: { x: 'Die Besten von euch sind die, die am besten zu ihren Familien sind — und ich bin der Beste von euch zu meiner Familie.', r: 'Tirmidhi 3895 — sahih' },
+        a: { text: 'Mach heute EINEN kleinen Schritt: ein freundliches Wort, eine Nachricht, ein Lächeln. Und sprich die Dua aus Koran 25:74.', dhikr: 'salawat', btn: '10× Salawat' }
+      }
+    ]
+  },
+
+  suende: {
+    prio: 6,
+    phrasen: ['fehler gemacht','schlecht gemacht','haram gemacht','sünde begangen','schäme mich'],
+    worte: ['sünde','sünden','schuld','schuldig','bereue','bereuen','vergebung','vergib','tawba','fehler'],
+    antworten: [
+      {
+        t: 'Deine Sünde ist groß? Allahs Barmherzigkeit ist größer. Immer. Das ist keine Floskel, das ist ʿAqida.',
+        e: 'Allah sagt in einem Hadith Qudsi: „O Sohn Adams, würdest du mit Sünden kommen, die fast die ganze Erde füllen, und Mir dann begegnen, ohne Mir etwas beizugesellen — Ich würde dir mit ebenso viel Vergebung begegnen.“ Eine ERDE voll Sünden gegen eine ERDE voll Vergebung. Und noch etwas: Allah FREUT sich über deine Rückkehr. Mehr als ein Mann in der Wüste, der sein verlorenes Kamel mit allem Essen und Wasser wiederfindet, nachdem er sich schon zum Sterben hingelegt hat. So sehr freut sich Allah, wenn du zurückkommst.',
+        q: { x: 'Und diejenigen, die, wenn sie etwas Schändliches getan oder sich selbst Unrecht zugefügt haben, Allahs gedenken und für ihre Sünden um Vergebung bitten — und wer vergibt die Sünden außer Allah?', r: 'Koran 3:135' },
+        h: { x: 'Allah freut Sich über die Reue Seines Dieners mehr als einer von euch, der sein Reittier in der Wüste verloren und wiedergefunden hat.', r: 'Sahih al-Bukhari 6309, Sahih Muslim 2747' },
+        a: { text: 'Der Prophet ﷺ — dem alles vergeben war — machte selbst über 70× Istighfar am Tag (Bukhari 6307). Fang jetzt an.', dhikr: 'istighfar', btn: '70× Istighfar' }
+      }
+    ]
+  },
+
+  qadar: {
+    prio: 5,
+    phrasen: ['warum ich','warum passiert mir','warum immer ich','zu spät gekommen','chance verpasst','alles verloren'],
+    worte: ['schicksal','qadar','ungerecht','unfair','pech','verpasst','verloren','misserfolg','gescheitert'],
+    antworten: [
+      {
+        t: 'Was dich verfehlt hat, hätte dich niemals treffen können. Und was dich getroffen hat, hätte dich niemals verfehlen können.',
+        e: 'Kennst du die Geschichte von Musa und al-Khidr im Koran? Al-Khidr macht ein Loch in das Boot armer Leute. Sieht aus wie ein Schaden, oder? In Wahrheit war es Schutz: Hinter ihnen kam ein König, der jedes HEILE Boot beschlagnahmte. Das Loch hat das Boot gerettet. Manches in deinem Leben, das kaputt aussieht — die verpasste Chance, die Absage, die Verspätung — ist in Wahrheit ein Loch, das Allah gebohrt hat, um dein Boot zu retten. Du siehst es nur noch nicht.',
+        q: { x: 'Kein Unglück trifft ein, weder auf der Erde noch bei euch selbst, ohne dass es in einem Buch wäre, bevor Wir es erschaffen — damit ihr nicht trauert über das, was euch entgangen ist, und euch nicht zu sehr freut über das, was Er euch gegeben hat.', r: 'Koran 57:22–23' },
+        h: { x: 'Sag nicht: „Hätte ich doch dies getan, dann wäre das und das gewesen“, denn das „hätte“ öffnet dem Shaytan das Tor. Sag: „Qaddarallahu wa ma scha’a faʿal“ — Allah hat es bestimmt, und was Er wollte, hat Er getan.', r: 'Sahih Muslim 2664' },
+        a: { text: 'Sag es jetzt einmal laut: „Qaddarallahu wa ma scha’a faʿal.“ Und dann schließ das Tor des „hätte, wäre, wenn“.', dhikr: 'lahawla', btn: '33× La hawla' }
+      }
+    ]
+  },
+
+  krankheit: {
+    prio: 5,
+    phrasen: ['bin krank','habe schmerzen'],
+    worte: ['krank','krankheit','schmerz','schmerzen','gesundheit','spital','krankenhaus','arzt','diagnose','operation'],
+    antworten: [
+      {
+        t: 'Krankheit nimmt dir Kraft — aber sie wäscht deine Sünden ab wie der Herbstwind die Blätter vom Baum.',
+        e: 'Der Prophet ﷺ hat versprochen: Nichts trifft einen Muslim — keine Müdigkeit, keine Krankheit, keine Sorge, nicht einmal ein Dornenstich — ohne dass Allah ihm dafür Sünden tilgt. Dein Schmerz ist bei Allah nie umsonst. Und wichtig: Zum Arzt gehen ist KEIN schwacher Tawakkul. Der Prophet ﷺ sagte dem Mann mit dem Kamel: „Binde es an UND vertraue auf Allah.“ Medizin ist dein Anbinden. Heilung kommt trotzdem nur von Ihm.',
+        q: { x: 'Und wenn ich krank bin, ist Er es, Der mich heilt.', r: 'Koran 26:80' },
+        h: { x: 'Keinen Muslim trifft Müdigkeit, Krankheit, Kummer, Trauer, Leid oder Sorge — nicht einmal ein Dorn, der ihn sticht — ohne dass Allah ihm damit von seinen Sünden tilgt.', r: 'Sahih al-Bukhari 5641' },
+        a: { text: 'Leg die Hand auf die Stelle, die schmerzt, sag 3× „Bismillah“ und 7× „Aʿudhu billahi wa qudratihi min scharri ma adschidu wa uhadhir“ (Sahih Muslim 2202).', dhikr: 'alhamdu', btn: '33× Alhamdulillah' }
+      }
+    ]
+  },
+
+  dank: {
+    prio: 3,
+    phrasen: ['gut gelaufen','hat geklappt','bin glücklich','freue mich'],
+    worte: ['danke','dankbar','alhamdulillah','elhamdulillah','geschafft','glücklich','froh'],
+    antworten: [
+      {
+        t: 'Alhamdulillah! Halte diesen Moment fest — denn Dankbarkeit ist der Schlüssel zu MEHR.',
+        e: 'Allah macht dir im Koran ein Versprechen ohne Wenn und Aber: „Wenn ihr dankbar seid, gebe Ich euch ganz gewiss noch mehr.“ Dankbarkeit ist wie Gießen: Was du dankbar anschaust, wächst. Und damit das Gefühl bleibt, gab der Prophet ﷺ einen Trick: Schau bei Weltlichem auf die, die weniger haben als du — nicht auf die, die mehr haben. Dann siehst du Allahs Gaben bei dir plötzlich überall.',
+        q: { x: 'Und als euer Herr ankündigte: Wenn ihr dankbar seid, werde Ich euch ganz gewiss noch mehr geben.', r: 'Koran 14:7' },
+        h: { x: 'Schaut auf die, die unter euch stehen, und nicht auf die, die über euch stehen — das ist eher geeignet, dass ihr die Gunst Allahs nicht geringschätzt.', r: 'Sahih Muslim 2963' },
+        a: { text: 'Gieße weiter: Sag 33× Alhamdulillah und nenne dabei konkret, wofür.', dhikr: 'alhamdu', btn: '33× Alhamdulillah' }
+      }
+    ]
+  },
+
+  allgemein: {
+    prio: 0,
+    phrasen: [], worte: [],
+    antworten: [
+      {
+        t: 'Ich habe dir zugehört. Lies das hier langsam — es ist für jedes Herz geschrieben.',
+        e: 'Tawakkul heißt nicht, dass du nichts tun musst. Tawakkul heißt: Du tust dein Bestes — und dann legst du das ERGEBNIS in Allahs Hände und schläfst ruhig. Der Bauer sät und gießt. Aber wachsen lassen? Das konnte noch nie ein Bauer. Genau da beginnt dein Frieden: bei der Grenze zwischen deiner Aufgabe (bemühen) und Allahs Aufgabe (das Ergebnis).',
+        q: { x: '… Und wenn du dich entschlossen hast, dann verlasse dich auf Allah. Gewiss, Allah liebt die sich auf Ihn Verlassenden.', r: 'Koran 3:159' },
+        h: { x: 'Ein Mann fragte: „O Gesandter Allahs, soll ich mein Kamel anbinden und auf Allah vertrauen, oder es loslassen und auf Allah vertrauen?“ Er sagte: „Binde es an und vertraue auf Allah.“', r: 'Tirmidhi 2517 — hasan' },
+        a: { text: 'Wenn du magst, schreib mir genauer, was dich beschäftigt — z. B. mit Worten wie „Geld“, „Angst“, „Familie“, „Dua“ oder „Gedanken“. Dann kann ich dir gezielter antworten.', dhikr: 'hasbuna', btn: '33× Hasbunallah' }
+      },
+      {
+        t: 'Wo auch immer du gerade stehst: Im Gedenken Allahs finden die Herzen Ruhe. Deins auch.',
+        e: 'Das ist kein schöner Spruch, das ist ein Naturgesetz von Allah — wie die Schwerkraft. So wie ein Fisch nur im Wasser ruhig ist, ist dein Herz nur im Dhikr ruhig. Nicht beim Scrollen, nicht beim Grübeln. Probier es JETZT aus, nicht später: eine Minute, nur du und „SubhanAllah“. Dein Herz merkt den Unterschied sofort.',
+        q: { x: 'Diejenigen, die glauben und deren Herzen im Gedenken Allahs Ruhe finden. Sicherlich, im Gedenken Allahs finden die Herzen Ruhe!', r: 'Koran 13:28' },
+        h: { x: 'Allah sagt: „Ich bin bei Meinem Diener, wenn er Meiner gedenkt und seine Lippen sich mit Mir bewegen.“', r: 'Hadith Qudsi — Ibn Majah 3792 — sahih' },
+        a: { text: 'Eine Minute Dhikr, jetzt sofort. Dein Herz wartet schon.', dhikr: 'subhan', btn: '33× SubhanAllah' }
+      }
+    ]
+  }
+};
+
+const DHIKR = {
+  istighfar: { ar: 'أَسْتَغْفِرُ اللهَ', lat: 'Astaghfirullah', de: 'Ich bitte Allah um Vergebung', ziel: 70 },
+  subhan:    { ar: 'سُبْحَانَ اللهِ', lat: 'SubhanAllah', de: 'Gepriesen sei Allah', ziel: 33 },
+  alhamdu:   { ar: 'الْحَمْدُ لِلَّهِ', lat: 'Alhamdulillah', de: 'Alles Lob gebührt Allah', ziel: 33 },
+  akbar:     { ar: 'اللهُ أَكْبَرُ', lat: 'Allahu akbar', de: 'Allah ist größer (als alles)', ziel: 34 },
+  hasbuna:   { ar: 'حَسْبُنَا اللهُ وَنِعْمَ الْوَكِيلُ', lat: "Hasbunallahu wa niʿmal-wakil", de: 'Allah genügt uns, und Er ist der beste Sachwalter (3:173)', ziel: 33 },
+  lahawla:   { ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', lat: 'La hawla wa la quwwata illa billah', de: 'Es gibt keine Macht und keine Kraft außer durch Allah', ziel: 33 },
+  salawat:   { ar: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', lat: 'Allahumma salli ʿala Muhammad', de: 'O Allah, segne Muhammad ﷺ', ziel: 10 }
+};
+
+const ERINNERUNGEN = [
+  { x: 'Hast du in der letzten Stunde an Allah gedacht? Jetzt ist ein guter Moment: Astaghfirullah.', r: '' },
+  { x: 'Wer sich auf Allah verlässt, dem ist Er genug.', r: 'Koran 65:3' },
+  { x: 'Im Gedenken Allahs finden die Herzen Ruhe.', r: 'Koran 13:28' },
+  { x: 'Dein Rizq ist aufgeschrieben. Arbeite ruhig — hetz dein Herz nicht.', r: 'nach Ibn Majah 2144' },
+  { x: 'Verzweifelt nicht an der Barmherzigkeit Allahs.', r: 'Koran 39:53' },
+  { x: 'Allah sagt: Ich bin so, wie Mein Diener von Mir denkt. Denk gut von Ihm — gerade jetzt.', r: 'Sahih al-Bukhari 7405' },
+  { x: 'Mit der Erschwernis kommt Erleichterung.', r: 'Koran 94:6' },
+  { x: 'Binde dein Kamel an — und vertraue auf Allah.', r: 'Tirmidhi 2517' },
+  { x: 'Der Prophet ﷺ machte täglich über 70× Istighfar. Wie viele hast du heute?', r: 'Sahih al-Bukhari 6307' },
+  { x: 'Uns trifft nur, was Allah für uns geschrieben hat.', r: 'Koran 9:51' },
+  { x: 'Ruft Mich an, so erhöre Ich euch.', r: 'Koran 40:60' },
+  { x: 'Wenn ihr dankbar seid, gebe Ich euch gewiss noch mehr. — Wofür bist du gerade dankbar?', r: 'Koran 14:7' },
+  { x: 'Deine Dua geht nie verloren: jetzt, später oder als Schatz im Jenseits.', r: 'Musnad Ahmad 11133' },
+  { x: 'Allah ist dir näher als deine Halsschlagader — auch in diesem Moment.', r: 'Koran 50:16' },
+  { x: 'Ein kurzes „Hasbunallahu wa niʿmal-wakil“ — und die Last wird leichter.', r: 'Koran 3:173' }
+];
+
+/* =============================================================
+   App-Logik
+   ============================================================= */
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d){ try { const v = localStorage.getItem('twk-' + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem('twk-' + k, JSON.stringify(v)); } catch(e){} }
+};
+
+/* ---------- Tabs ---------- */
+const tabs = document.querySelectorAll('.tab');
+function showView(name){
+  tabs.forEach(t => t.classList.toggle('active', t.dataset.view === name));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  $('composer').classList.toggle('active', name === 'chat');
+  window.scrollTo(0, name === 'chat' ? document.body.scrollHeight : 0);
+}
+tabs.forEach(t => t.addEventListener('click', () => showView(t.dataset.view)));
+
+/* ---------- Chat ---------- */
+const chatlog = $('chatlog');
+let verlauf = store.get('verlauf', []);
+
+function el(tag, cls, text){
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;
+  return n;
+}
+function renderUser(text){
+  chatlog.appendChild(el('div', 'msg-user', text));
+}
+function renderAntwort(a){
+  const card = el('div', 'msg-app');
+  card.appendChild(el('p', 'korrektur', a.t));
+  const lb1 = el('span', 'label', 'Ganz einfach erklärt');
+  card.appendChild(lb1);
+  card.appendChild(el('p', 'einfach', a.e));
+  const bq1 = el('blockquote', 'quelle');
+  bq1.appendChild(el('span', 'label', 'Aus dem Koran'));
+  bq1.appendChild(document.createTextNode('„' + a.q.x + '“'));
+  bq1.appendChild(el('span', 'ref', a.q.r));
+  card.appendChild(bq1);
+  const bq2 = el('blockquote', 'quelle');
+  bq2.appendChild(el('span', 'label', 'Der Prophet ﷺ sagte'));
+  bq2.appendChild(document.createTextNode('„' + a.h.x + '“'));
+  bq2.appendChild(el('span', 'ref', a.h.r));
+  card.appendChild(bq2);
+  const tu = el('div', 'tu');
+  tu.appendChild(el('p', 'tu-text', a.a.text));
+  const b = el('button', 'btn', a.a.btn);
+  b.addEventListener('click', () => { waehleDhikr(a.a.dhikr); showView('dhikr'); });
+  tu.appendChild(b);
+  card.appendChild(tu);
+  chatlog.appendChild(card);
+}
+function renderWelcome(){
+  const card = el('div', 'msg-app');
+  card.appendChild(el('p', 'korrektur', 'As-salamu alaykum. Ich bin dein Begleiter für Tawakkul — das Vertrauen auf Allah.'));
+  card.appendChild(el('p', 'einfach',
+    'Schreib mir, was dir durch den Kopf geht — eine Sorge, ein Blitzgedanke, eine Frage an dein Herz. ' +
+    'Ich antworte dir mit dem Koran und der authentischen Sunnah, so einfach erklärt, dass es jedes Herz versteht. ' +
+    'Alles bleibt nur auf deinem Gerät.'));
+  chatlog.appendChild(card);
+}
+function normalisieren(s){
+  return s.toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+    .replace(/[^a-z0-9\s']/g,' ');
+}
+function findeKategorie(text){
+  const t = ' ' + normalisieren(text) + ' ';
+  let beste = 'allgemein', besteWert = 0;
+  for (const [name, kat] of Object.entries(DB)){
+    if (name === 'allgemein') continue;
+    let score = 0;
+    for (const p of kat.phrasen) if (t.includes(normalisieren(p))) score += 3;
+    for (const w of kat.worte) if (t.includes(' ' + normalisieren(w))) score += 1;
+    if (score > besteWert || (score === besteWert && score > 0 && kat.prio > DB[beste].prio)){
+      beste = name; besteWert = score;
+    }
+  }
+  return beste;
+}
+function antworte(text){
+  const kat = findeKategorie(text);
+  const liste = DB[kat].antworten;
+  const idxKey = 'idx-' + kat;
+  const idx = store.get(idxKey, 0) % liste.length;
+  store.set(idxKey, idx + 1);
+  return { kat, idx };
+}
+function sende(text){
+  text = text.trim();
+  if (!text) return;
+  renderUser(text);
+  const { kat, idx } = antworte(text);
+  renderAntwort(DB[kat].antworten[idx]);
+  verlauf.push({ u: text, k: kat, i: idx });
+  if (verlauf.length > 60) verlauf = verlauf.slice(-60);
+  store.set('verlauf', verlauf);
+  window.scrollTo(0, document.body.scrollHeight);
+}
+$('send').addEventListener('click', () => { sende($('input').value); $('input').value = ''; });
+$('input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sende($('input').value); $('input').value = ''; }
+});
+document.querySelectorAll('#chips .chip').forEach(c =>
+  c.addEventListener('click', () => sende(c.textContent)));
+$('clearChat').addEventListener('click', () => {
+  verlauf = []; store.set('verlauf', []);
+  chatlog.replaceChildren(); renderWelcome();
+});
+
+renderWelcome();
+for (const e of verlauf){
+  renderUser(e.u);
+  const kat = DB[e.k] ? e.k : 'allgemein';
+  renderAntwort(DB[kat].antworten[e.i % DB[kat].antworten.length]);
+}
+
+/* ---------- Dhikr ---------- */
+let aktuellesDhikr = store.get('dhikr-aktiv', 'istighfar');
+let counts = store.get('counts', {});
+function heuteKey(){ const d = new Date(); return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate(); }
+let heute = store.get('heute', { tag: heuteKey(), n: 0 });
+if (heute.tag !== heuteKey()) heute = { tag: heuteKey(), n: 0 };
+
+const presetsDiv = $('presets');
+for (const [id, d] of Object.entries(DHIKR)){
+  const c = el('button', 'chip', d.lat);
+  c.dataset.id = id;
+  c.addEventListener('click', () => waehleDhikr(id));
+  presetsDiv.appendChild(c);
+}
+function waehleDhikr(id){
+  if (!DHIKR[id]) id = 'istighfar';
+  aktuellesDhikr = id; store.set('dhikr-aktiv', id);
+  const d = DHIKR[id];
+  $('dAr').textContent = d.ar;
+  $('dLat').textContent = d.lat;
+  $('dDe').textContent = d.de;
+  $('ziel').textContent = 'Ziel: ' + d.ziel;
+  presetsDiv.querySelectorAll('.chip').forEach(c =>
+    c.style.borderColor = c.dataset.id === id ? 'var(--gold)' : '');
+  zeichneZaehler();
+}
+function zeichneZaehler(){
+  const n = counts[aktuellesDhikr] || 0;
+  const ziel = DHIKR[aktuellesDhikr].ziel;
+  $('count').textContent = n;
+  $('tap').style.setProperty('--p', Math.min(100, (n % ziel === 0 && n > 0 ? ziel : n % ziel) / ziel * 100));
+  $('heute').textContent = 'Heute insgesamt: ' + heute.n + ' Dhikr';
+}
+$('tap').addEventListener('click', () => {
+  counts[aktuellesDhikr] = (counts[aktuellesDhikr] || 0) + 1;
+  heute.n += 1;
+  store.set('counts', counts); store.set('heute', heute);
+  if (navigator.vibrate) navigator.vibrate(10);
+  zeichneZaehler();
+});
+$('reset').addEventListener('click', () => {
+  counts[aktuellesDhikr] = 0; store.set('counts', counts); zeichneZaehler();
+});
+waehleDhikr(aktuellesDhikr);
+
+/* ---------- Erinnerungen ---------- */
+let rIdx = Math.abs((store.get('r-idx', 0)) % ERINNERUNGEN.length);
+function zeigeErinnerung(){
+  const r = ERINNERUNGEN[rIdx % ERINNERUNGEN.length];
+  $('rText').textContent = r.x;
+  $('rRef').textContent = r.r;
+}
+$('rNext').addEventListener('click', () => {
+  rIdx = (rIdx + 1) % ERINNERUNGEN.length; store.set('r-idx', rIdx); zeigeErinnerung();
+});
+zeigeErinnerung();
+
+let notifTimer = null;
+function starteNotifs(){
+  if (notifTimer) clearInterval(notifTimer);
+  const min = parseInt($('iv').value, 10);
+  notifTimer = setInterval(() => {
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+    const r = ERINNERUNGEN[Math.floor(Date.now() / 60000) % ERINNERUNGEN.length];
+    try { new Notification('۞ Erinnerung', { body: r.x + (r.r ? ' — ' + r.r : ''), tag: 'twk' }); } catch(e){}
+  }, min * 60000);
+  store.set('notif', { an: true, min });
+  $('notifBtn').textContent = 'Aktiv ✓';
+}
+$('notifBtn').addEventListener('click', () => {
+  if (!('Notification' in window)){
+    $('notifHint').textContent = 'Benachrichtigungen sind in dieser Ansicht nicht verfügbar. Installiere die App über Safari → Teilen → „Zum Home-Bildschirm“, dann klappt es (ab iOS 16.4).';
+    return;
+  }
+  Notification.requestPermission().then(p => {
+    if (p === 'granted') starteNotifs();
+    else $('notifHint').textContent = 'Benachrichtigungen wurden nicht erlaubt. Du kannst sie in den iPhone-Einstellungen für diese App aktivieren.';
+  });
+});
+$('iv').addEventListener('change', () => { if (notifTimer) starteNotifs(); });
+const notifPref = store.get('notif', null);
+if (notifPref && notifPref.an && 'Notification' in window && Notification.permission === 'granted'){
+  $('iv').value = String(notifPref.min); starteNotifs();
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(function(){});
+}
+</script>
+</body>
+</html>
