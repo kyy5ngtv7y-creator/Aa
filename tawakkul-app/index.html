@@ -334,6 +334,36 @@
   .adhkar-ar{font-family:var(--arabic);font-size:21px;direction:rtl;display:block;margin-bottom:2px}
   .adhkar-de{font-size:13.5px;color:var(--ink-soft);display:block;margin-top:2px}
 
+  details.acc{
+    background:var(--surface);border:1px solid var(--line);border-radius:18px;
+    margin-bottom:12px;box-shadow:0 6px 20px var(--shadow);overflow:hidden;
+  }
+  details.acc summary{
+    list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
+    padding:15px 16px;font-family:var(--serif);font-size:16.5px;font-weight:600;
+  }
+  details.acc summary::-webkit-details-marker{display:none}
+  details.acc summary::after{
+    content:'+';margin-left:auto;color:var(--gold);font-size:22px;font-weight:400;
+    line-height:1;transition:transform .25s ease;
+  }
+  details.acc[open] summary::after{transform:rotate(45deg)}
+  details.acc .acc-body{padding:0 16px 16px;font-size:14.5px}
+  details.acc .acc-body p{margin:0 0 10px}
+  details.acc .acc-body p:last-child{margin-bottom:0}
+  details.acc .acc-body ul,details.acc .acc-body ol{margin:0 0 10px;padding-left:20px}
+  details.acc .acc-body li{margin-bottom:7px}
+  .schritt{display:flex;gap:12px;border-top:1px solid var(--line);padding:12px 0}
+  .schritt:first-of-type{border-top:none;padding-top:0}
+  .schritt-n{
+    width:27px;height:27px;border-radius:50%;flex-shrink:0;
+    background:var(--chip);color:var(--gold);
+    font-family:var(--serif);font-weight:700;font-size:13.5px;
+    display:grid;place-items:center;
+  }
+  .schritt > div{flex:1}
+  .schritt b{font-family:var(--serif)}
+
   /* ---------- Weg (Checkliste + Duas) ---------- */
   .check-item{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding:11px 0}
   .check-item:first-child{border-top:none;padding-top:2px}
@@ -538,6 +568,168 @@
 
     <!-- ================= WISSEN ================= -->
     <section id="view-wissen" class="view">
+      <h2 class="sect">Deine Schatzkammer</h2>
+      <p class="sub">Gebete, Zeiten und die Kunst der Dua — mit Quellen, zum sofort Anwenden.
+      Tippe eine Karte an, um sie zu öffnen.</p>
+
+      <details class="acc" open>
+        <summary>So machst du Dua — Schritt für Schritt</summary>
+        <div class="acc-body">
+          <div class="schritt"><span class="schritt-n">0</span><div>
+            <b>Bereite dich vor.</b> Wenn möglich: Wudu, Richtung Qibla, Hände heben. Und das
+            Wichtigste im Leben dahinter: halal essen und verdienen — der Prophet ﷺ erzählte von
+            einem Mann, der lange reist, staubig ist und die Hände hebt: „O Herr, o Herr!“ — doch
+            sein Essen ist haram, seine Kleidung haram: „Wie sollte er erhört werden?“ (Sahih Muslim 1015)
+          </div></div>
+          <div class="schritt"><span class="schritt-n">1</span><div>
+            <b>Beginne mit Lob — nicht mit der Bitte.</b> Zum Beispiel: 10× SubhanAllah, 10×
+            Alhamdulillah, 10× Allahu akbar, dann: „Alhamdulillahi Rabbil-ʿalamin, ar-Rahmanir-Rahim —
+            alles Lob gebührt Dir, und Dein Wort ist die Wahrheit.“ Der Prophet ﷺ hörte einen Mann,
+            der ohne Lob und Salawat sofort bat, und sagte: „Dieser hat es eilig gehabt.“
+            (Abu Dawud 1481, Tirmidhi 3477)
+          </div></div>
+          <div class="schritt"><span class="schritt-n">2</span><div>
+            <b>Sprich Salawat auf den Propheten ﷺ.</b> Von ʿUmar (möge Allah mit ihm zufrieden sein)
+            ist überliefert: Die Dua bleibt zwischen Himmel und Erde stehen, bis du den Segen über
+            den Propheten ﷺ sprichst. (Tirmidhi 486)
+          </div></div>
+          <div class="schritt"><span class="schritt-n">3</span><div>
+            <b>Rufe Allah mit dem Namen, der zu deiner Bitte passt.</b> „Und Allah gehören die
+            schönsten Namen — so ruft Ihn damit an.“ (Koran 7:180). Für Versorgung: „Ya Razzaq!“
+            Für Barmherzigkeit: „Ya Arhamar-Rahimin — o Barmherzigster aller Barmherzigen!“ Wenn
+            Türen zu sind: „Ya Fattah — o Öffner!“ Bei Krankheit: „Ya Schafi — o Heiler!“
+          </div></div>
+          <div class="schritt"><span class="schritt-n">4</span><div>
+            <b>Bitte demütig — aber mit voller Gewissheit.</b> Fordere nicht, als müsste Allah
+            liefern — bitte wie ein Bedürftiger an der Tür des großzügigsten Königs: um Hilfe, um
+            den richtigen Weg, um Seine Barmherzigkeit. Und gleichzeitig: Sei dir sicher, dass Er
+            antwortet. „Bittet Allah in der Gewissheit der Erhörung — und wisst, dass Allah keine
+            Dua von einem achtlosen, abgelenkten Herzen annimmt.“ (Tirmidhi 3479) Sag niemals
+            „O Allah, vergib mir, wenn Du willst“ — bitte mit Entschlossenheit, denn niemand kann
+            Allah zu etwas zwingen, Er gibt aus Großzügigkeit. (Sahih al-Bukhari 6339)
+          </div></div>
+          <div class="schritt"><span class="schritt-n">5</span><div>
+            <b>Wiederhole dreimal, sei konkret, schließe andere ein.</b> Der Prophet ﷺ liebte es,
+            seine Dua dreimal zu sprechen (Sahih Muslim 1794). Beginne bei dir, dann Familie, dann
+            die Ummah — die Dua für den Bruder in seiner Abwesenheit kommt zu dir zurück:
+            „Und für dich das Gleiche.“ (Sahih Muslim 2732)
+          </div></div>
+          <div class="schritt"><span class="schritt-n">6</span><div>
+            <b>Danach: vertrau und hetze nicht.</b> „Jedem von euch wird erhört, solange er nicht
+            ungeduldig wird und sagt: Ich habe Dua gemacht, und mir wurde nicht geantwortet.“
+            (Sahih al-Bukhari 6340) Deine Antwort kommt: jetzt, später oder besser.
+          </div></div>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Wann Allah Duas besonders annimmt</summary>
+        <div class="acc-body">
+          <ul>
+            <li><b>Im letzten Drittel der Nacht</b> — Allah fragt: „Wer ruft Mich an, dass Ich ihm
+            antworte? Wer bittet Mich, dass Ich ihm gebe? Wer bittet Mich um Vergebung, dass Ich
+            ihm vergebe?“ (Sahih al-Bukhari 1145)</li>
+            <li><b>In der Sadschda</b> — „Am nächsten ist der Diener seinem Herrn in der
+            Niederwerfung: macht darin viel Dua.“ (Sahih Muslim 482)</li>
+            <li><b>Zwischen Adhan und Iqama</b> — „Die Dua zwischen Adhan und Iqama wird nicht
+            zurückgewiesen.“ (Tirmidhi 212)</li>
+            <li><b>Am Freitag in der verborgenen Stunde</b> — nach starker Gelehrtenmeinung die
+            letzte Stunde vor Maghrib. Dein Gefühl, 30 Minuten vor Maghrib Dua zu machen, ist also
+            goldrichtig — besonders am Freitag! (Sahih al-Bukhari 935; Abu Dawud 1048)</li>
+            <li><b>Beim Fasten und beim Fastenbrechen</b> — die Dua des Fastenden wird nicht
+            abgewiesen. (Tirmidhi 3598)</li>
+            <li><b>Direkt nach den Pflichtgebeten</b> (Tirmidhi 3499)</li>
+            <li><b>Beim Regen</b> — zwei werden nicht abgewiesen: die Dua beim Gebetsruf und unter
+            dem Regen. (Abu Dawud 2540)</li>
+            <li><b>Auf Reisen, als Eltern für die Kinder, und als Unterdrückter</b> — drei Duas,
+            an deren Annahme kein Zweifel besteht. (Tirmidhi 3448)</li>
+            <li><b>In der Nacht von al-Qadr</b> — sprich: „Allahumma innaka ʿafuwwun tuhibbul-ʿafwa
+            faʿfu ʿanni — O Allah, Du bist der Verzeihende, Du liebst das Verzeihen, so verzeih mir.“
+            (Tirmidhi 3513)</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Salat ad-Duha — das Vormittagsgeschenk</summary>
+        <div class="acc-body">
+          <p><b>Was:</b> 2 bis 8 Rakʿa am Vormittag. <b>Wann:</b> ab etwa 15–20 Minuten nach
+          Sonnenaufgang bis kurz vor der Mittagszeit — am besten, wenn die Sonne schon warm ist.</p>
+          <p><b>Warum:</b> „Jeden Morgen ist für jedes eurer Gelenke eine Sadaqa fällig: Jedes
+          SubhanAllah ist Sadaqa, jedes Alhamdulillah ist Sadaqa … und all das erfüllen zwei Rakʿa,
+          die man am Vormittag (Duha) betet.“ (Sahih Muslim 720) — Dein Körper hat 360 Gelenke.
+          Zwei Rakʿa, und die Rechnung des Tages ist beglichen.</p>
+          <p>Abu Hurayra sagte: „Mein geliebter Freund ﷺ hat mir drei Dinge ans Herz gelegt“ —
+          eines davon: die zwei Rakʿa Duha. (Sahih al-Bukhari 1178)</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Salat al-Hadschah — wenn du ein Anliegen hast</summary>
+        <div class="acc-body">
+          <p>Wenn dich ein Anliegen drückt — Arbeit, Geld, eine Entscheidung, eine Sorge:</p>
+          <ol>
+            <li>Mach sorgfältig Wudu.</li>
+            <li>Bete zwei Rakʿa mit Ruhe und Konzentration.</li>
+            <li>Lobe danach Allah, sprich Salawat, und trage Ihm dein Anliegen vor — mit der
+            überlieferten Dua: „La ilaha illallahul-Halimul-Karim, subhanallahi Rabbil-ʿarschil-ʿazim,
+            alhamdulillahi Rabbil-ʿalamin …“ und dann deine Bitte, ganz konkret. (Tirmidhi 479)</li>
+          </ol>
+          <p class="quelle-klein">Ehrlich gesagt: Die Überliefererkette dieses Hadith stufen viele
+          Gelehrte als schwach ein. Aber zwei Rakʿa zu beten und Allah danach sein Anliegen
+          vorzutragen, ist in jedem Fall richtig und gut — das ist der Kern der Sunnah: Bei jeder
+          Sorge zum Gebet flüchten. (vgl. Koran 2:45: „Sucht Hilfe in der Geduld und im Gebet.“)</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Tahadschud — die Stunde der Könige</summary>
+        <div class="acc-body">
+          <p>Wenn du wirklich etwas von Allah willst: Stell den Wecker eine halbe Stunde früher.
+          Im letzten Drittel der Nacht — während alle schlafen — fragt dein Herr, wer Ihn ruft.
+          (Sahih al-Bukhari 1145)</p>
+          <p>Es müssen keine langen Gebete sein: zwei Rakʿa, dann deine Hände heben und alles
+          aussprechen, was dein Herz trägt. Die Dua in dieser Zeit ist wie ein Pfeil, der nicht
+          daneben geht — der Prophet ﷺ nannte sie die beste Zeit der Dua überhaupt.
+          (Tirmidhi 3579)</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Der gewaltigste Name Allahs</summary>
+        <div class="acc-body">
+          <p>Der Prophet ﷺ hörte einen Mann beten:</p>
+          <span class="adhkar-ar">اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنِّي أَشْهَدُ أَنَّكَ أَنْتَ اللهُ لَا إِلَهَ إِلَّا أَنْتَ، الْأَحَدُ الصَّمَدُ، الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ</span>
+          <p><em>Allahumma inni as’aluka bi-anni asch-hadu annaka antallah, la ilaha illa ant,
+          al-Ahadus-Samad, alladhi lam yalid wa lam yulad, wa lam yakun lahu kufuwan ahad.</em></p>
+          <p>Da sagte er ﷺ: „Er hat Allah mit Seinem gewaltigsten Namen gebeten — mit dem, wenn
+          man Ihn damit bittet, Er gibt, und wenn man Ihn damit anruft, Er antwortet.“
+          (Abu Dawud 1493, Tirmidhi 3475)</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Allahs Namen für dein Herz</summary>
+        <div class="acc-body">
+          <ul>
+            <li><b>Ar-Rahman — der Allerbarmer.</b> Der Prophet ﷺ sah eine Mutter, die ihr
+            wiedergefundenes Kind an sich drückte, und sagte: „Allah ist barmherziger zu Seinen
+            Dienern als diese Mutter zu ihrem Kind.“ (Sahih al-Bukhari 5999) Rufe: „Ya Arhamar-Rahimin!“</li>
+            <li><b>Ar-Razzaq — der Versorger.</b> Dein Rizq ist bei Ihm registriert, nicht bei
+            deinem Chef. (Koran 51:58)</li>
+            <li><b>Al-Wakil — der beste Sachwalter.</b> Ihm kannst du deine ganze Akte übergeben:
+            „Hasbunallahu wa niʿmal-Wakil.“ (Koran 3:173)</li>
+            <li><b>Al-Mudschib — der Erhörende.</b> „Mein Herr ist nahe und erhört.“ (Koran 11:61)</li>
+            <li><b>Al-Fattah — der Öffner.</b> Wenn alle Türen zu scheinen, ruf den, Der Türen
+            erschafft, wo keine waren. (Koran 34:26)</li>
+            <li><b>Al-Latif — der Feinfühlige.</b> Er lenkt deine Geschichte in Details, die du
+            erst Jahre später verstehst — wie bei Yusuf. (Koran 12:100)</li>
+            <li><b>Asch-Schafi — der Heiler.</b> „Es gibt keine Heilung außer Deiner Heilung.“
+            (Sahih al-Bukhari 5743)</li>
+          </ul>
+        </div>
+      </details>
+
       <h2 class="sect">Träume — was die Sunnah sagt</h2>
       <div class="wcard">
         <h3>Der Prophet ﷺ lehrte drei Arten von Träumen</h3>
@@ -726,8 +918,8 @@ const DB = {
 
   dua: {
     prio: 9,
-    phrasen: ['dua wird nicht erhört','dua nicht erhört','bete seit','nicht erhört','wird nicht beantwortet'],
-    worte: ['dua','bittgebet','erhört','duas'],
+    phrasen: ['dua wird nicht erhört','dua nicht erhört','bete seit','nicht erhört','wird nicht beantwortet','wie mache ich dua','wie macht man dua','richtig dua','dua tipps','beste dua','dua machen'],
+    worte: ['dua','bittgebet','erhört','duas','duha','hadscha','tahajjud','tahadschud'],
     antworten: [
       {
         t: 'Deine Dua ist nicht abgelehnt. Sie ist in Bearbeitung — bei Dem, der keine Fehler macht.',
@@ -735,6 +927,13 @@ const DB = {
         q: { x: 'Und wenn dich Meine Diener nach Mir fragen: Ich bin nahe. Ich erhöre den Ruf des Rufenden, wenn er Mich anruft.', r: 'Koran 2:186' },
         h: { x: 'Es gibt keinen Muslim, der eine Dua macht, in der keine Sünde und kein Abbruch der Verwandtschaftsbande liegt, ohne dass Allah ihm dafür eines von dreien gibt: Er erhört sie bald, oder Er hebt sie ihm fürs Jenseits auf, oder Er wendet dafür ein gleich großes Übel von ihm ab.', r: 'Musnad Ahmad 11133 — sahih' },
         a: { text: 'Der Prophet ﷺ warnte nur vor einem: der Ungeduld — „Ich habe Dua gemacht, und es wurde nicht erhört“ (Bukhari 6340). Hör nicht auf. Klopf weiter an die Tür.', dhikr: 'lahawla', btn: '33× La hawla' }
+      },
+      {
+        t: 'Dua ist eine Kunst — und der Prophet ﷺ hat uns Schritt für Schritt gezeigt, wie sie Allah am liebsten ist.',
+        e: 'Stell dir vor, du klopfst an die Tür des großzügigsten Königs. Du rennst nicht hinein und rufst „Gib mir!“ — du grüßt, du ehrst ihn, du sprichst mit Liebe. Genau so lehrte es der Prophet ﷺ: Beginne mit Lob (zum Beispiel 10× SubhanAllah, 10× Alhamdulillah, 10× Allahu akbar), sprich dann Salawat, und rufe Allah mit dem Namen, der zu deinem Wunsch passt — „Ya Razzaq“ für Versorgung, „Ya Arhamar-Rahimin“ für Barmherzigkeit. Und dann bitte: nicht fordernd, als müsste Allah liefern — sondern wie ein Bedürftiger, der um Hilfe, den richtigen Weg und Erbarmen bittet. Aber mit voller Gewissheit, dass Er antwortet.',
+        q: { x: 'Und Allah gehören die schönsten Namen — so ruft Ihn damit an.', r: 'Koran 7:180' },
+        h: { x: 'Wenn einer von euch betet, so soll er mit dem Lobpreis Allahs beginnen, dann den Segen über den Propheten sprechen und danach bitten, was er möchte.', r: 'Abu Dawud 1481, Tirmidhi 3477 — sahih' },
+        a: { text: 'In der Schatzkammer findest du die komplette Schritt-für-Schritt-Anleitung — und alle Zeiten, in denen Allah Duas besonders annimmt.', view: 'wissen', btn: 'Zur Dua-Anleitung' }
       }
     ]
   },
@@ -933,6 +1132,28 @@ const ERINNERUNGEN = [
   { x: 'Hast du dich heute schon bei einem alten Gedanken erwischt und ihn umgedreht? Das ist Training, kein Versagen.', r: '' }
 ];
 
+const ZEIT_ERINNERUNGEN = {
+  morgen: [
+    { x: 'Die Sonne ist auf — schenk Allah zwei Rakʿa Duha. Sie zählen als Sadaqa für jedes Gelenk deines Körpers.', r: 'Sahih Muslim 720' },
+    { x: 'Guten Morgen! Ein kurzes Morgen-Dhikr jetzt, und dein Tag steht unter Allahs Schutz.', r: 'Abu Dawud 5081' }
+  ],
+  nachmittag: [
+    { x: 'Der Tag neigt sich. Heb vor Maghrib die Hände — besonders am Freitag liegt dort eine Stunde, in der Dua nicht abgewiesen wird.', r: 'Abu Dawud 1048' },
+    { x: 'Zwischen Adhan und Iqama wird die Dua nicht zurückgewiesen. Nutze diese Minuten.', r: 'Tirmidhi 212' }
+  ],
+  nacht: [
+    { x: 'Im letzten Drittel der Nacht fragt dein Herr: „Wer ruft Mich an, dass Ich ihm antworte?“ Vielleicht bist du heute Nacht der, der ruft.', r: 'Sahih al-Bukhari 1145' },
+    { x: 'Schließ den Tag mit Istighfar — und schlaf mit einem leichten Herzen.', r: '' }
+  ]
+};
+function aktuelleListe(){
+  const h = new Date().getHours();
+  const pool = (h >= 5 && h < 12) ? ZEIT_ERINNERUNGEN.morgen
+    : (h >= 15 && h < 19) ? ZEIT_ERINNERUNGEN.nachmittag
+    : (h >= 20 || h < 5) ? ZEIT_ERINNERUNGEN.nacht : [];
+  return pool.concat(ERINNERUNGEN);
+}
+
 /* =============================================================
    App-Logik
    ============================================================= */
@@ -1124,6 +1345,7 @@ waehleDhikr(aktuellesDhikr);
 const WEG_ITEMS = [
   { id: 'gebete',   t: 'Meine 5 Gebete gebetet (so gut ich konnte)' },
   { id: 'morgen',   t: 'Morgen-Adhkar gemacht' },
+  { id: 'duha',     t: 'Zwei Rakʿa Duha am Vormittag gebetet' },
   { id: 'abend',    t: 'Abend-Adhkar gemacht' },
   { id: 'istighfar',t: '70× Istighfar gesprochen', go: 'dhikr' },
   { id: 'koran',    t: 'Etwas Koran gelesen oder gehört (5 Minuten zählen!)' },
@@ -1182,14 +1404,15 @@ function renderWeg(){
 renderWeg();
 
 /* ---------- Erinnerungen ---------- */
-let rIdx = Math.abs((store.get('r-idx', 0)) % ERINNERUNGEN.length);
+let rIdx = Math.abs(store.get('r-idx', 0));
 function zeigeErinnerung(){
-  const r = ERINNERUNGEN[rIdx % ERINNERUNGEN.length];
+  const L = aktuelleListe();
+  const r = L[rIdx % L.length];
   $('rText').textContent = r.x;
   $('rRef').textContent = r.r;
 }
 $('rNext').addEventListener('click', () => {
-  rIdx = (rIdx + 1) % ERINNERUNGEN.length; store.set('r-idx', rIdx); zeigeErinnerung();
+  rIdx = (rIdx + 1) % aktuelleListe().length; store.set('r-idx', rIdx); zeigeErinnerung();
   const t = $('rText');
   t.classList.remove('wechsel'); void t.offsetWidth; t.classList.add('wechsel');
 });
@@ -1201,7 +1424,8 @@ function starteNotifs(){
   const min = parseInt($('iv').value, 10);
   notifTimer = setInterval(() => {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
-    const r = ERINNERUNGEN[Math.floor(Date.now() / 60000) % ERINNERUNGEN.length];
+    const L = aktuelleListe();
+    const r = L[Math.floor(Date.now() / 60000) % L.length];
     try { new Notification('۞ Erinnerung', { body: r.x + (r.r ? ' — ' + r.r : ''), tag: 'twk' }); } catch(e){}
   }, min * 60000);
   store.set('notif', { an: true, min });
