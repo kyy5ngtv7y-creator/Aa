@@ -400,6 +400,13 @@
   .suche::placeholder{color:var(--ink-soft)}
   .suche:focus{outline:none;border-color:var(--teal)}
 
+  .zeiten-next{font-family:var(--serif);font-size:15.5px;color:var(--teal);margin:12px 0 10px;line-height:1.5}
+  .zeit-row{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px solid var(--line)}
+  .zeit-row:first-child{border-top:none}
+  .zeit-row .zeit-uhr{font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+  .zeit-row.aktiv{color:var(--gold);font-weight:600}
+  .zeit-row.aktiv .zeit-uhr{color:var(--gold)}
+
   /* ---------- Tabbar (schwebende Pille) ---------- */
   nav.tabbar{
     position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:6;
@@ -504,6 +511,22 @@
       </div>
       <div class="panel">
         <div class="panel-row">
+          <h3>Dein Gebets-Kompass</h3>
+          <button class="btn ghost" id="ortBtn">Standort nutzen</button>
+        </div>
+        <div class="panel-row" style="margin-top:10px">
+          <label for="stadt" style="font-size:14px">oder Stadt wählen</label>
+          <select class="iv" id="stadt"><option value="">— bitte wählen —</option></select>
+        </div>
+        <p class="zeiten-next" id="nextEvent"></p>
+        <div id="zeitenListe"></div>
+        <p class="hint">Astronomisch berechnet (±ein paar Minuten) — für den exakten Adhan gilt deine
+        Moschee. Duha beginnt ca. 20 Minuten nach Sonnenaufgang; das letzte Nachtdrittel wird aus
+        Maghrib und Fadschr berechnet. Damit dich die Hodscha-Meldungen erreichen („In 30 Minuten
+        beginnt das letzte Drittel …“), aktiviere unten die Benachrichtigungen.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-row">
           <h3>Benachrichtigungen</h3>
           <button class="btn ghost" id="notifBtn">Aktivieren</button>
         </div>
@@ -577,6 +600,65 @@
             ungeduldig wird und sagt: Ich habe Dua gemacht, und mir wurde nicht geantwortet.“
             (Sahih al-Bukhari 6340) Deine Antwort kommt: jetzt, später oder besser.
           </div></div>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Vor, während und nach der Dua — das ganze Adab</summary>
+        <div class="acc-body">
+          <span class="label">Vor der Dua</span>
+          <ul>
+            <li><b>Kehre erst um (Tawba).</b> Sprich Istighfar und — wichtig — gib zurück, was
+            Menschen bei dir haben. Die Gelehrten sagen: Unrechtes Gut und verletzte Rechte sind die
+            häufigsten Türen, die eine Dua verschließen (vgl. Sahih Muslim 1015 über den, dessen
+            Essen haram ist).</li>
+            <li><b>Schick eine gute Tat voraus.</b> Sadaqa, zwei Rakʿa, jemandem helfen — und dann
+            bitte. Die drei Männer in der Höhle, die ein Felsblock einschloss, baten Allah bei ihren
+            besten Taten („O Allah, wenn ich das nur für Dich getan habe …“) — und der Fels rückte
+            Stück für Stück beiseite, bis sie frei waren. (Sahih al-Bukhari 2272, Sahih Muslim 2743)</li>
+            <li><b>Wähle die besten Zeiten</b> (Karte „Wann Allah Duas besonders annimmt“) und wenn
+            möglich Wudu, Qibla und erhobene Hände — so machte es der Prophet ﷺ. (Sahih al-Bukhari 4323)</li>
+            <li><b>Sammle dein Herz.</b> Wisse, WAS du willst, bevor du die Hände hebst — Allah nimmt
+            keine Dua von einem achtlosen, abgelenkten Herzen an. (Tirmidhi 3479)</li>
+          </ul>
+          <span class="label">Während der Dua</span>
+          <ul>
+            <li><b>Lob → Salawat → Bitte</b> — die gelernte Reihenfolge. (Abu Dawud 1481)</li>
+            <li><b>Leise und demütig.</b> „Ruft euren Herrn in Demut und im Verborgenen — Er liebt
+            nicht die Maßlosen.“ (Koran 7:55) Du flüsterst nicht ins Leere: Er hört das Kratzen der
+            Ameise auf dem Stein.</li>
+            <li><b>Bitte GROSS.</b> Wer bittet, ehrt Allah: „Wen Allah nicht bittet, dem zürnt Er.“
+            (Tirmidhi 3373) Und der Prophet ﷺ sagte: „Wenn ihr Allah um das Paradies bittet, dann
+            bittet um al-Firdaws, das höchste.“ (Sahih al-Bukhari 2790) Kleine Wünsche gibt es bei
+            Ihm nicht — bitte um alles, sogar um das Salz fürs Essen und den Schnürsenkel, wie die
+            Salaf sagten.</li>
+            <li><b>Sei konkret und beharrlich.</b> Dreimal wiederholen (Sahih Muslim 1794), heute,
+            morgen, nächsten Monat — Beharrlichkeit ist bei Allah geliebt, nicht lästig. Bei
+            Menschen nervt Bitten. Bei Allah öffnet es.</li>
+            <li><b>Niemals gegen dich selbst beten.</b> Nicht „Ich wünschte, ich wäre tot“, nichts
+            gegen deine Kinder, dein Geld, dich selbst — du könntest eine Stunde der Annahme treffen.
+            (Sahih Muslim 3009)</li>
+            <li><b>Schließe andere ein.</b> Die Dua für deinen Bruder in seiner Abwesenheit kommt
+            mit einem Engel zurück: „Amin — und für dich das Gleiche.“ (Sahih Muslim 2732)</li>
+            <li><b>Weinen ist Stärke.</b> Und wenn keine Tränen kommen: Demut im Herzen reicht.</li>
+          </ul>
+          <span class="label">Nach der Dua</span>
+          <ul>
+            <li><b>Nicht hetzen.</b> „Jedem wird erhört, solange er nicht sagt: Ich habe gebeten,
+            und mir wurde nicht geantwortet.“ (Sahih al-Bukhari 6340)</li>
+            <li><b>Denk gut von Allah.</b> „Ich bin so, wie Mein Diener von Mir denkt.“
+            (Sahih al-Bukhari 7405) Erwarte die Antwort wie ein Kind, das weiß: Papa hat es gehört.</li>
+            <li><b>Bleib in Verbindung — auch wenn es dir gut geht.</b> „Erkenne Allah im
+            Wohlstand, dann erkennt Er dich in der Not.“ (Tirmidhi 2516) Wer nur in der Krise
+            klopft, kennt die Tür nicht.</li>
+            <li><b>Wenn erhört: Danke sofort.</b> Der Prophet ﷺ sagte bei erfreulichen Nachrichten:
+            „Alhamdulillahil-ladhi bi-niʿmatihi tatimmus-salihat“ — Alles Lob gebührt Allah, durch
+            Dessen Gnade das Gute vollendet wird. (Ibn Madscha 3803 — sahih)</li>
+            <li><b>Wenn (noch) nicht erhört: nichts ist verloren.</b> Jetzt, später, Schutz oder
+            Schatz (Musnad Ahmad 11133). ʿUmar (möge Allah mit ihm zufrieden sein) sagte sinngemäß:
+            „Ich trage nicht die Sorge der Erhörung, sondern die Sorge der Dua — wenn mir die Dua
+            eingegeben wird, ist die Erhörung schon mit ihr.“</li>
+          </ul>
         </div>
       </details>
 
@@ -1246,7 +1328,18 @@ for (const e of verlauf){
 /* ---------- Dhikr ---------- */
 let aktuellesDhikr = store.get('dhikr-aktiv', 'istighfar');
 let counts = store.get('counts', {});
-function heuteKey(){ const d = new Date(); return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate(); }
+function tagKey(d){ return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate(); }
+function heuteKey(){ return tagKey(new Date()); }
+function gesternKey(){ return tagKey(new Date(Date.now() - 86400000)); }
+function dhikrSerie(){
+  const tage = store.get('dhikr-tage', {});
+  let s = (tage[heuteKey()] || 0) > 0 ? 1 : 0;
+  for (let i = 1; i < 60; i++){
+    if ((tage[tagKey(new Date(Date.now() - i * 86400000))] || 0) > 0) s++;
+    else break;
+  }
+  return s;
+}
 let heute = store.get('heute', { tag: heuteKey(), n: 0 });
 if (heute.tag !== heuteKey()) heute = { tag: heuteKey(), n: 0 };
 
@@ -1276,12 +1369,20 @@ function zeichneZaehler(){
   const ziel = DHIKR[aktuellesDhikr].ziel;
   $('count').textContent = n;
   $('tap').style.setProperty('--p', Math.min(100, (n % ziel === 0 && n > 0 ? ziel : n % ziel) / ziel * 100));
-  $('heute').textContent = 'Heute insgesamt: ' + heute.n + ' Dhikr';
+  const gesternN = (store.get('dhikr-tage', {}))[gesternKey()] || 0;
+  const serie = dhikrSerie();
+  $('heute').textContent = 'Heute: ' + heute.n + ' Dhikr · Gestern: ' + gesternN +
+    (serie > 1 ? ' · ' + serie + ' Tage in Folge, ma schaa Allah!' : '');
 }
 $('tap').addEventListener('click', () => {
   counts[aktuellesDhikr] = (counts[aktuellesDhikr] || 0) + 1;
   heute.n += 1;
   store.set('counts', counts); store.set('heute', heute);
+  const tage = store.get('dhikr-tage', {});
+  tage[heuteKey()] = heute.n;
+  const tKeys = Object.keys(tage);
+  if (tKeys.length > 20){ tKeys.sort(); delete tage[tKeys[0]]; }
+  store.set('dhikr-tage', tage);
   const tap = $('tap');
   tap.classList.remove('pulse'); void tap.offsetWidth; tap.classList.add('pulse');
   const p1 = el('span', 'plus1', '+1');
@@ -1517,6 +1618,179 @@ const notifPref = store.get('notif', null);
 if (notifPref && notifPref.an && 'Notification' in window && Notification.permission === 'granted'){
   $('iv').value = String(notifPref.min); starteNotifs();
 }
+
+/* ---------- Gebets-Kompass: astronomische Zeiten + heilige Momente ---------- */
+const STAEDTE = [
+  { n: 'Zürich', la: 47.37, lo: 8.54 }, { n: 'Bern', la: 46.95, lo: 7.44 },
+  { n: 'Basel', la: 47.56, lo: 7.59 }, { n: 'Genf', la: 46.20, lo: 6.14 },
+  { n: 'Luzern', la: 47.05, lo: 8.31 }, { n: 'St. Gallen', la: 47.42, lo: 9.37 },
+  { n: 'Wien', la: 48.21, lo: 16.37 }, { n: 'Berlin', la: 52.52, lo: 13.40 },
+  { n: 'Hamburg', la: 53.55, lo: 10.00 }, { n: 'München', la: 48.14, lo: 11.58 },
+  { n: 'Köln', la: 50.94, lo: 6.96 }, { n: 'Frankfurt', la: 50.11, lo: 8.68 },
+  { n: 'Stuttgart', la: 48.78, lo: 9.18 }, { n: 'Istanbul', la: 41.01, lo: 28.98 },
+  { n: 'Sarajevo', la: 43.86, lo: 18.41 }, { n: 'Pristina', la: 42.66, lo: 21.17 },
+  { n: 'Tirana', la: 41.33, lo: 19.82 }, { n: 'Skopje', la: 41.99, lo: 21.43 }
+];
+let ort = store.get('ort', null);
+
+const stadtSel = $('stadt');
+for (const s of STAEDTE){
+  const o = document.createElement('option');
+  o.value = s.n; o.textContent = s.n;
+  stadtSel.appendChild(o);
+}
+if (ort && ort.name !== 'Eigener Standort') stadtSel.value = ort.name;
+stadtSel.addEventListener('change', () => {
+  const s = STAEDTE.find(x => x.n === stadtSel.value);
+  if (s){ ort = { name: s.n, la: s.la, lo: s.lo }; store.set('ort', ort); renderZeiten(); }
+});
+$('ortBtn').addEventListener('click', () => {
+  if (!navigator.geolocation){ $('nextEvent').textContent = 'Standort nicht verfügbar — wähle bitte eine Stadt.'; return; }
+  navigator.geolocation.getCurrentPosition(p => {
+    ort = { name: 'Eigener Standort', la: p.coords.latitude, lo: p.coords.longitude };
+    store.set('ort', ort); stadtSel.value = ''; renderZeiten();
+  }, () => { $('nextEvent').textContent = 'Standort wurde nicht erlaubt — wähle bitte eine Stadt aus der Liste.'; });
+});
+
+function sonnen(la, lo, d){
+  const rad = Math.PI / 180;
+  const start = new Date(d.getFullYear(), 0, 0);
+  const tag = Math.floor((d - start) / 86400000);
+  const g = 2 * Math.PI / 365 * (tag - 1 + 0.5);
+  const eq = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g)
+    - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+  const de = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g)
+    - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g)
+    - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+  const tz = -d.getTimezoneOffset();
+  const mittag = 720 - 4 * lo - eq + tz;
+  const ha = alt => {
+    const c = (Math.sin(alt * rad) - Math.sin(la * rad) * Math.sin(de)) / (Math.cos(la * rad) * Math.cos(de));
+    return (c < -1 || c > 1) ? null : 4 * Math.acos(c) / rad;
+  };
+  const hs = ha(-0.833), hf = ha(-18), hi = ha(-17);
+  const asrAlt = Math.atan(1 / (1 + Math.tan(Math.abs(la * rad - de)))) / rad;
+  const hAsr = ha(asrAlt);
+  return {
+    fadschr: hf === null ? null : mittag - hf,
+    aufgang: hs === null ? null : mittag - hs,
+    dhuhr: mittag + 2,
+    asr: hAsr === null ? null : mittag + hAsr,
+    maghrib: hs === null ? null : mittag + hs,
+    ischa: hi === null ? null : mittag + hi
+  };
+}
+function fmtZeit(min){
+  min = ((Math.round(min) % 1440) + 1440) % 1440;
+  const h = Math.floor(min / 60), m = min % 60;
+  return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+}
+function tagesplan(){
+  if (!ort) return null;
+  const jetzt = new Date();
+  const t = sonnen(ort.la, ort.lo, jetzt);
+  const gestern = sonnen(ort.la, ort.lo, new Date(jetzt.getTime() - 86400000));
+  const morgen = sonnen(ort.la, ort.lo, new Date(jetzt.getTime() + 86400000));
+  if (t.maghrib === null || t.fadschr === null) return { fehler: true };
+  const nachtHeute = (morgen.fadschr === null) ? null : morgen.fadschr + 1440 - t.maghrib;
+  const drittelNacht = nachtHeute === null ? null : t.maghrib + nachtHeute * 2 / 3;
+  const nachtGestern = gestern.maghrib === null ? null : t.fadschr + 1440 - gestern.maghrib;
+  const drittelFrueh = nachtGestern === null ? null : gestern.maghrib + nachtGestern * 2 / 3 - 1440;
+  const duha = t.aufgang === null ? null : t.aufgang + 20;
+  return { t, duha, drittelNacht, drittelFrueh };
+}
+function eventListe(){
+  const p = tagesplan();
+  if (!p || p.fehler) return [];
+  const L = [];
+  const add = (id, name, zeit, tipp) => { if (zeit !== null) L.push({ id, name, zeit, tipp }); };
+  add('drittelF', 'Letztes Nachtdrittel', p.drittelFrueh, 'Steh auf: 2 Rakʿa, dann Dua — Allah fragt gerade: „Wer ruft Mich?“ (Bukhari 1145)');
+  add('fadschr', 'Fadschr', p.t.fadschr, 'Nach dem Gebet: Morgen-Adhkar und „Allahumma inni as’aluka ʿilman nafiʿan …“');
+  add('aufgang', 'Sonnenaufgang', p.t.aufgang, 'Kein Gebet, bis die Sonne ganz aufgegangen ist — danach beginnt bald Duha.');
+  add('duha', 'Duha-Zeit beginnt', p.duha, 'Zwei Rakʿa — Sadaqa für alle 360 Gelenke (Muslim 720).');
+  add('dhuhr', 'Dhuhr', p.t.dhuhr, 'Nach dem Adhan: 4 Rakʿa Sunnah, dann das Fard — und bitte Allah im Gebet um alles.');
+  add('asr', 'ʿAsr', p.t.asr, 'Nach ʿAsr: Zeit für die Abend-Adhkar.');
+  add('maghrib', 'Maghrib', p.t.maghrib, 'Die Minuten davor sind Dua-Zeit — besonders am Freitag (Abu Dawud 1048).');
+  add('ischa', 'ʿIscha', p.t.ischa, 'Danach: Witr nicht vergessen — und die Schlaf-Duas.');
+  add('drittelN', 'Letztes Nachtdrittel', p.drittelNacht, 'Die beste Stunde der Dua — stell dir einen Wecker!');
+  return L.sort((a, b) => a.zeit - b.zeit);
+}
+let zeitenTimer = null;
+function renderZeiten(){
+  const liste = $('zeitenListe');
+  if (!ort){ $('nextEvent').textContent = 'Wähle deine Stadt oder nutze den Standort — dann sage ich dir, wann die besten Momente für Dua und Gebet sind.'; liste.replaceChildren(); return; }
+  const L = eventListe();
+  if (!L.length){ $('nextEvent').textContent = 'In deiner Region lassen sich die Zeiten gerade nicht astronomisch berechnen (Polarsommer/-winter). Richte dich nach deiner Moschee.'; liste.replaceChildren(); return; }
+  const jetzt = new Date();
+  const nowMin = jetzt.getHours() * 60 + jetzt.getMinutes();
+  let next = L.find(e => e.zeit > nowMin);
+  if (!next) next = L[0];
+  const diff = Math.round((next.zeit - nowMin + 1440) % 1440);
+  const dh = Math.floor(diff / 60), dm = diff % 60;
+  $('nextEvent').textContent = 'Als Nächstes: ' + next.name + ' um ' + fmtZeit(next.zeit) +
+    ' (in ' + (dh ? dh + ' Std ' : '') + dm + ' Min) — ' + next.tipp;
+  liste.replaceChildren();
+  for (const e of L){
+    const row = el('div', 'zeit-row' + (e === next ? ' aktiv' : ''));
+    row.appendChild(el('span', null, e.name));
+    row.appendChild(el('span', 'zeit-uhr', fmtZeit(e.zeit)));
+    liste.appendChild(row);
+  }
+  if (!zeitenTimer) zeitenTimer = setInterval(renderZeiten, 30000);
+}
+renderZeiten();
+
+/* Hodscha-Benachrichtigungen: 30 Min vorher + zum Beginn */
+function feuerNotif(titel, text){
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try { new Notification(titel, { body: text, tag: 'twk-' + titel }); } catch(e){}
+}
+function kompassTick(){
+  if (!ort) return;
+  const p = tagesplan();
+  if (!p || p.fehler) return;
+  const jetzt = new Date();
+  const nowMin = jetzt.getHours() * 60 + jetzt.getMinutes();
+  const gefeuert = store.get('gefeuert', { tag: heuteKey(), ids: {} });
+  if (gefeuert.tag !== heuteKey()){ gefeuert.tag = heuteKey(); gefeuert.ids = {}; }
+  const alarme = [];
+  if (p.drittelNacht !== null){
+    alarme.push({ id: 'd30', zeit: p.drittelNacht - 30, ti: '۞ Bald: letztes Nachtdrittel', tx: 'In etwa 30 Minuten beginnt das letzte Drittel der Nacht — die Stunde, in der Allah fragt: „Wer ruft Mich, dass Ich ihm antworte?“ Zwei Rakʿa und dann Dua. (Bukhari 1145)' });
+    alarme.push({ id: 'd0', zeit: p.drittelNacht, ti: '۞ Jetzt: letztes Nachtdrittel', tx: 'Es ist so weit. Steh auf, bete zwei Rakʿa und sprich mit deinem Herrn — jetzt ist die beste Stunde der Dua.' });
+  }
+  if (p.drittelFrueh !== null){
+    alarme.push({ id: 'df', zeit: p.drittelFrueh, ti: '۞ Jetzt: letztes Nachtdrittel', tx: 'Das letzte Drittel der Nacht hat begonnen — zwei Rakʿa, dann Dua. Allah fragt gerade, wer Ihn ruft.' });
+  }
+  if (p.duha !== null) alarme.push({ id: 'duha', zeit: p.duha, ti: '۞ Duha-Zeit', tx: 'Jetzt ist die Zeit für das Duha-Gebet: zwei Rakʿa als Sadaqa für alle 360 Gelenke deines Körpers. (Muslim 720)' });
+  if (p.t.dhuhr !== null) alarme.push({ id: 'dhuhr', zeit: p.t.dhuhr, ti: '۞ Dhuhr', tx: 'Dhuhr ist da. Nach dem Adhan: vier Rakʿa Sunnah, dann das Fard — und bitte Allah im Gebet um alles, was dein Herz trägt.' });
+  if (p.t.asr !== null) alarme.push({ id: 'asr', zeit: p.t.asr, ti: '۞ ʿAsr', tx: 'Nach dem ʿAsr-Gebet: Zeit für deine Abend-Adhkar.' });
+  if (p.t.maghrib !== null) alarme.push({ id: 'm30', zeit: p.t.maghrib - 30, ti: '۞ Dua-Zeit vor Maghrib', tx: 'Noch etwa 30 Minuten bis Maghrib. Heb die Hände — besonders am Freitag liegt hier eine Stunde, in der Dua nicht abgewiesen wird. (Abu Dawud 1048)' });
+  if (p.t.fadschr !== null) alarme.push({ id: 'fa', zeit: p.t.fadschr, ti: '۞ Fadschr', tx: 'Der Tag beginnt bei Allah: Fadschr beten, dann Morgen-Adhkar — und der Tag steht unter Seinem Schutz.' });
+  for (const a of alarme){
+    const z = ((Math.round(a.zeit) % 1440) + 1440) % 1440;
+    if (Math.abs(z - nowMin) < 1 && !gefeuert.ids[a.id]){
+      gefeuert.ids[a.id] = true;
+      store.set('gefeuert', gefeuert);
+      feuerNotif(a.ti, a.tx);
+    }
+  }
+  /* Dhikr-Wächter: erkennt, wenn du heute nachlässt */
+  const tage = store.get('dhikr-tage', {});
+  const gesternN = tage[gesternKey()] || 0;
+  if (jetzt.getHours() === 14 && !gefeuert.ids.w14){
+    gefeuert.ids.w14 = true; store.set('gefeuert', gefeuert);
+    if (heute.n === 0) feuerNotif('۞ Dein Herz wartet', 'Halber Tag vorbei — und noch kein Dhikr. Die Dunya zieht dich; zieh zurück. Ein einziges Astaghfirullah genügt für den Anfang.');
+    else if (gesternN >= 20 && heute.n < gesternN / 2) feuerNotif('۞ Gestern warst du näher', 'Gestern hattest du ' + gesternN + ' Dhikr, heute erst ' + heute.n + '. Komm zurück — dein Zähler wartet.');
+  }
+  if (jetzt.getHours() === 20 && !gefeuert.ids.w20){
+    gefeuert.ids.w20 = true; store.set('gefeuert', gefeuert);
+    if (gesternN >= 20 && heute.n < gesternN / 2) feuerNotif('۞ Der Tag ist fast um', 'Heute ' + heute.n + ' Dhikr, gestern ' + gesternN + '. Schließ den Tag nicht mit weniger ab — 33× Astaghfirullah vor dem Schlafen.');
+    else if (heute.n === 0) feuerNotif('۞ Vergiss dein Herz nicht', 'Heute war noch kein Dhikr dabei. „Im Gedenken Allahs finden die Herzen Ruhe“ (13:28) — ein paar Minuten vor dem Schlafen reichen.');
+  }
+}
+setInterval(kompassTick, 60000);
+kompassTick();
+
 </script>
 <script>
 if ('serviceWorker' in navigator) {
