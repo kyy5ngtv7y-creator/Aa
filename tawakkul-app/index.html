@@ -261,6 +261,17 @@
   @keyframes steig{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-30px)}}
   .counter-tools{display:flex;justify-content:center;gap:14px;margin-top:18px}
   .heute{margin-top:14px;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+  .versteh{
+    background:var(--surface);border:1px solid var(--line);border-radius:18px;
+    padding:16px;margin-top:12px;box-shadow:0 6px 20px var(--shadow);
+    animation:fadeUp .35s ease;
+  }
+  .versteh .label{margin-top:14px}
+  .versteh .label:first-child{margin-top:0}
+  .wort-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .wort-ar{font-family:var(--arabic);font-size:20px;direction:rtl;flex-shrink:0}
+  .wort-de{font-size:13.5px;color:var(--ink-soft);text-align:right}
+  .versteh-p{font-size:14.5px;margin:2px 0 4px}
 
   /* ---------- Erinnerung (Nachthimmel-Karte) ---------- */
   .remind-card{
@@ -451,6 +462,7 @@
         <button class="chip">Warum passiert mir das?</button>
         <button class="chip">Andere haben ein schönes Leben und ich nur Probleme</button>
         <button class="chip">Ich erwische mich wieder bei alten Gedanken</button>
+        <button class="chip">Was bedeutet SubhanAllah eigentlich?</button>
       </div>
       <p style="text-align:center;margin-top:18px">
         <button class="linkbtn" id="clearChat">Verlauf löschen</button>
@@ -476,7 +488,9 @@
           <button class="btn ghost" id="reset">Zurücksetzen</button>
         </div>
         <p class="heute" id="heute"></p>
+        <button class="btn ghost" id="verstehBtn" style="margin-top:14px">Was sage ich da? · Verstehen</button>
       </div>
+      <div id="verstehen" class="versteh" hidden></div>
     </section>
 
     <!-- ================= WEG ================= -->
@@ -1119,6 +1133,21 @@ const DB = {
     ]
   },
 
+  bedeutung: {
+    prio: 9,
+    phrasen: ['was bedeutet','was heisst','bedeutung von','verstehe nicht was','verstehe das wort'],
+    worte: ['bedeutet','bedeutung'],
+    antworten: [
+      {
+        t: 'Wunderbare Frage — denn Dhikr, das man versteht, wiegt tausendmal schwerer als Dhikr, das man nur ausspricht.',
+        e: 'Genau dafür gibt es im Dhikr-Bereich jetzt den Knopf „Was sage ich da? · Verstehen“: Zu jedem Dhikr bekommst du die Bedeutung Wort für Wort, die arabische Wurzel, ein Bild zum Vorstellen und deinen Lohn. Ein Vorgeschmack: „SubhanAllah“ kommt von derselben Wurzel wie „schwimmen“ — du erklärst, dass jeder Fehler und jeder Makel unendlich weit von Allah „weggeschwommen“ ist: Er vergisst nie, ist nie ungerecht, nie zu spät. Sag es das nächste Mal mit diesem Bild vor Augen — und spür den Unterschied.',
+        q: { x: 'Und gedenke des Namens deines Herrn und widme dich Ihm ganz und gar.', r: 'Koran 73:8' },
+        h: { x: 'Bittet Allah in der Gewissheit der Erhörung — und wisst, dass Allah keine Dua von einem achtlosen, abgelenkten Herzen annimmt.', r: 'Tirmidhi 3479' },
+        a: { text: 'Öffne den Dhikr-Bereich, wähle ein Dhikr und tippe unter dem Zähler auf „Was sage ich da? · Verstehen“.', view: 'dhikr', btn: 'Zum Verstehen' }
+      }
+    ]
+  },
+
   allgemein: {
     prio: 0,
     phrasen: [], worte: [],
@@ -1142,13 +1171,70 @@ const DB = {
 };
 
 const DHIKR = {
-  istighfar: { ar: 'أَسْتَغْفِرُ اللهَ', lat: 'Astaghfirullah', de: 'Ich bitte Allah um Vergebung', ziel: 70 },
-  subhan:    { ar: 'سُبْحَانَ اللهِ', lat: 'SubhanAllah', de: 'Gepriesen sei Allah', ziel: 33 },
-  alhamdu:   { ar: 'الْحَمْدُ لِلَّهِ', lat: 'Alhamdulillah', de: 'Alles Lob gebührt Allah', ziel: 33 },
-  akbar:     { ar: 'اللهُ أَكْبَرُ', lat: 'Allahu akbar', de: 'Allah ist größer (als alles)', ziel: 34 },
-  hasbuna:   { ar: 'حَسْبُنَا اللهُ وَنِعْمَ الْوَكِيلُ', lat: "Hasbunallahu wa niʿmal-wakil", de: 'Allah genügt uns, und Er ist der beste Sachwalter (3:173)', ziel: 33 },
-  lahawla:   { ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', lat: 'La hawla wa la quwwata illa billah', de: 'Es gibt keine Macht und keine Kraft außer durch Allah', ziel: 33 },
-  salawat:   { ar: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', lat: 'Allahumma salli ʿala Muhammad', de: 'O Allah, segne Muhammad ﷺ', ziel: 10 }
+  istighfar: { ar: 'أَسْتَغْفِرُ اللهَ', lat: 'Astaghfirullah', de: 'Ich bitte Allah um Vergebung', ziel: 70,
+    tief: {
+      woerter: [ { a: 'أَسْتَغْفِرُ', b: '„ich bitte um Ghafr“ — um Zudeckung und Schutz' }, { a: 'اللهَ', b: 'Allah — den Einen, der wirklich vergeben kann' } ],
+      wurzel: 'Die Wurzel gh-f-r (غفر) bedeutet: zudecken und dadurch schützen. Der Helm des Kriegers heißt auf Arabisch „mighfar“ — aus derselben Wurzel! Du sagst also nicht nur „sorry“. Du bittest um drei Dinge auf einmal: Deck meine Sünde zu (damit sie mich nicht bloßstellt), lösch ihre Strafe, und schütze mich davor wie ein Helm, damit sie mich nicht wieder trifft.',
+      bild: 'Stell dir deine Sünde wie einen Fleck auf weißem Stoff vor. Astaghfirullah ist nicht nur „Entschuldigung sagen“ — es ist der Fleck, der rausgewaschen wird, UND eine Schutzschicht, damit der Stoff nicht wieder so leicht Flecken annimmt. Der Prophet ﷺ sagte: Wer beständig Istighfar macht, dem verwandelt Allah sogar die Enge in einen Ausweg.',
+      schild: 'Dein Schild, wenn dich Schuldgefühle erdrücken („Allah nimmt mich nie an“) — und dein Schlüssel, wenn Rizq und Wege verschlossen wirken (Koran 71:10–12: Istighfar bringt Regen, Vermögen und Kinder).',
+      lohn: 'Der Prophet ﷺ — dem alles vergeben war — machte selbst über 70× am Tag Istighfar (Bukhari 6307). Und: „Wer beständig um Vergebung bittet, dem macht Allah aus jeder Sorge einen Ausweg.“ (Abu Dawud 1518)'
+    } },
+  subhan: { ar: 'سُبْحَانَ اللهِ', lat: 'SubhanAllah', de: 'Allah ist erhaben über jeden Makel', ziel: 33,
+    tief: {
+      woerter: [ { a: 'سُبْحَانَ', b: '„weit erhaben, völlig frei von jedem Fehler“' }, { a: 'اللهِ', b: 'ist Allah' } ],
+      wurzel: 'Die Wurzel s-b-h (سبح) ist dieselbe wie in „sabaha“ = schwimmen! „Subhan“ heißt wörtlich: weit weg-sein, davonschwimmen. Wenn du SubhanAllah sagst, erklärst du: Jeder Fehler, jede Schwäche, jeder Makel ist unendlich weit weg von Allah — Er vergisst nie, schläft nie, ist nie ungerecht, nie zu spät, braucht niemanden.',
+      bild: 'Stell dir vor, ein schlechter Gedanke versucht, zu Allah „hinzuschwimmen“: „Allah hat dich vergessen … Allah ist unfair zu dir …“ SubhanAllah ist deine Hand, die den Gedanken wegstößt: „Nein! Weit entfernt ist Allah davon!“ Im Koran steht: „Dein Herr ist nicht vergesslich.“ (19:64) Deshalb ist SubhanAllah die direkte Antwort auf jeden Blitzgedanken über Allah — du sprichst die Wahrheit gegen die Lüge aus.',
+      schild: 'Dein Schild gegen jeden schlechten Gedanken über Allah: „Er gibt mir nicht“ → SubhanAllah, erhaben ist Er über Geiz. „Er hat mich vergessen“ → SubhanAllah, erhaben ist Er über Vergessen.',
+      lohn: '„Wer sagt: SubhanAllahil-ʿAzimi wa bi-hamdih, dem wird eine Dattelpalme im Paradies gepflanzt.“ (Tirmidhi 3464 — sahih) Bei jedem Mal. Zähl deine Palmen.'
+    } },
+  alhamdu: { ar: 'الْحَمْدُ لِلَّهِ', lat: 'Alhamdulillah', de: 'Alles Lob und aller Dank gehören Allah', ziel: 33,
+    tief: {
+      woerter: [ { a: 'الْـ', b: '„DAS“ — das ganze, alles davon' }, { a: 'حَمْدُ', b: 'Hamd = Lob aus Liebe UND Dank zugleich' }, { a: 'لِلَّهِ', b: 'gehört Allah (li- = gehört)' } ],
+      wurzel: '„Hamd“ ist mehr als Danken. Danken (schukr) sagst du, wenn du etwas bekommst. Hamd sagst du, weil Er IST, wer Er ist — auch wenn du gerade nichts bekommen hast, auch am schweren Tag. Und das „al-“ davor heißt: nicht irgendein Lob, sondern ALLES Lob, das je existiert hat und je existieren wird — es gehört alles Ihm.',
+      bild: 'In diesem Moment laufen in dir Millionen Geschenke gleichzeitig: dein Herz schlägt (ohne dass du es steuerst), deine Augen lesen das hier, deine Lunge atmet, dein Essen von gestern wurde verdaut. Alhamdulillah heißt: „Ich sehe es. Das alles kommt von Dir.“ Der Prophet ﷺ sagte sogar in schlechten Lagen: „Alhamdulillah in jeder Lage“ — weil auch der schwere Tag von Dem kommt, Der es gut mit dir meint.',
+      schild: 'Dein Schild gegen den Neid-Blick auf andere: Sobald du zählst, was DU hast, verliert das Schaufenster der anderen seine Macht. Und Allah verspricht: „Wenn ihr dankbar seid, gebe Ich euch mehr.“ (14:7)',
+      lohn: '„Alhamdulillah füllt die Waage.“ (Sahih Muslim 223) Ein Wort — und die Waagschale deiner guten Taten wird voll.'
+    } },
+  akbar: { ar: 'اللهُ أَكْبَرُ', lat: 'Allahu akbar', de: 'Allah ist größer — als alles', ziel: 34,
+    tief: {
+      woerter: [ { a: 'اللهُ', b: 'Allah' }, { a: 'أَكْبَرُ', b: '„ist GRÖSSER“ — bewusst offen gelassen: größer als was? Als ALLES.' } ],
+      wurzel: '„Akbar“ ist die Steigerungsform von „kabir“ (groß). Es heißt absichtlich nicht „Allah ist groß“, sondern „Allah ist GRÖSSER“ — der Satz bleibt offen, damit du einsetzen kannst, was dich gerade erdrückt: größer als die Rechnung. Größer als der Chef. Größer als die Diagnose. Größer als deine Angst.',
+      bild: 'Halte eine Münze direkt vors Auge — sie verdeckt die ganze Sonne. So sind Sorgen: winzig, aber direkt vor deinem Gesicht wirken sie riesig. Allahu akbar nimmt die Münze vom Auge und stellt die Größenordnung wieder her. Genau deshalb beginnt jedes Gebet mit „Allahu akbar“: In diesem Moment erklärst du alles hinter dir für klein — und trittst vor den wirklich Großen.',
+      schild: 'Dein Schild, wenn ein Problem übermächtig aussieht. Sag es und setz ein: „Allah ist größer als …“ — und nenne dein Problem beim Namen.',
+      lohn: 'Zusammen mit SubhanAllah und Alhamdulillah nach jedem Gebet (33/33/34) — der Prophet ﷺ nannte es einen Weg, mit dem die Armen die Reichen überholen. (Sahih Muslim 595)'
+    } },
+  hasbuna: { ar: 'حَسْبُنَا اللهُ وَنِعْمَ الْوَكِيلُ', lat: 'Hasbunallahu wa niʿmal-wakil', de: 'Allah genügt uns — und Er ist der beste Sachwalter', ziel: 33,
+    tief: {
+      woerter: [ { a: 'حَسْبُنَا', b: '„unsere Genüge“ — Er reicht uns völlig aus' }, { a: 'اللهُ', b: 'Allah' }, { a: 'وَنِعْمَ', b: 'und wie vortrefflich ist' }, { a: 'الْوَكِيلُ', b: 'der Wakil — Der, dem man seine Sache anvertraut' } ],
+      wurzel: 'Ein „Wakil“ ist der, dem du deine Angelegenheit komplett übergibst — wie ein Anwalt, ein Treuhänder, ein Verwalter. „Hasb“ heißt Genüge: Wenn Er für dich ist, brauchst du niemanden mehr dazu. Der Satz bedeutet: „Ich übergebe meine Akte — und der, der sie übernimmt, hat noch nie einen Fall verloren.“',
+      bild: 'Ibrahim (Friede sei mit ihm) sagte genau diese Worte, als man ihn ins Feuer warf — und Allah befahl dem Feuer: „Sei kühl und harmlos für Ibrahim!“ (21:69). Die Gefährten sagten sie, als man ihnen drohte: „Die Menschen haben sich gegen euch versammelt!“ — und sie kehrten unversehrt und mit Gewinn zurück (3:173–174). Feuer und Armeen — dieselben vier Worte.',
+      schild: 'Dein Schild, wenn du dich ohnmächtig fühlst: gegen Menschen, Behörden, Rechnungen, Übermacht. Du gibst die Akte ab — und schläfst.',
+      lohn: 'Ibn ʿAbbas sagte: „Hasbunallahu wa niʿmal-wakil“ sprach Ibrahim im Feuer, und Muhammad ﷺ sprach es, als man ihm mit den Armeen drohte. (Sahih al-Bukhari 4563)'
+    } },
+  lahawla: { ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', lat: 'La hawla wa la quwwata illa billah', de: 'Kein Wandel und keine Kraft — außer durch Allah', ziel: 33,
+    tief: {
+      woerter: [ { a: 'لَا حَوْلَ', b: 'kein „Hawl“ — kein Wegbewegen, kein Ändern eines Zustands' }, { a: 'وَلَا قُوَّةَ', b: 'und keine Kraft, etwas zu erreichen' }, { a: 'إِلَّا بِاللهِ', b: 'außer DURCH Allah' } ],
+      wurzel: '„Hawl“ kommt von „sich wandeln“ (wie „hal“ = Zustand): die Kraft, von etwas Schlechtem WEGzukommen. „Quwwa“ ist die Kraft, etwas Gutes zu ERREICHEN. Der Satz gibt beides ab: Ich kann weder der Sünde entkommen noch den Gehorsam schaffen, weder dem Schaden entgehen noch den Erfolg packen — außer Du gibst mir die Kraft dazu.',
+      bild: 'Du bist wie eine Lampe: wunderschön gebaut, aber ohne eigenen Strom. Alles, was du je geschafft hast, lief über Sein Kabel. La hawla sagen heißt nicht „ich bin schwach und wertlos“ — es heißt: „Ich stecke meinen Stecker in die einzige Steckdose, die es gibt.“ Danach arbeitest du mit Seiner Kraft statt mit deiner. Deshalb sagst du es, wenn etwas zu schwer für dich ist.',
+      schild: 'Dein Schild bei Überforderung: zu viel Arbeit, zu große Aufgabe, zu schwere Prüfung. Nicht aufgeben — umstecken.',
+      lohn: 'Der Prophet ﷺ sagte zu Abu Musa: „Soll ich dir einen Schatz aus den Schätzen des Paradieses zeigen? La hawla wa la quwwata illa billah.“ (Sahih al-Bukhari 4205) Ein Schatz — weil er verborgen und unbezahlbar ist.'
+    } },
+  salawat: { ar: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', lat: 'Allahumma salli ʿala Muhammad', de: 'O Allah, segne Muhammad ﷺ', ziel: 10,
+    tief: {
+      woerter: [ { a: 'اللَّهُمَّ', b: '„O Allah!“ — feierliche Anrede' }, { a: 'صَلِّ عَلَى', b: 'erweise Segen, Lob und Barmherzigkeit' }, { a: 'مُحَمَّدٍ', b: 'Muhammad ﷺ — „der immerfort Gelobte“' } ],
+      wurzel: 'Wenn ALLAH „Salat“ auf den Propheten spricht, heißt das: Er lobt ihn in der höchsten Versammlung der Engel und überschüttet ihn mit Barmherzigkeit. Wenn DU Salawat sprichst, bittest du Allah, genau das zu tun — und trittst damit in eine Kette ein, in der Allah und Seine Engel schon stehen (Koran 33:56).',
+      bild: 'Stell dir vor: Du schickst einen Gruß ab — und ein Engel trägt ihn persönlich zum Propheten ﷺ und sagt: „Der und der, Sohn des und des, grüßt dich.“ Mit deinem Namen! Und für jeden einen Gruß segnet Allah DICH zehnmal zurück. Du gibst 1 und bekommst 10 — bei keinem Geschäft der Welt gibt es diesen Kurs.',
+      schild: 'Dein Schild bei Kummer, dessen Grund du nicht greifen kannst. Ubayy fragte: „Soll ich meine ganze Dua-Zeit dir widmen, o Gesandter Allahs?“ Er sagte: „Dann wird deine Sorge genommen und deine Sünde vergeben.“ (Tirmidhi 2457)',
+      lohn: '„Wer einmal Segen über mich spricht, über den spricht Allah zehnmal Segen.“ (Sahih Muslim 408)'
+    } },
+  lailaha: { ar: 'لَا إِلَهَ إِلَّا اللهُ', lat: 'La ilaha illallah', de: 'Es gibt nichts Anbetungswürdiges außer Allah', ziel: 100,
+    tief: {
+      woerter: [ { a: 'لَا', b: '„NEIN“ — radikaler Abriss' }, { a: 'إِلَهَ', b: 'kein „Ilah“ — nichts, woran das Herz sich hängt und dem es dient' }, { a: 'إِلَّا', b: 'AUSSER' }, { a: 'اللهُ', b: 'Allah — Er allein' } ],
+      wurzel: 'Ein „Ilah“ ist nicht nur eine Götzenstatue. Ein Ilah ist ALLES, woran dein Herz hängt, worauf es hofft und wovor es zittert: Geld kann ein Ilah werden, die Meinung der Menschen, die Angst, sogar das eigene Ego. Der Satz hat zwei Schläge: Erst reißt „La ilaha“ ALLES ab — dann setzt „illallah“ den Einen ein, dem das Herz wirklich gehört.',
+      bild: 'Dein Herz ist ein Thronsaal mit genau EINEM Thron. Solange Geld, Angst und Menschen sich darauf drängeln, ist Chaos im Saal. „La ilaha“ räumt den Thron komplett leer — „illallah“ setzt den wahren König darauf. Ab dann herrscht Ordnung: Alles andere darf im Saal SEIN (Geld, Familie, Träume), aber nichts darf mehr auf dem Thron SITZEN.',
+      schild: 'Dein Schild, wenn die Dunya zu laut wird und du merkst, dass dein Herz an etwas anderem hängt als an Ihm. Sag es langsam und räum den Thron.',
+      lohn: '„Das beste Dhikr ist La ilaha illallah.“ (Tirmidhi 3383 — hasan) Und der Prophet ﷺ sagte: Würde man die sieben Himmel und Erden in eine Waagschale legen und La ilaha illallah in die andere — es würde schwerer wiegen.'
+    } }
 };
 
 const ERINNERUNGEN = [
@@ -1363,6 +1449,7 @@ function waehleDhikr(id){
   presetsDiv.querySelectorAll('.preset').forEach(c =>
     c.classList.toggle('aktiv', c.dataset.id === id));
   zeichneZaehler();
+  renderVerstehen();
 }
 function zeichneZaehler(){
   const n = counts[aktuellesDhikr] || 0;
@@ -1398,7 +1485,37 @@ $('tap').addEventListener('click', () => {
 $('reset').addEventListener('click', () => {
   counts[aktuellesDhikr] = 0; store.set('counts', counts); zeichneZaehler();
 });
+
+let verstehOffen = store.get('versteh-offen', false);
+function renderVerstehen(){
+  const box = $('verstehen');
+  box.hidden = !verstehOffen;
+  $('verstehBtn').textContent = verstehOffen ? 'Verstehen ausblenden' : 'Was sage ich da? · Verstehen';
+  if (!verstehOffen) return;
+  box.replaceChildren();
+  const t = DHIKR[aktuellesDhikr].tief;
+  if (!t) return;
+  box.appendChild(el('span', 'label', 'Wort für Wort'));
+  for (const w of t.woerter){
+    const r = el('div', 'wort-row');
+    r.appendChild(el('span', 'wort-ar', w.a));
+    r.appendChild(el('span', 'wort-de', w.b));
+    box.appendChild(r);
+  }
+  box.appendChild(el('span', 'label', 'Die Wurzel — was du wirklich sagst'));
+  box.appendChild(el('p', 'versteh-p', t.wurzel));
+  box.appendChild(el('span', 'label', 'Stell es dir so vor'));
+  box.appendChild(el('p', 'versteh-p', t.bild));
+  box.appendChild(el('span', 'label', 'Dein Schild — wann du es brauchst'));
+  box.appendChild(el('p', 'versteh-p', t.schild));
+  box.appendChild(el('span', 'label', 'Was du dafür bekommst'));
+  box.appendChild(el('p', 'versteh-p', t.lohn));
+}
+$('verstehBtn').addEventListener('click', () => {
+  verstehOffen = !verstehOffen; store.set('versteh-offen', verstehOffen); renderVerstehen();
+});
 waehleDhikr(aktuellesDhikr);
+renderVerstehen();
 
 /* ---------- Mein Weg: Tages-Checkliste ---------- */
 const WEG_ITEMS = [
