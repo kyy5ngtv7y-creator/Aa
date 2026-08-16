@@ -21,16 +21,35 @@ Alle Eingaben bleiben ausschließlich auf dem Gerät (localStorage). Es gibt kei
 Server und keine Datenübertragung. Die App funktioniert nach dem ersten Öffnen
 auch offline (Service Worker).
 
+## Gehostete Version (GitHub Pages, gratis)
+
+Die App wird automatisch auf GitHub Pages veröffentlicht:
+
+**https://kyy5ngtv7y-creator.github.io/Aa/**
+
+- Der Branch `gh-pages` enthält die veröffentlichten Dateien.
+- Der Workflow `.github/workflows/tawakkul-pages.yml` aktualisiert die Seite
+  automatisch bei jedem Push in `tawakkul-app/`.
+- Falls die Seite 404 zeigt: Repository-Einstellungen → Pages → Branch
+  `gh-pages` / Ordner `/ (root)` als Quelle wählen.
+- Die Web-Adresse ist öffentlich erreichbar, aber nirgendwo verlinkt. Alle
+  Eingaben (Gedanken, Zähler, Checkliste) bleiben ausschließlich im
+  localStorage des eigenen Geräts – der Server liefert nur die App-Dateien.
+
 ## Auf dem iPhone installieren
 
-1. Die App muss über HTTPS erreichbar sein – am einfachsten mit GitHub Pages:
-   Repository-Einstellungen → Pages → diesen Branch/Ordner veröffentlichen,
-   oder den Ordner `tawakkul-app/` zu einem beliebigen statischen Host hochladen.
-2. Die Adresse in **Safari** auf dem iPhone öffnen.
-3. **Teilen-Symbol → „Zum Home-Bildschirm“** antippen.
-4. Die App liegt nun wie eine normale App auf dem Home-Bildschirm (eigenes Icon,
+1. **https://kyy5ngtv7y-creator.github.io/Aa/** in **Safari** öffnen.
+2. **Teilen-Symbol → „Zum Home-Bildschirm“** antippen.
+3. Die App liegt nun wie eine normale App auf dem Home-Bildschirm (eigenes Icon,
    Vollbild, offline nutzbar). Benachrichtigungen sind ab iOS 16.4 möglich,
    sobald die App installiert ist.
+
+## Später auf eigenen/bezahlten Server umziehen
+
+Die App ist rein statisch (keine Datenbank, kein Backend): Einfach den Inhalt
+von `tawakkul-app/` zu einem beliebigen Host kopieren (eigener Webspace,
+Netlify, Vercel, Cloudflare Pages …) – fertig. Auf dem iPhone danach einmal
+neu „Zum Home-Bildschirm“ hinzufügen, da sich die Adresse ändert.
 
 ## Wichtiger Hinweis
 
