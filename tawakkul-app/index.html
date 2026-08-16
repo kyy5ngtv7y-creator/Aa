@@ -463,6 +463,7 @@
         <button class="chip">Andere haben ein schönes Leben und ich nur Probleme</button>
         <button class="chip">Ich erwische mich wieder bei alten Gedanken</button>
         <button class="chip">Was bedeutet SubhanAllah eigentlich?</button>
+        <button class="chip">Das klappt bei mir eh nie</button>
       </div>
       <p style="text-align:center;margin-top:18px">
         <button class="linkbtn" id="clearChat">Verlauf löschen</button>
@@ -746,6 +747,41 @@
           aussprechen, was dein Herz trägt. Die Dua in dieser Zeit ist wie ein Pfeil, der nicht
           daneben geht — der Prophet ﷺ nannte sie die beste Zeit der Dua überhaupt.
           (Tirmidhi 3579)</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Nichts ist Ihm unmöglich — die Beweise</summary>
+        <div class="acc-body">
+          <p>Jedes Mal, wenn dein Kopf sagt „Das passiert nie“, halte ihm diese Liste hin.
+          Alles davon war nach menschlicher Rechnung unmöglich:</p>
+          <ul>
+            <li><b>Zakariyya</b> — alt, schwach, die Frau unfruchtbar. Er bat trotzdem. Allah:
+            „Das ist Mir ein Leichtes.“ → Yahya wurde geboren. (Koran 19:8–9)</li>
+            <li><b>Sara</b> — lachte über die Ankündigung eines Sohnes im Alter. Die Engel:
+            „Wunderst du dich über den Befehl Allahs?“ → Ishaq. (Koran 11:71–73)</li>
+            <li><b>Maryam</b> — ein Kind ohne Mann: „So ist es; Allah erschafft, was Er will.“
+            (Koran 3:47)</li>
+            <li><b>Musa</b> — Meer vorne, Armee hinten, alle: „Verloren!“ Er: „Keineswegs, mein
+            Herr ist mit mir.“ → Das Meer teilte sich. (Koran 26:61–63)</li>
+            <li><b>Yusuf</b> — vom Brunnen ins Gefängnis, vom Gefängnis auf den Thron Ägyptens —
+            und die Träume wurden nach Jahrzehnten wahr. (Koran 12:100)</li>
+            <li><b>Ayyub</b> — Jahre der Krankheit, alles verloren. Eine Dua → Heilung, Familie
+            und mehr zurück. (Koran 21:83–84)</li>
+            <li><b>Yunus</b> — im Bauch des Wals, in dreifacher Finsternis: eine Dua → gerettet.
+            (Koran 21:87–88)</li>
+            <li><b>Der Prophet ﷺ in der Höhle</b> — die Verfolger standen direkt davor: „Sei
+            nicht traurig, Allah ist mit uns.“ → Sie sahen sie nicht. (Koran 9:40)</li>
+            <li><b>Badr</b> — 313 schlecht Bewaffnete gegen ein Heer: „Allah hat euch bei Badr
+            geholfen, als ihr schwach wart.“ (Koran 3:123)</li>
+          </ul>
+          <p><b>Dein Training:</b> Sag nie wieder „Das passiert eh nie.“ Sag: „<em>In scha
+          Allah</em> — so Allah will, bringt Er es mir. Und Ihm ist nichts unmöglich.“ Du
+          verlierst damit nichts: Entweder Er gibt es dir, oder Er gibt dir Besseres — aber dein
+          Herz bleibt bei Ihm statt im „Nie“.</p>
+          <p class="quelle-klein">„Sein Befehl, wenn Er etwas will, ist nur, dass Er dazu sagt:
+          Sei! — und es ist.“ (Koran 36:82) · „Und wenn dich Allah mit Gutem berührt — so hat Er
+          zu allem die Macht.“ (Koran 6:17)</p>
         </div>
       </details>
 
@@ -1133,6 +1169,28 @@ const DB = {
     ]
   },
 
+  unmoeglich: {
+    prio: 9,
+    phrasen: ['nie passieren','eh nie','wird nie klappen','klappt nie','wird eh nichts','wird nie was','werde das nie','schaffe das nie','kann nie passieren','zu spät für mich','zu gross für mich','zu groß für mich','bleibt ein traum','nur ein traum','niemals möglich','klappt bei mir nie','bei mir nie'],
+    worte: ['unmöglich','aussichtslos','unrealistisch','utopisch','unerreichbar'],
+    antworten: [
+      {
+        t: '„Nie“ ist ein Wort für Menschen-Kräfte. Für Den, Der sagt „Sei!“ — und es ist — gibt es kein „nie“.',
+        e: 'Allah beschreibt Selbst, wie Er erschafft: Wenn Er etwas will, sagt Er nur „Kun!“ — „Sei!“ — und es ist. Kein Aufwand, kein „mal schauen“, keine Bedingungen. Schau Zakariyya an: ein alter Mann, weißes Haar, schwache Knochen, seine Frau unfruchtbar — ein Kind war nach jeder menschlichen Rechnung unmöglich. Er machte trotzdem Dua. Und Allahs Antwort war: „Das ist Mir ein Leichtes — Ich habe ja dich selbst zuvor erschaffen, als du noch nichts warst.“ (Koran 19:9) Yahya wurde geboren. Deine Sache mag bei Menschen unmöglich sein, bei Banken unmöglich, bei Ärzten unmöglich — aber du fragst ja nicht Menschen, Banken oder Ärzte. Du fragst Den, Der aus dem Nichts erschafft.',
+        q: { x: 'Sein Befehl, wenn Er etwas will, ist nur, dass Er dazu sagt: „Sei!“ — und es ist.', r: 'Koran 36:82' },
+        h: { x: 'Allah sagt: O Meine Diener, wenn die Ersten und die Letzten von euch, Menschen und Dschinn, an einem Ort stünden und Mich alle bitten würden — und Ich gäbe jedem Einzelnen, worum er bittet — würde das Mein Reich nicht mehr mindern, als eine Nadel das Meer mindert, wenn man sie hineintaucht.', r: 'Hadith Qudsi — Sahih Muslim 2577' },
+        a: { text: 'Trainiere den Satz-Tausch: Streiche „Das passiert eh nie“ und sag laut: „In scha Allah — mein Herr kann alles, auch das.“ Dann hak es in der Checkliste ab.', view: 'weg', btn: 'Zur Checkliste' }
+      },
+      {
+        t: 'Sara hat auch gelacht, als die Engel es ihr ankündigten. Kurz darauf trug sie Ishaq im Arm.',
+        e: 'Ibrahims Frau Sara war alt und unfruchtbar. Als die Engel ihr einen Sohn ankündigten, LACHTE sie — genau dein „Das passiert doch nie!“ Die Antwort der Engel: „Wunderst du dich über den Befehl Allahs?“ (11:73). Und schau das Muster an: Maryam bekam ein Kind ohne Mann. Musa stand vor dem Meer, die Armee im Rücken — alle riefen: „Wir sind verloren!“ Er sagte nur: „Keineswegs! Mein Herr ist mit mir, Er wird mich leiten.“ (26:62) Das Meer teilte sich. Yusuf lag im Brunnen — Jahre später regierte er Ägypten. Ayyub war lange Jahre krank — und wurde geheilt. Merkst du es? Allah liebt es, genau DA zu geben, wo Menschen „unmöglich“ draufgeschrieben haben — damit hinterher jeder weiß: Das war ER.',
+        q: { x: 'Gewiss, Allah erreicht Sein Vorhaben. Allah hat für alles ein Maß festgesetzt.', r: 'Koran 65:3' },
+        h: { x: 'Allah sagt: „Ich bin so, wie Mein Diener von Mir denkt: Denkt er Gutes von Mir, so bekommt er es. Und denkt er Schlechtes von Mir, so bekommt er das.“', r: 'Musnad Ahmad 9076 — sahih' },
+        a: { text: 'Dein „unmöglich“ ist eine Diagnose über DEINE Kraft — nicht über Seine. Sag 34× „Allahu akbar“: größer als jedes Unmöglich.', dhikr: 'akbar', btn: '34× Allahu akbar' }
+      }
+    ]
+  },
+
   bedeutung: {
     prio: 9,
     phrasen: ['was bedeutet','was heisst','bedeutung von','verstehe nicht was','verstehe das wort'],
@@ -1255,7 +1313,10 @@ const ERINNERUNGEN = [
   { x: 'Ein kurzes „Hasbunallahu wa niʿmal-wakil“ — und die Last wird leichter.', r: 'Koran 3:173' },
   { x: 'Richte deine Augen nicht auf das, was andere haben. Die Versorgung deines Herrn ist besser und beständiger.', r: 'Koran 20:131' },
   { x: 'Allah ändert nicht den Zustand eines Volkes, bis sie ändern, was in ihnen selbst ist. — Dein Haken auf der Checkliste wartet.', r: 'Koran 13:11' },
-  { x: 'Hast du dich heute schon bei einem alten Gedanken erwischt und ihn umgedreht? Das ist Training, kein Versagen.', r: '' }
+  { x: 'Hast du dich heute schon bei einem alten Gedanken erwischt und ihn umgedreht? Das ist Training, kein Versagen.', r: '' },
+  { x: '„Sei!“ — und es ist. Dein Wunsch ist Ihm nicht zu groß.', r: 'Koran 36:82' },
+  { x: 'Sag heute nicht „Das passiert nie“. Sag: „In scha Allah — mein Herr kann alles.“', r: '' },
+  { x: 'Würden alle Menschen und Dschinn alles bekommen, was sie bitten — Sein Reich würde nur so viel weniger, wie eine Nadel dem Meer nimmt.', r: 'Sahih Muslim 2577' }
 ];
 
 const ZEIT_ERINNERUNGEN = {
@@ -1527,6 +1588,7 @@ const WEG_ITEMS = [
   { id: 'koran',    t: 'Etwas Koran gelesen oder gehört (5 Minuten zählen!)' },
   { id: 'dank',     t: '3 Dinge genannt, für die ich Allah dankbar bin' },
   { id: 'gedanke',  t: 'Schlechten Gedanken über Allah erwischt und umgedreht' },
+  { id: 'yaqin',    t: '„Das passiert nie“ ersetzt durch „In scha Allah — Allah kann alles“' },
   { id: 'gutes',    t: 'Einem Menschen Gutes getan oder ein freundliches Wort geschenkt' },
   { id: 'sadaqa',   t: 'Sadaqa gegeben — auch ganz klein, ein Lächeln zählt' },
   { id: 'dua',      t: 'Eine ehrliche Dua gemacht, für mich und für andere' }
