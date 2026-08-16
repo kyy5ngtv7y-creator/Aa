@@ -211,6 +211,24 @@
   .adhkar-ar{font-family:var(--arabic);font-size:21px;direction:rtl;display:block;margin-bottom:2px}
   .adhkar-de{font-size:13.5px;color:var(--ink-soft)}
 
+  /* ---------- Weg (Checkliste + Duas) ---------- */
+  .check-item{display:flex;align-items:flex-start;gap:10px;border-top:1px solid var(--line);padding:10px 0}
+  .check-item:first-child{border-top:none;padding-top:2px}
+  .check-item input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--teal);flex-shrink:0;cursor:pointer}
+  .check-item label{font-size:14.5px;cursor:pointer;flex:1}
+  .check-item.done label{color:var(--ink-soft);text-decoration:line-through}
+  .check-go{
+    font:inherit;font-size:12px;color:var(--teal);background:none;cursor:pointer;
+    border:1px solid var(--line);border-radius:999px;padding:2px 10px;flex-shrink:0;
+  }
+  .check-go:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .progress{height:8px;border-radius:999px;background:var(--surface2);margin-top:14px;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));width:0%;transition:width .3s ease}
+  .p-text{font-size:13px;color:var(--ink-soft);margin:8px 0 0;font-variant-numeric:tabular-nums}
+  .dua-item{border-top:1px solid var(--line);padding:12px 0}
+  .dua-item:first-of-type{border-top:none;padding-top:2px}
+  .dua-titel{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 4px}
+
   /* ---------- Tabbar ---------- */
   nav.tabbar{
     position:fixed;left:0;right:0;bottom:0;z-index:6;
@@ -248,6 +266,8 @@
         <button class="chip">Ich fühle mich allein</button>
         <button class="chip">Ich habe Fehler gemacht</button>
         <button class="chip">Warum passiert mir das?</button>
+        <button class="chip">Andere haben ein schönes Leben und ich nur Probleme</button>
+        <button class="chip">Ich erwische mich wieder bei alten Gedanken</button>
       </div>
       <p style="text-align:center;margin-top:18px">
         <button class="linkbtn" id="clearChat">Verlauf löschen</button>
@@ -273,6 +293,74 @@
           <button class="btn ghost" id="reset">Zurücksetzen</button>
         </div>
         <p class="heute" id="heute"></p>
+      </div>
+    </section>
+
+    <!-- ================= WEG ================= -->
+    <section id="view-weg" class="view">
+      <h2 class="sect">Mein Weg — Tages-Checkliste</h2>
+      <p class="sub">Kleine Schritte, jeden Tag. So wird aus „Ich will mich ändern“ ein echtes Training.
+      Die Liste beginnt jeden Tag neu.</p>
+      <div class="wcard">
+        <div id="checkliste"></div>
+        <div class="progress" aria-hidden="true"><div class="progress-fill" id="pFill"></div></div>
+        <p class="p-text" id="pText"></p>
+      </div>
+
+      <h2 class="sect">Duas für dich</h2>
+      <p class="sub">Authentische Duas aus Koran und Sunnah — für genau die Momente, um die es dir geht.</p>
+      <div class="wcard">
+        <div class="dua-item">
+          <p class="dua-titel">Bei Sorgen, Traurigkeit und Schulden</p>
+          <span class="adhkar-ar">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ</span>
+          <em>Allahumma inni aʿudhu bika minal-hammi wal-hazani, wal-ʿadschzi wal-kasali, wal-buchli wal-dschubni, wa dalaʿid-dayni wa ghalabatir-ridschal</em>
+          <span class="adhkar-de">„O Allah, ich suche Zuflucht bei Dir vor Sorge und Trauer, vor Unfähigkeit und Faulheit, vor Geiz und Feigheit, vor der Last der Schulden und der Übermacht der Menschen.“ — Der Prophet ﷺ sprach sie sehr oft. (Sahih al-Bukhari 6369)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Für halalen Rizq und Unabhängigkeit</p>
+          <span class="adhkar-ar">اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ</span>
+          <em>Allahumma-kfini bi-halalika ʿan haramika, wa aghnini bi-fadlika ʿamman siwak</em>
+          <span class="adhkar-de">„O Allah, lass mir Dein Halal genügen, sodass ich Dein Haram nicht brauche, und mach mich durch Deine Gunst unabhängig von allen außer Dir.“ — Der Prophet ﷺ sagte: Damit tilgt Allah selbst Schulden so groß wie ein Berg. (Tirmidhi 3563)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Wenn du gar nichts hast — die Dua von Musa</p>
+          <span class="adhkar-ar">رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ</span>
+          <em>Rabbi inni lima anzalta ilayya min khayrin faqir</em>
+          <span class="adhkar-de">„Mein Herr, ich bin bedürftig für das Gute, das Du zu mir herabsendest.“ (Koran 28:24) — Musa sprach sie als Flüchtling ohne Geld, ohne Heimat, unter einem Baum. Kurz danach gab Allah ihm Arbeit, Familie und Sicherheit.</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">In tiefster Dunkelheit — die Dua von Yunus</p>
+          <span class="adhkar-ar">لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</span>
+          <em>La ilaha illa anta, subhanaka, inni kuntu minaz-zalimin</em>
+          <span class="adhkar-de">„Es gibt keinen Gott außer Dir. Gepriesen seist Du! Ich gehörte zu den Ungerechten.“ (Koran 21:87) — Der Prophet ﷺ sagte: Kein Muslim bittet mit ihr um etwas, ohne dass Allah ihn erhört. (Tirmidhi 3505)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Damit dein Herz fest bleibt</p>
+          <span class="adhkar-ar">يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ</span>
+          <em>Ya muqalliba-l-qulub, thabbit qalbi ʿala dinik</em>
+          <span class="adhkar-de">„O Du, Der die Herzen wendet, festige mein Herz auf Deiner Religion.“ — Die Dua, die der Prophet ﷺ am häufigsten sprach. (Tirmidhi 3522)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Beim Verlassen des Hauses</p>
+          <span class="adhkar-ar">بِسْمِ اللهِ، تَوَكَّلْتُ عَلَى اللهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ</span>
+          <em>Bismillahi, tawakkaltu ʿalallahi, wa la hawla wa la quwwata illa billah</em>
+          <span class="adhkar-de">„Im Namen Allahs, ich verlasse mich auf Allah, und es gibt keine Macht und keine Kraft außer durch Allah.“ — Wer sie spricht, dem wird gesagt: Du bist geleitet, versorgt und geschützt. (Abu Dawud 5095)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Wenn etwas schwer ist</p>
+          <span class="adhkar-ar">اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا</span>
+          <em>Allahumma la sahla illa ma dschaʿaltahu sahlan, wa anta tadschʿalu-l-hazna idha schi’ta sahlan</em>
+          <span class="adhkar-de">„O Allah, nichts ist leicht außer dem, was Du leicht machst — und wenn Du willst, machst Du sogar das Schwere leicht.“ (Ibn Hibban 970 — sahih)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Sayyid al-Istighfar — die Krone der Vergebungsbitte</p>
+          <span class="adhkar-ar">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</span>
+          <span class="adhkar-de">„O Allah, Du bist mein Herr, es gibt keinen Gott außer Dir. Du hast mich erschaffen, und ich bin Dein Diener, und ich halte Deinen Bund und Dein Versprechen, so gut ich kann. Ich suche Zuflucht bei Dir vor dem Übel dessen, was ich getan habe. Ich bekenne Dir Deine Gnade an mir, und ich bekenne meine Sünde — so vergib mir, denn niemand vergibt die Sünden außer Dir.“ — Wer sie morgens mit Überzeugung spricht und an dem Tag stirbt, gehört zu den Leuten des Paradieses. (Sahih al-Bukhari 6306)</span>
+        </div>
+        <div class="dua-item">
+          <p class="dua-titel">Vor großen Entscheidungen: Istikhara</p>
+          <span class="adhkar-de">Bei jeder wichtigen Entscheidung (Arbeit, Heirat, Umzug …) lehrte der Prophet ﷺ das Istikhara-Gebet: zwei Rakʿa beten und danach die Istikhara-Dua sprechen — damit legst du die Entscheidung in Allahs Hände und gehst dann mutig los. (Sahih al-Bukhari 1162; den vollständigen Text findest du in jedem Dua-Buch oder bei deinem Imam.)</span>
+        </div>
       </div>
     </section>
 
@@ -392,6 +480,10 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><circle cx="6" cy="8.5" r="2"/><circle cx="18" cy="8.5" r="2"/><circle cx="4.5" cy="14.5" r="2"/><circle cx="19.5" cy="14.5" r="2"/><circle cx="12" cy="19" r="2.6"/></svg>
         Dhikr
       </button>
+      <button class="tab" data-view="weg">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.5l1.5 1.5 2.5-2.5"/><path d="M4.5 12.5l1.5 1.5 2.5-2.5"/><path d="M4.5 18.5l1.5 1.5 2.5-2.5"/><path d="M12.5 6.5h7M12.5 12.5h7M12.5 18.5h7"/></svg>
+        Weg
+      </button>
       <button class="tab" data-view="remind">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c-3.2 0-5 2.3-5 5v4l-1.8 3h13.6L17 12.5v-4c0-2.7-1.8-5-5-5z"/><path d="M10 18.5a2 2 0 0 0 4 0"/></svg>
         Erinnerung
@@ -419,7 +511,7 @@
 const DB = {
   nichtgeben: {
     prio: 10,
-    phrasen: ['gibt mir nicht','will mir nicht geben','gibt mir nichts','bekomme nicht','bekomme nie','kriege nicht','kriege nie','nie etwas','hat mich vergessen','vergisst mich','andere haben alles','warum habe ich nicht','gibt mir nie'],
+    phrasen: ['gibt mir nicht','will mir nicht geben','gibt mir nichts','bekomme nicht','bekomme nie','kriege nicht','kriege nie','nie etwas','hat mich vergessen','vergisst mich','warum habe ich nicht','gibt mir nie','alte gedanken','erwische mich','ertappe mich','immer diese gedanken','schon wieder gedacht','immer wieder denke ich'],
     worte: ['benachteiligt','übergangen','leer aus'],
     antworten: [
       {
@@ -435,6 +527,35 @@ const DB = {
         q: { x: 'Und euer Herr sagt: Ruft Mich an, so erhöre Ich euch.', r: 'Koran 40:60' },
         h: { x: 'Euer Herr ist voller Scham und Großzügigkeit: Er schämt Sich, die Hände Seines Dieners leer zurückzuweisen, wenn dieser sie zu Ihm erhebt.', r: 'Abu Dawud 1488, Tirmidhi 3556 — sahih' },
         a: { text: 'Heb jetzt deine Hände und mach eine kleine, ehrliche Dua — auf Deutsch reicht völlig.', dhikr: 'hasbuna', btn: '33× Hasbunallah' }
+      },
+      {
+        t: 'Gut, dass du dich erwischt hast! Genau SO trainiert man ein Herz um. Das ist kein Versagen — das ist das Training.',
+        e: 'Alte Gedanken sind wie ein ausgetretener Weg im Schnee: Die Füße gehen ihn automatisch, weil sie ihn tausendmal gegangen sind. Jedes Mal, wenn du dich erwischst und den Gedanken umdrehst — „Nein, Allah will mir sehr wohl geben, Er wählt nur Zeitpunkt und Form“ — trittst du einen NEUEN Weg in den Schnee. Die ersten fünfzig Mal ist es anstrengend. Danach geht dein Herz den neuen Weg von selbst. Dass du dich überhaupt erwischst, zeigt: Dein Herz ist wach.',
+        q: { x: 'Gewiss, Allah ändert nicht den Zustand eines Volkes, bis sie das ändern, was in ihnen selbst ist.', r: 'Koran 13:11' },
+        h: { x: 'Der Iman in euren Herzen nutzt sich ab, wie ein Kleid sich abnutzt — so bittet Allah, den Iman in euren Herzen zu erneuern.', r: 'al-Hakim, al-Mustadrak — sahih nach al-Albani (Sahih al-Dschamiʿ 1590)' },
+        a: { text: 'Mach dein Training messbar: In deiner Tages-Checkliste gibt es den Punkt „Schlechten Gedanken über Allah erwischt und umgedreht“. Hak ihn heute ab — jeder Tag ein Sieg.', view: 'weg', btn: 'Zur Checkliste' }
+      }
+    ]
+  },
+
+  neid: {
+    prio: 8,
+    phrasen: ['andere haben','andere leute haben','alle anderen','schönes leben','keine probleme','wieso hat er','wieso hat sie','warum hat er','warum hat sie','warum haben andere','wieso haben andere','besseres leben','mehr glück','immer glück','haben alles'],
+    worte: ['neid','neidisch','beneide','vergleiche','vergleichen','eifersüchtig','eifersucht','instagram','tiktok'],
+    antworten: [
+      {
+        t: 'Dreh den Gedanken um: Vielleicht hält Allah es nicht von dir fern — vielleicht macht Er dich gerade erst BEREIT dafür.',
+        e: 'Ein guter Lehrer gibt dem Schüler aus der 3. Klasse nicht die Prüfung der 6. Klasse — nicht als Strafe, sondern als Schutz. Genauso können manche Geschenke uns heute kaputt machen: Geld vor der Reife macht hochmütig, Erfolg vor der Demut macht blind. Allah sagt selbst, dass Er die Versorgung „im rechten Maß“ herabsendet, weil Übermaß Menschen verdirbt. Also stell die Frage neu: Nicht „Wieso hat ER das?“, sondern „Was kann ICH tun, um bereit zu werden?“ — Und genau dafür hast du jetzt eine Checkliste: jeden Tag kleine Schritte, die dich vorbereiten, bis Allah sagt: Jetzt.',
+        q: { x: 'Und würde Allah Seinen Dienern die Versorgung im Übermaß gewähren, würden sie auf der Erde Ungerechtigkeit verüben. Aber Er lässt im rechten Maß herab, was Er will. Er hat Kenntnis von Seinen Dienern und sieht sie wohl.', r: 'Koran 42:27' },
+        h: { x: 'Kein Neid ist erlaubt, außer bei zweien: einem Mann, dem Allah Vermögen gab und der es für die Wahrheit ausgibt, und einem Mann, dem Allah Weisheit gab und der danach handelt und sie lehrt.', r: 'Sahih al-Bukhari 73' },
+        a: { text: 'Öffne deine Tages-Checkliste und mach heute den ersten Haken. Bereit werden ist Arbeit — fang jetzt an.', view: 'weg', btn: 'Zur Checkliste' }
+      },
+      {
+        t: 'Du vergleichst dein Inneres mit dem Schaufenster der anderen. Aber niemand zeigt dir sein Lager.',
+        e: 'Von anderen siehst du nur die Bühne: das Lachen, das Auto, die Ferienfotos. Die unbezahlte Rechnung, die Tränen um drei Uhr nachts, die Angst — das postet niemand. Allah sagt, dass JEDER Mensch geprüft wird, ausnahmslos — nur die Prüfungen sehen verschieden aus. Und denk an Qarun: Er hatte so viele Schätze, dass starke Männer die Schlüssel kaum tragen konnten. Die Leute sagten: „Hätten wir doch, was Qarun hat!“ Dann ließ Allah ihn mit seinem Haus in der Erde versinken — und dieselben Leute sagten: „Wie gut, dass wir es nicht hatten.“ (Koran 28:76–82). Du weißt nie, was du dir da gerade wünschst.',
+        q: { x: 'Und richte deine Augen nicht auf das, was Wir manchen von ihnen als Glanz des diesseitigen Lebens gewährt haben, um sie darin zu prüfen. Die Versorgung deines Herrn ist besser und beständiger.', r: 'Koran 20:131' },
+        h: { x: 'Erfolgreich ist, wer den Islam angenommen hat, wessen Versorgung ausreichend ist und wen Allah zufrieden gemacht hat mit dem, was Er ihm gab.', r: 'Sahih Muslim 1054' },
+        a: { text: 'Sag 33× Alhamdulillah — und zähl dabei auf, was Allah DIR gegeben hat, ohne dass du es je bestellt hast: Augen, Iman, ein Herz, das Ihn sucht.', dhikr: 'alhamdu', btn: '33× Alhamdulillah' }
       }
     ]
   },
@@ -664,7 +785,10 @@ const ERINNERUNGEN = [
   { x: 'Wenn ihr dankbar seid, gebe Ich euch gewiss noch mehr. — Wofür bist du gerade dankbar?', r: 'Koran 14:7' },
   { x: 'Deine Dua geht nie verloren: jetzt, später oder als Schatz im Jenseits.', r: 'Musnad Ahmad 11133' },
   { x: 'Allah ist dir näher als deine Halsschlagader — auch in diesem Moment.', r: 'Koran 50:16' },
-  { x: 'Ein kurzes „Hasbunallahu wa niʿmal-wakil“ — und die Last wird leichter.', r: 'Koran 3:173' }
+  { x: 'Ein kurzes „Hasbunallahu wa niʿmal-wakil“ — und die Last wird leichter.', r: 'Koran 3:173' },
+  { x: 'Richte deine Augen nicht auf das, was andere haben. Die Versorgung deines Herrn ist besser und beständiger.', r: 'Koran 20:131' },
+  { x: 'Allah ändert nicht den Zustand eines Volkes, bis sie ändern, was in ihnen selbst ist. — Dein Haken auf der Checkliste wartet.', r: 'Koran 13:11' },
+  { x: 'Hast du dich heute schon bei einem alten Gedanken erwischt und ihn umgedreht? Das ist Training, kein Versagen.', r: '' }
 ];
 
 /* =============================================================
@@ -718,7 +842,10 @@ function renderAntwort(a){
   const tu = el('div', 'tu');
   tu.appendChild(el('p', 'tu-text', a.a.text));
   const b = el('button', 'btn', a.a.btn);
-  b.addEventListener('click', () => { waehleDhikr(a.a.dhikr); showView('dhikr'); });
+  b.addEventListener('click', () => {
+    if (a.a.view){ showView(a.a.view); }
+    else { waehleDhikr(a.a.dhikr); showView('dhikr'); }
+  });
   tu.appendChild(b);
   card.appendChild(tu);
   chatlog.appendChild(card);
@@ -832,6 +959,55 @@ $('reset').addEventListener('click', () => {
   counts[aktuellesDhikr] = 0; store.set('counts', counts); zeichneZaehler();
 });
 waehleDhikr(aktuellesDhikr);
+
+/* ---------- Mein Weg: Tages-Checkliste ---------- */
+const WEG_ITEMS = [
+  { id: 'gebete',   t: 'Meine 5 Gebete gebetet (so gut ich konnte)' },
+  { id: 'morgen',   t: 'Morgen-Adhkar gemacht' },
+  { id: 'abend',    t: 'Abend-Adhkar gemacht' },
+  { id: 'istighfar',t: '70× Istighfar gesprochen', go: 'dhikr' },
+  { id: 'koran',    t: 'Etwas Koran gelesen oder gehört (5 Minuten zählen!)' },
+  { id: 'dank',     t: '3 Dinge genannt, für die ich Allah dankbar bin' },
+  { id: 'gedanke',  t: 'Schlechten Gedanken über Allah erwischt und umgedreht' },
+  { id: 'gutes',    t: 'Einem Menschen Gutes getan oder ein freundliches Wort geschenkt' },
+  { id: 'sadaqa',   t: 'Sadaqa gegeben — auch ganz klein, ein Lächeln zählt' },
+  { id: 'dua',      t: 'Eine ehrliche Dua gemacht, für mich und für andere' }
+];
+let weg = store.get('weg', { tag: heuteKey(), done: {} });
+if (weg.tag !== heuteKey()) weg = { tag: heuteKey(), done: {} };
+
+function renderWeg(){
+  const wrap = $('checkliste');
+  wrap.replaceChildren();
+  let n = 0;
+  for (const item of WEG_ITEMS){
+    const done = !!weg.done[item.id];
+    if (done) n++;
+    const row = el('div', 'check-item' + (done ? ' done' : ''));
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.id = 'ck-' + item.id; cb.checked = done;
+    cb.addEventListener('change', () => {
+      if (weg.tag !== heuteKey()) weg = { tag: heuteKey(), done: {} };
+      weg.done[item.id] = cb.checked;
+      store.set('weg', weg);
+      renderWeg();
+    });
+    const lb = el('label', null, item.t);
+    lb.htmlFor = cb.id;
+    row.appendChild(cb); row.appendChild(lb);
+    if (item.go){
+      const go = el('button', 'check-go', 'Öffnen');
+      go.addEventListener('click', () => { waehleDhikr('istighfar'); showView(item.go); });
+      row.appendChild(go);
+    }
+    wrap.appendChild(row);
+  }
+  $('pFill').style.width = (n / WEG_ITEMS.length * 100) + '%';
+  $('pText').textContent = n === WEG_ITEMS.length
+    ? 'Alle ' + WEG_ITEMS.length + ' geschafft — möge Allah es von dir annehmen! So sieht ein Tag aus, der dein Herz verändert.'
+    : n + ' von ' + WEG_ITEMS.length + ' heute geschafft.';
+}
+renderWeg();
 
 /* ---------- Erinnerungen ---------- */
 let rIdx = Math.abs((store.get('r-idx', 0)) % ERINNERUNGEN.length);
