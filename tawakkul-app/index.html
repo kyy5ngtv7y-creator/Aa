@@ -392,6 +392,14 @@
   .dua-item:first-of-type{border-top:none;padding-top:2px}
   .dua-titel{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 5px}
 
+  .suche{
+    width:100%;font:inherit;font-size:15px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:11px 14px;margin-bottom:12px;-webkit-appearance:none;
+  }
+  .suche::placeholder{color:var(--ink-soft)}
+  .suche:focus{outline:none;border-color:var(--teal)}
+
   /* ---------- Tabbar (schwebende Pille) ---------- */
   nav.tabbar{
     position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:6;
@@ -475,61 +483,11 @@
         <p class="p-text" id="pText"></p>
       </div>
 
-      <h2 class="sect">Duas für dich</h2>
-      <p class="sub">Authentische Duas aus Koran und Sunnah — für genau die Momente, um die es dir geht.</p>
-      <div class="wcard">
-        <div class="dua-item">
-          <p class="dua-titel">Bei Sorgen, Traurigkeit und Schulden</p>
-          <span class="adhkar-ar">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ</span>
-          <em>Allahumma inni aʿudhu bika minal-hammi wal-hazani, wal-ʿadschzi wal-kasali, wal-buchli wal-dschubni, wa dalaʿid-dayni wa ghalabatir-ridschal</em>
-          <span class="adhkar-de">„O Allah, ich suche Zuflucht bei Dir vor Sorge und Trauer, vor Unfähigkeit und Faulheit, vor Geiz und Feigheit, vor der Last der Schulden und der Übermacht der Menschen.“ — Der Prophet ﷺ sprach sie sehr oft. (Sahih al-Bukhari 6369)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Für halalen Rizq und Unabhängigkeit</p>
-          <span class="adhkar-ar">اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ</span>
-          <em>Allahumma-kfini bi-halalika ʿan haramika, wa aghnini bi-fadlika ʿamman siwak</em>
-          <span class="adhkar-de">„O Allah, lass mir Dein Halal genügen, sodass ich Dein Haram nicht brauche, und mach mich durch Deine Gunst unabhängig von allen außer Dir.“ — Der Prophet ﷺ sagte: Damit tilgt Allah selbst Schulden so groß wie ein Berg. (Tirmidhi 3563)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Wenn du gar nichts hast — die Dua von Musa</p>
-          <span class="adhkar-ar">رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ</span>
-          <em>Rabbi inni lima anzalta ilayya min khayrin faqir</em>
-          <span class="adhkar-de">„Mein Herr, ich bin bedürftig für das Gute, das Du zu mir herabsendest.“ (Koran 28:24) — Musa sprach sie als Flüchtling ohne Geld, ohne Heimat, unter einem Baum. Kurz danach gab Allah ihm Arbeit, Familie und Sicherheit.</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">In tiefster Dunkelheit — die Dua von Yunus</p>
-          <span class="adhkar-ar">لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</span>
-          <em>La ilaha illa anta, subhanaka, inni kuntu minaz-zalimin</em>
-          <span class="adhkar-de">„Es gibt keinen Gott außer Dir. Gepriesen seist Du! Ich gehörte zu den Ungerechten.“ (Koran 21:87) — Der Prophet ﷺ sagte: Kein Muslim bittet mit ihr um etwas, ohne dass Allah ihn erhört. (Tirmidhi 3505)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Damit dein Herz fest bleibt</p>
-          <span class="adhkar-ar">يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ</span>
-          <em>Ya muqalliba-l-qulub, thabbit qalbi ʿala dinik</em>
-          <span class="adhkar-de">„O Du, Der die Herzen wendet, festige mein Herz auf Deiner Religion.“ — Die Dua, die der Prophet ﷺ am häufigsten sprach. (Tirmidhi 3522)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Beim Verlassen des Hauses</p>
-          <span class="adhkar-ar">بِسْمِ اللهِ، تَوَكَّلْتُ عَلَى اللهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ</span>
-          <em>Bismillahi, tawakkaltu ʿalallahi, wa la hawla wa la quwwata illa billah</em>
-          <span class="adhkar-de">„Im Namen Allahs, ich verlasse mich auf Allah, und es gibt keine Macht und keine Kraft außer durch Allah.“ — Wer sie spricht, dem wird gesagt: Du bist geleitet, versorgt und geschützt. (Abu Dawud 5095)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Wenn etwas schwer ist</p>
-          <span class="adhkar-ar">اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا</span>
-          <em>Allahumma la sahla illa ma dschaʿaltahu sahlan, wa anta tadschʿalu-l-hazna idha schi’ta sahlan</em>
-          <span class="adhkar-de">„O Allah, nichts ist leicht außer dem, was Du leicht machst — und wenn Du willst, machst Du sogar das Schwere leicht.“ (Ibn Hibban 970 — sahih)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Sayyid al-Istighfar — die Krone der Vergebungsbitte</p>
-          <span class="adhkar-ar">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</span>
-          <span class="adhkar-de">„O Allah, Du bist mein Herr, es gibt keinen Gott außer Dir. Du hast mich erschaffen, und ich bin Dein Diener, und ich halte Deinen Bund und Dein Versprechen, so gut ich kann. Ich suche Zuflucht bei Dir vor dem Übel dessen, was ich getan habe. Ich bekenne Dir Deine Gnade an mir, und ich bekenne meine Sünde — so vergib mir, denn niemand vergibt die Sünden außer Dir.“ — Wer sie morgens mit Überzeugung spricht und an dem Tag stirbt, gehört zu den Leuten des Paradieses. (Sahih al-Bukhari 6306)</span>
-        </div>
-        <div class="dua-item">
-          <p class="dua-titel">Vor großen Entscheidungen: Istikhara</p>
-          <span class="adhkar-de">Bei jeder wichtigen Entscheidung (Arbeit, Heirat, Umzug …) lehrte der Prophet ﷺ das Istikhara-Gebet: zwei Rakʿa beten und danach die Istikhara-Dua sprechen — damit legst du die Entscheidung in Allahs Hände und gehst dann mutig los. (Sahih al-Bukhari 1162; den vollständigen Text findest du in jedem Dua-Buch oder bei deinem Imam.)</span>
-        </div>
-      </div>
+      <h2 class="sect">Dua-Bibliothek</h2>
+      <p class="sub">Authentische Duas aus Koran und Sunnah zu jedem Lebensthema — nur Überlieferungen,
+      die die Gelehrten als verlässlich (sahih/hasan) einstufen, immer mit Quelle. Such einfach nach deinem Thema.</p>
+      <input class="suche" id="duaSuche" type="search" placeholder="Suche: Sorgen, Schulden, Kinder, Heilung …" aria-label="Duas durchsuchen">
+      <div id="duaLib"></div>
     </section>
 
     <!-- ================= ERINNERUNG ================= -->
@@ -1402,6 +1360,119 @@ function renderWeg(){
     : n + ' von ' + WEG_ITEMS.length + ' heute geschafft.';
 }
 renderWeg();
+
+/* ---------- Dua-Bibliothek (nur authentische Quellen) ---------- */
+const DUA_LIB = [
+  { kat: 'Bei Sorgen, Angst und Kummer', duas: [
+    { t: 'Gegen Sorge und Trauer', ar: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ', lat: 'Allahumma inni aʿudhu bika minal-hammi wal-hazani, wal-ʿadschzi wal-kasali, wal-buchli wal-dschubni, wa dalaʿid-dayni wa ghalabatir-ridschal', de: 'O Allah, ich suche Zuflucht bei Dir vor Sorge und Trauer, Unfähigkeit und Faulheit, Geiz und Feigheit, der Last der Schulden und der Übermacht der Menschen.', q: 'Sahih al-Bukhari 6369' },
+    { t: 'Die große Kummer-Dua — sie tauscht Sorge gegen Freude', ar: 'اللَّهُمَّ إِنِّي عَبْدُكَ، ابْنُ عَبْدِكَ، ابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلَاءَ حُزْنِي، وَذَهَابَ هَمِّي', lat: 'Allahumma inni ʿabduka, ibnu ʿabdika, ibnu amatika, nasiyati bi-yadika, madin fiyya hukmuka, ʿadlun fiyya qada’uka, as’aluka bi-kulli-smin huwa laka … an tadschʿalal-qur’ana rabiʿa qalbi, wa nura sadri, wa dschala’a huzni, wa dhahaba hammi', de: 'O Allah, ich bin Dein Diener, Sohn Deines Dieners … ich bitte Dich bei jedem Namen, der Dir gehört: Mach den Koran zum Frühling meines Herzens, zum Licht meiner Brust, zum Vertreiber meiner Trauer und zum Ende meiner Sorge. — Der Prophet ﷺ versprach: Wer sie spricht, dem nimmt Allah seine Sorge und gibt ihm stattdessen Freude.', q: 'Musnad Ahmad 3712 — sahih' },
+    { t: 'In großer Bedrängnis', ar: 'لَا إِلَهَ إِلَّا اللهُ الْعَظِيمُ الْحَلِيمُ، لَا إِلَهَ إِلَّا اللهُ رَبُّ الْعَرْشِ الْعَظِيمِ، لَا إِلَهَ إِلَّا اللهُ رَبُّ السَّمَاوَاتِ وَرَبُّ الْأَرْضِ وَرَبُّ الْعَرْشِ الْكَرِيمِ', lat: 'La ilaha illallahul-ʿAzimul-Halim, la ilaha illallahu Rabbul-ʿarschil-ʿazim, la ilaha illallahu Rabbus-samawati wa Rabbul-ardi wa Rabbul-ʿarschil-karim', de: 'Es gibt keinen Gott außer Allah, dem Gewaltigen, dem Nachsichtigen. Es gibt keinen Gott außer Allah, dem Herrn des gewaltigen Throns, dem Herrn der Himmel und der Erde. — Die Dua des Propheten ﷺ in der Bedrängnis.', q: 'Sahih al-Bukhari 6346, Sahih Muslim 2730' },
+    { t: 'Überlass mich keinen Augenblick mir selbst', ar: 'اللَّهُمَّ رَحْمَتَكَ أَرْجُو، فَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ، وَأَصْلِحْ لِي شَأْنِي كُلَّهُ، لَا إِلَهَ إِلَّا أَنْتَ', lat: 'Allahumma rahmataka ardschu, fala takilni ila nafsi tarfata ʿayn, wa aslih li scha’ni kullahu, la ilaha illa ant', de: 'O Allah, auf Deine Barmherzigkeit hoffe ich — überlass mich nicht einen Augenblick mir selbst, und bring alle meine Angelegenheiten in Ordnung. Es gibt keinen Gott außer Dir.', q: 'Abu Dawud 5090 — hasan' },
+    { t: 'Der Notruf', ar: 'يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ', lat: 'Ya Hayyu ya Qayyum, bi-rahmatika astaghith', de: 'O Lebendiger, o Beständiger, bei Deiner Barmherzigkeit suche ich Hilfe!', q: 'Tirmidhi 3524 — hasan' },
+    { t: 'Die Dua von Yunus in der Dunkelheit', ar: 'لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ', lat: 'La ilaha illa anta, subhanaka, inni kuntu minaz-zalimin', de: 'Es gibt keinen Gott außer Dir. Gepriesen seist Du! Ich gehörte zu den Ungerechten. — Kein Muslim bittet damit um etwas, ohne dass Allah ihn erhört.', q: 'Koran 21:87; Tirmidhi 3505 — sahih' }
+  ]},
+  { kat: 'Rizq, Arbeit und Schulden', duas: [
+    { t: 'Für halalen Rizq und Freiheit von Schulden', ar: 'اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ', lat: 'Allahumma-kfini bi-halalika ʿan haramika, wa aghnini bi-fadlika ʿamman siwak', de: 'O Allah, lass mir Dein Halal genügen, sodass ich Dein Haram nicht brauche, und mach mich durch Deine Gunst unabhängig von allen außer Dir. — Damit tilgt Allah selbst Schulden so groß wie ein Berg.', q: 'Tirmidhi 3563 — hasan' },
+    { t: 'Morgens nach dem Fadschr-Gebet', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا', lat: 'Allahumma inni as’aluka ʿilman nafiʿan, wa rizqan tayyiban, wa ʿamalan mutaqabbalan', de: 'O Allah, ich bitte Dich um nützliches Wissen, gute (halale) Versorgung und angenommene Taten. — Der Prophet ﷺ sprach sie nach dem Morgengebet.', q: 'Ibn Madscha 925 — sahih' },
+    { t: 'Fünf Worte, die Dunya und Achira umfassen', ar: 'اللَّهُمَّ اغْفِرْ لِي، وَارْحَمْنِي، وَاهْدِنِي، وَعَافِنِي، وَارْزُقْنِي', lat: 'Allahumma-ghfir li, warhamni, wahdini, wa ʿafini, warzuqni', de: 'O Allah, vergib mir, erbarme Dich meiner, leite mich recht, gib mir Wohlergehen und versorge mich. — Der Prophet ﷺ sagte: Diese fassen dir dein Diesseits und dein Jenseits zusammen.', q: 'Sahih Muslim 2697' },
+    { t: 'Wenn du gar nichts hast — die Dua von Musa', ar: 'رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ', lat: 'Rabbi inni lima anzalta ilayya min khayrin faqir', de: 'Mein Herr, ich bin bedürftig für das Gute, das Du zu mir herabsendest. — Musa sprach sie ohne Geld und Heimat; kurz danach gab Allah ihm Arbeit, Familie und Sicherheit.', q: 'Koran 28:24' },
+    { t: 'Vor dem Schlafen: gegen Schulden und Armut', ar: 'اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ … اقْضِ عَنَّا الدَّيْنَ وَأَغْنِنَا مِنَ الْفَقْرِ', lat: 'Allahumma Rabbas-samawatis-sabʿi wa Rabbal-ʿarschil-ʿazim, Rabbana wa Rabba kulli schay’ … iqdi ʿannad-dayna wa aghnina minal-faqr', de: 'O Allah, Herr der sieben Himmel und des gewaltigen Throns, unser Herr und Herr aller Dinge … begleiche für uns die Schulden und befreie uns aus der Armut.', q: 'Sahih Muslim 2713' }
+  ]},
+  { kat: 'Vergebung und Tawba', duas: [
+    { t: 'Sayyid al-Istighfar — die Krone der Vergebungsbitte', ar: 'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ', lat: 'Allahumma anta Rabbi, la ilaha illa ant, khalaqtani wa ana ʿabduka, wa ana ʿala ʿahdika wa waʿdika ma-stataʿtu, aʿudhu bika min scharri ma sanaʿtu, abu’u laka bi-niʿmatika ʿalayya, wa abu’u bi-dhanbi, faghfir li, fa-innahu la yaghfirudh-dhunuba illa ant', de: 'O Allah, Du bist mein Herr, es gibt keinen Gott außer Dir. Du hast mich erschaffen, und ich bin Dein Diener … Ich bekenne Dir Deine Gnade an mir und bekenne meine Sünde — so vergib mir, denn niemand vergibt die Sünden außer Dir. — Wer sie morgens mit Überzeugung spricht und an dem Tag stirbt, gehört zu den Leuten des Paradieses.', q: 'Sahih al-Bukhari 6306' },
+    { t: 'Die Dua von Adam und Hawwa', ar: 'رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ', lat: 'Rabbana zalamna anfusana, wa in lam taghfir lana wa tarhamna lanakunanna minal-khasirin', de: 'Unser Herr, wir haben uns selbst Unrecht getan. Wenn Du uns nicht vergibst und Dich unser erbarmst, gehören wir gewiss zu den Verlierern.', q: 'Koran 7:23' },
+    { t: 'Die 100-mal-Dua des Propheten ﷺ', ar: 'رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ', lat: 'Rabbi-ghfir li wa tub ʿalayya, innaka antat-Tawwabur-Rahim', de: 'Mein Herr, vergib mir und wende Dich mir zu — Du bist der Reueannehmende, der Barmherzige. — Die Gefährten zählten sie hundertmal in einer einzigen Sitzung des Propheten ﷺ.', q: 'Abu Dawud 1516 — sahih' },
+    { t: 'In der Sadschda: alles auf einmal', ar: 'اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ، دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ، وَعَلَانِيَتَهُ وَسِرَّهُ', lat: 'Allahumma-ghfir li dhanbi kullahu, diqqahu wa dschillahu, wa awwalahu wa achirahu, wa ʿalaniyatahu wa sirrahu', de: 'O Allah, vergib mir meine Sünden alle: die kleinen und die großen, die ersten und die letzten, die offenen und die verborgenen.', q: 'Sahih Muslim 483' }
+  ]},
+  { kat: 'Rechtleitung und ein festes Herz', duas: [
+    { t: 'Die häufigste Dua des Propheten ﷺ', ar: 'يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ', lat: 'Ya muqalliba-l-qulub, thabbit qalbi ʿala dinik', de: 'O Du, Der die Herzen wendet, festige mein Herz auf Deiner Religion.', q: 'Tirmidhi 3522 — sahih' },
+    { t: 'Zwei Worte, die alles tragen', ar: 'اللَّهُمَّ اهْدِنِي وَسَدِّدْنِي', lat: 'Allahumma-hdini wa saddidni', de: 'O Allah, leite mich recht und lass mich das Richtige treffen.', q: 'Sahih Muslim 2725' },
+    { t: 'Um die vier Schätze', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى', lat: 'Allahumma inni as’alukal-huda wat-tuqa wal-ʿafafa wal-ghina', de: 'O Allah, ich bitte Dich um Rechtleitung, Gottesfurcht, Anstand und Genügsamkeit (Reichtum des Herzens).', q: 'Sahih Muslim 2721' },
+    { t: 'Dass das Herz nie wieder abrutscht', ar: 'رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً إِنَّكَ أَنْتَ الْوَهَّابُ', lat: 'Rabbana la tuzigh qulubana baʿda idh hadaytana, wa hab lana min ladunka rahmah, innaka antal-Wahhab', de: 'Unser Herr, lass unsere Herzen nicht abschweifen, nachdem Du uns rechtgeleitet hast, und schenke uns Barmherzigkeit von Dir — Du bist der große Schenker.', q: 'Koran 3:8' }
+  ]},
+  { kat: 'Schutz für dich und deine Familie', duas: [
+    { t: 'Der Rundum-Schutz (3× am Abend)', ar: 'أَعُوذُ بِكَلِمَاتِ اللهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ', lat: 'Aʿudhu bi-kalimatillahit-tammati min scharri ma khalaq', de: 'Ich suche Zuflucht in den vollkommenen Worten Allahs vor dem Übel dessen, was Er erschaffen hat. — Wer sie abends dreimal spricht, dem schadet in jener Nacht nichts.', q: 'Sahih Muslim 2708' },
+    { t: 'Der Schutz für deine Kinder', ar: 'أُعِيذُكُمَا بِكَلِمَاتِ اللهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ', lat: 'Uʿidhukuma bi-kalimatillahit-tammah, min kulli schaytanin wa hammah, wa min kulli ʿaynin lammah', de: 'Ich stelle euch beide unter den Schutz der vollkommenen Worte Allahs — vor jedem Satan, jedem Getier und jedem bösen Blick. — So schützte Ibrahim seine Söhne, und so schützte der Prophet ﷺ Hasan und Husayn.', q: 'Sahih al-Bukhari 3371' },
+    { t: 'Um Wohlergehen in beiden Welten', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ', lat: 'Allahumma inni as’alukal-ʿafwa wal-ʿafiyata fid-dunya wal-achirah', de: 'O Allah, ich bitte Dich um Verzeihung und Wohlergehen im Diesseits und im Jenseits. — Morgens und abends; der Prophet ﷺ ließ diese Dua nie aus.', q: 'Abu Dawud 5074 — sahih' },
+    { t: 'Dass der Segen nicht geht', ar: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ', lat: 'Allahumma inni aʿudhu bika min zawali niʿmatika, wa tahawwuli ʿafiyatika, wa fudscha’ati niqmatika, wa dschamiʿi sachatika', de: 'O Allah, ich suche Zuflucht bei Dir davor, dass Deine Gnade schwindet, Dein Wohlergehen sich wendet, Deine Strafe plötzlich kommt und vor allem, was Dich zürnen lässt.', q: 'Sahih Muslim 2739' }
+  ]},
+  { kat: 'Krankheit und Heilung', duas: [
+    { t: 'Die Heilungs-Dua des Propheten ﷺ', ar: 'اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ وَأَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا', lat: 'Allahumma Rabban-nas, adhhibil-ba’s, ischfi wa antasch-Schafi, la schifa’a illa schifa’uka, schifa’an la yughadiru saqama', de: 'O Allah, Herr der Menschen, nimm das Leid hinweg. Heile — denn Du bist der Heiler. Es gibt keine Heilung außer Deiner Heilung: eine Heilung, die keine Krankheit zurücklässt.', q: 'Sahih al-Bukhari 5743' },
+    { t: 'Für einen kranken Menschen (7× sprechen)', ar: 'أَسْأَلُ اللهَ الْعَظِيمَ، رَبَّ الْعَرْشِ الْعَظِيمِ، أَنْ يَشْفِيَكَ', lat: 'As’alullahal-ʿAzim, Rabbal-ʿarschil-ʿazim, an yaschfiyak', de: 'Ich bitte Allah, den Gewaltigen, den Herrn des gewaltigen Throns, dass Er dich heilt. — Wer einen Kranken besucht und dies siebenmal spricht, für den wird er geheilt, sofern nicht seine Frist gekommen ist.', q: 'Tirmidhi 2083 — sahih' },
+    { t: 'Bei Schmerzen am eigenen Körper', ar: 'بِسْمِ اللهِ (٣×) — أَعُوذُ بِاللهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (٧×)', lat: 'Bismillah (3×) — Aʿudhu billahi wa qudratihi min scharri ma adschidu wa uhadhir (7×)', de: 'Leg die Hand auf die schmerzende Stelle: dreimal „Im Namen Allahs“, dann siebenmal „Ich suche Zuflucht bei Allah und Seiner Macht vor dem Übel dessen, was ich spüre und befürchte.“', q: 'Sahih Muslim 2202' },
+    { t: 'Jeden Morgen um Gesundheit', ar: 'اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ', lat: 'Allahumma ʿafini fi badani, Allahumma ʿafini fi samʿi, Allahumma ʿafini fi basari, la ilaha illa ant', de: 'O Allah, gib mir Gesundheit in meinem Körper, in meinem Gehör und in meinem Augenlicht. Es gibt keinen Gott außer Dir.', q: 'Abu Dawud 5090 — hasan' }
+  ]},
+  { kat: 'Familie und Kinder', duas: [
+    { t: 'Für eine Familie, die die Augen kühlt', ar: 'رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا', lat: 'Rabbana hab lana min azwadschina wa dhurriyyatina qurrata aʿyunin wa-dschʿalna lil-muttaqina imama', de: 'Unser Herr, schenke uns an unseren Ehepartnern und Kindern Frohsinn der Augen, und mache uns zu einem Vorbild für die Gottesfürchtigen.', q: 'Koran 25:74' },
+    { t: 'Dass du und deine Kinder das Gebet halten', ar: 'رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي، رَبَّنَا وَتَقَبَّلْ دُعَاءِ', lat: 'Rabbi-dschʿalni muqimas-salati wa min dhurriyyati, Rabbana wa taqabbal duʿa’', de: 'Mein Herr, mache mich zu einem, der das Gebet verrichtet, und auch meine Nachkommen. Unser Herr, und nimm meine Dua an. — Die Dua von Ibrahim.', q: 'Koran 14:40' },
+    { t: 'Für Dankbarkeit und rechtschaffene Kinder', ar: 'رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَى وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ وَأَصْلِحْ لِي فِي ذُرِّيَّتِي', lat: 'Rabbi awziʿni an aschkura niʿmatakal-lati anʿamta ʿalayya wa ʿala walidayya wa an aʿmala salihan tardahu wa aslih li fi dhurriyyati', de: 'Mein Herr, gib mir ein, dass ich für Deine Gnade danke, die Du mir und meinen Eltern erwiesen hast, dass ich Gutes tue, das Dir gefällt — und lass meine Nachkommen rechtschaffen sein.', q: 'Koran 46:15' },
+    { t: 'Für deine Eltern', ar: 'رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا', lat: 'Rabbi-rhamhuma kama rabbayani saghira', de: 'Mein Herr, erbarme Dich ihrer beider, wie sie mich großgezogen haben, als ich klein war.', q: 'Koran 17:24' }
+  ]},
+  { kat: 'Schlafen und Aufwachen', duas: [
+    { t: 'Die Tawakkul-Dua vor dem Schlafen', ar: 'اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ', lat: 'Allahumma aslamtu nafsi ilayk, wa fawwadtu amri ilayk, wa aldscha’tu zahri ilayk, raghbatan wa rahbatan ilayk, la maldscha’a wa la mandscha minka illa ilayk, amantu bi-kitabikal-ladhi anzalt, wa bi-nabiyyikal-ladhi arsalt', de: 'O Allah, ich habe mich Dir ergeben, meine Angelegenheit Dir überlassen und meinen Rücken an Dich gelehnt — aus Hoffnung und Ehrfurcht vor Dir. Es gibt keine Zuflucht vor Dir außer bei Dir … — Der Prophet ﷺ sagte: Wer sie als Letztes spricht und in jener Nacht stirbt, stirbt auf der Fitra. Das ist Tawakkul in einem Satz.', q: 'Sahih al-Bukhari 247' },
+    { t: 'Beim Hinlegen', ar: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا', lat: 'Bismika Allahumma amutu wa ahya', de: 'In Deinem Namen, o Allah, sterbe ich und lebe ich.', q: 'Sahih al-Bukhari 6324' },
+    { t: 'Beim Aufwachen', ar: 'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ', lat: 'Alhamdulillahil-ladhi ahyana baʿda ma amatana wa ilayhin-nuschur', de: 'Alles Lob gebührt Allah, Der uns belebt hat, nachdem Er uns sterben ließ — und zu Ihm ist die Auferstehung.', q: 'Sahih al-Bukhari 6312' }
+  ]},
+  { kat: 'Im Alltag', duas: [
+    { t: 'Beim Verlassen des Hauses', ar: 'بِسْمِ اللهِ، تَوَكَّلْتُ عَلَى اللهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', lat: 'Bismillahi, tawakkaltu ʿalallahi, wa la hawla wa la quwwata illa billah', de: 'Im Namen Allahs, ich verlasse mich auf Allah, und es gibt keine Macht und keine Kraft außer durch Allah. — Wer sie spricht, dem wird gesagt: Du bist geleitet, versorgt und geschützt.', q: 'Abu Dawud 5095 — sahih' },
+    { t: 'Auf dem Markt / beim Einkaufen', ar: 'لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ حَيٌّ لَا يَمُوتُ، بِيَدِهِ الْخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ', lat: 'La ilaha illallahu wahdahu la scharika lah, lahul-mulku wa lahul-hamd, yuhyi wa yumit, wa huwa hayyun la yamut, bi-yadihil-khayr, wa huwa ʿala kulli schay’in qadir', de: 'Es gibt keinen Gott außer Allah, allein, ohne Partner. Ihm gehört die Herrschaft und das Lob … in Seiner Hand ist das Gute, und Er hat Macht über alle Dinge. — Wer sie auf dem Markt spricht, dem schreibt Allah eine Million gute Taten.', q: 'Tirmidhi 3428 — hasan' },
+    { t: 'Nach dem Essen', ar: 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ', lat: 'Alhamdulillahil-ladhi atʿamani hadha wa razaqanihi min ghayri hawlin minni wa la quwwah', de: 'Alles Lob gebührt Allah, Der mich dies essen ließ und mich damit versorgte — ohne Macht und Kraft von mir. — Dem Sprecher werden die vergangenen Sünden vergeben.', q: 'Tirmidhi 3458 — hasan' },
+    { t: 'Auf der Reise / im Auto', ar: 'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ', lat: 'Subhanal-ladhi sachchara lana hadha wa ma kunna lahu muqrinin, wa inna ila Rabbina la-munqalibun', de: 'Gepriesen sei Der, Der uns dies dienstbar gemacht hat — wir hätten es nicht bezwingen können. Und zu unserem Herrn kehren wir zurück.', q: 'Koran 43:13; Sahih Muslim 1342' },
+    { t: 'Wenn etwas schwer ist', ar: 'اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا', lat: 'Allahumma la sahla illa ma dschaʿaltahu sahlan, wa anta tadschʿalul-hazna idha schi’ta sahlan', de: 'O Allah, nichts ist leicht außer dem, was Du leicht machst — und wenn Du willst, machst Du sogar das Schwere leicht.', q: 'Ibn Hibban 970 — sahih' }
+  ]},
+  { kat: 'Salawat und die liebsten Worte', duas: [
+    { t: 'As-Salat al-Ibrahimiyya — die vollkommene Salawat', ar: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ', lat: 'Allahumma salli ʿala Muhammadin wa ʿala ali Muhammad, kama sallayta ʿala Ibrahima wa ʿala ali Ibrahim, innaka Hamidun Madschid. Allahumma barik ʿala Muhammadin wa ʿala ali Muhammad, kama barakta ʿala Ibrahima wa ʿala ali Ibrahim, innaka Hamidun Madschid', de: 'O Allah, segne Muhammad und die Familie Muhammads, wie Du Ibrahim und die Familie Ibrahims gesegnet hast … — Wer einmal Salawat spricht, den segnet Allah dafür zehnmal (Muslim 408).', q: 'Sahih al-Bukhari 3370' },
+    { t: 'Hundertmal am Tag — Sünden wie Meeresschaum', ar: 'سُبْحَانَ اللهِ وَبِحَمْدِهِ', lat: 'Subhanallahi wa bi-hamdih', de: 'Gepriesen sei Allah und gelobt. — Wer es hundertmal am Tag sagt, dem werden die Sünden vergeben, auch wenn sie wie der Schaum des Meeres wären.', q: 'Sahih al-Bukhari 6405' },
+    { t: 'Leicht auf der Zunge, schwer auf der Waage', ar: 'سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ اللهِ الْعَظِيمِ', lat: 'Subhanallahi wa bi-hamdih, Subhanallahil-ʿAzim', de: 'Zwei Worte: leicht auf der Zunge, schwer auf der Waage, geliebt vom Allerbarmer.', q: 'Sahih al-Bukhari 6682' },
+    { t: 'Die vier liebsten Worte bei Allah', ar: 'سُبْحَانَ اللهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللهُ، وَاللهُ أَكْبَرُ', lat: 'Subhanallah, wal-hamdulillah, wa la ilaha illallah, wallahu akbar', de: 'Die liebsten Worte bei Allah sind vier — mit welchem du beginnst, schadet nicht.', q: 'Sahih Muslim 2137' }
+  ]},
+  { kat: 'Die umfassendsten Duas', duas: [
+    { t: 'Die häufigste Dua des Propheten ﷺ', ar: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ', lat: 'Rabbana atina fid-dunya hasanah, wa fil-achirati hasanah, wa qina ʿadhaban-nar', de: 'Unser Herr, gib uns im Diesseits Gutes und im Jenseits Gutes, und bewahre uns vor der Strafe des Feuers.', q: 'Koran 2:201; Sahih al-Bukhari 6389' },
+    { t: 'Nach jedem Gebet — aus Liebe empfohlen', ar: 'اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ', lat: 'Allahumma aʿinni ʿala dhikrika wa schukrika wa husni ʿibadatik', de: 'O Allah, hilf mir, Deiner zu gedenken, Dir zu danken und Dich auf schönste Weise anzubeten. — Der Prophet ﷺ sagte zu Muʿadh: „Bei Allah, ich liebe dich — lass diese Worte nach keinem Gebet aus.“', q: 'Abu Dawud 1522 — sahih' },
+    { t: 'Alles Gute erbitten, vor allem Übel schützen', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنَ الْخَيْرِ كُلِّهِ، عَاجِلِهِ وَآجِلِهِ، مَا عَلِمْتُ مِنْهُ وَمَا لَمْ أَعْلَمْ، وَأَعُوذُ بِكَ مِنَ الشَّرِّ كُلِّهِ، عَاجِلِهِ وَآجِلِهِ، مَا عَلِمْتُ مِنْهُ وَمَا لَمْ أَعْلَمْ', lat: 'Allahumma inni as’aluka minal-khayri kullihi, ʿadschilihi wa adschilihi, ma ʿalimtu minhu wa ma lam aʿlam, wa aʿudhu bika minasch-scharri kullihi, ʿadschilihi wa adschilihi, ma ʿalimtu minhu wa ma lam aʿlam', de: 'O Allah, ich bitte Dich um das Gute — alles davon, das jetzige und das kommende, was ich davon kenne und was nicht. Und ich suche Zuflucht bei Dir vor dem Übel — allem davon … — Die Dua, die der Prophet ﷺ seiner Frau Aischa lehrte.', q: 'Ibn Madscha 3846 — sahih' },
+    { t: 'Das Wichtigste überhaupt', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ', lat: 'Allahumma inni as’alukal-dschannata wa aʿudhu bika minan-nar', de: 'O Allah, ich bitte Dich um das Paradies und suche Zuflucht bei Dir vor dem Feuer. — „Darum kreisen wir alle“, sagte der Prophet ﷺ.', q: 'Abu Dawud 792 — sahih' }
+  ]},
+  { kat: 'Vor Entscheidungen: Istikhara', duas: [
+    { t: 'Das Istikhara-Gebet — bete 2 Rakʿa und sprich dann', ar: 'اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ، وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ، وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ، فَإِنَّكَ تَقْدِرُ وَلَا أَقْدِرُ، وَتَعْلَمُ وَلَا أَعْلَمُ، وَأَنْتَ عَلَّامُ الْغُيُوبِ. اللَّهُمَّ إِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الْأَمْرَ خَيْرٌ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي فَاقْدُرْهُ لِي وَيَسِّرْهُ لِي ثُمَّ بَارِكْ لِي فِيهِ، وَإِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الْأَمْرَ شَرٌّ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي فَاصْرِفْهُ عَنِّي وَاصْرِفْنِي عَنْهُ وَاقْدُرْ لِيَ الْخَيْرَ حَيْثُ كَانَ ثُمَّ أَرْضِنِي بِهِ', lat: 'Allahumma inni astakhiruka bi-ʿilmika, wa astaqdiruka bi-qudratika, wa as’aluka min fadlikal-ʿazim, fa-innaka taqdiru wa la aqdir, wa taʿlamu wa la aʿlam, wa anta ʿallamul-ghuyub. Allahumma in kunta taʿlamu anna hadhal-amra khayrun li fi dini wa maʿaschi wa ʿaqibati amri, faqdurhu li wa yassirhu li, thumma barik li fih. Wa in kunta taʿlamu anna hadhal-amra scharrun li fi dini wa maʿaschi wa ʿaqibati amri, fasrifhu ʿanni wasrifni ʿanhu, waqdur liyal-khayra haythu kan, thumma ardini bih', de: 'O Allah, ich bitte Dich um die gute Wahl durch Dein Wissen und um Kraft durch Deine Macht … Wenn Du weißt, dass diese Sache gut für mich ist in meiner Religion, meinem Leben und meinem Ausgang, dann bestimme sie für mich, mach sie mir leicht und segne sie mir. Und wenn Du weißt, dass sie schlecht für mich ist, dann wende sie von mir ab und wende mich von ihr ab — und bestimme für mich das Gute, wo immer es ist, und mach mich damit zufrieden. — Bei „diese Sache“ nennst du dein Anliegen. Danach: geh mutig los und schau, was Allah dir leicht macht.', q: 'Sahih al-Bukhari 1162' }
+  ]}
+];
+
+function renderDuaLib(filter){
+  const wrap = $('duaLib');
+  wrap.replaceChildren();
+  const f = (filter || '').trim().toLowerCase();
+  let treffer = 0;
+  for (const g of DUA_LIB){
+    const items = f
+      ? g.duas.filter(d => (g.kat + ' ' + d.t + ' ' + d.lat + ' ' + d.de + ' ' + d.q).toLowerCase().includes(f))
+      : g.duas;
+    if (!items.length) continue;
+    treffer += items.length;
+    const det = document.createElement('details');
+    det.className = 'acc';
+    if (f) det.open = true;
+    const sum = document.createElement('summary');
+    sum.textContent = g.kat + ' · ' + items.length;
+    det.appendChild(sum);
+    const body = el('div', 'acc-body');
+    for (const d of items){
+      const it = el('div', 'dua-item');
+      it.appendChild(el('p', 'dua-titel', d.t));
+      it.appendChild(el('span', 'adhkar-ar', d.ar));
+      const lt = el('em', null, d.lat);
+      it.appendChild(lt);
+      it.appendChild(el('span', 'adhkar-de', '„' + d.de + '“ (' + d.q + ')'));
+      body.appendChild(it);
+    }
+    det.appendChild(body);
+    wrap.appendChild(det);
+  }
+  if (!treffer){
+    wrap.appendChild(el('p', 'sub', 'Nichts gefunden — versuch ein anderes Wort, z. B. „Sorgen“, „Schulden“, „Schlafen“, „Kinder“ oder „Heilung“.'));
+  }
+}
+$('duaSuche').addEventListener('input', e => renderDuaLib(e.target.value));
+renderDuaLib();
 
 /* ---------- Erinnerungen ---------- */
 let rIdx = Math.abs(store.get('r-idx', 0));
