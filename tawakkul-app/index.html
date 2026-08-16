@@ -418,6 +418,17 @@
   .zeit-row.aktiv{color:var(--gold);font-weight:600}
   .zeit-row.aktiv .zeit-uhr{color:var(--gold)}
 
+  .switch{position:relative;width:47px;height:28px;flex-shrink:0}
+  .switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+  .switch .knob{position:absolute;inset:0;border-radius:999px;background:var(--surface2);border:1px solid var(--line);transition:background .25s ease,border-color .25s ease}
+  .switch .knob::after{
+    content:'';position:absolute;top:2.5px;left:3px;width:21px;height:21px;border-radius:50%;
+    background:var(--surface);box-shadow:0 1px 4px var(--shadow);transition:transform .25s ease;
+  }
+  .switch input:checked + .knob{background:var(--teal);border-color:var(--teal)}
+  .switch input:checked + .knob::after{transform:translateX(19px)}
+  .switch input:focus-visible + .knob{outline:2px solid var(--gold);outline-offset:2px}
+
   /* ---------- Tabbar (schwebende Pille) ---------- */
   nav.tabbar{
     position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:6;
@@ -538,12 +549,25 @@
         <p class="hint">Astronomisch berechnet (±ein paar Minuten) — für den exakten Adhan gilt deine
         Moschee. Duha beginnt ca. 20 Minuten nach Sonnenaufgang; das letzte Nachtdrittel wird aus
         Maghrib und Fadschr berechnet. Damit dich die Hodscha-Meldungen erreichen („In 30 Minuten
-        beginnt das letzte Drittel …“), aktiviere unten die Benachrichtigungen.</p>
+        beginnt das letzte Drittel …“), schalte unten die Hodscha-Meldungen ein.</p>
       </div>
       <div class="panel">
         <div class="panel-row">
-          <h3>Benachrichtigungen</h3>
-          <button class="btn ghost" id="notifBtn">Aktivieren</button>
+          <div style="flex:1;min-width:200px">
+            <h3>Hodscha-Meldungen</h3>
+            <p class="hint" style="margin-top:3px">Automatisch zur richtigen Zeit — du musst nichts
+            einstellen: Nachtdrittel, Duha, Dua vor Maghrib, Gebetszeiten, dein Dhikr- und
+            Checklisten-Stand.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="hodschaAn" aria-label="Hodscha-Meldungen ein/aus"><span class="knob"></span></label>
+        </div>
+        <div class="panel-row" style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px">
+          <div style="flex:1;min-width:200px">
+            <h3>Regelmäßige Erinnerungen</h3>
+            <p class="hint" style="margin-top:3px">Wechselnde Tawakkul-Erinnerungen im festen Takt —
+            den Takt bestimmst du.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="intervAn" aria-label="Regelmäßige Erinnerungen ein/aus"><span class="knob"></span></label>
         </div>
         <div class="panel-row" style="margin-top:10px">
           <label for="iv" style="font-size:14px">Erinnere mich alle</label>
@@ -557,7 +581,8 @@
         <p class="hint" id="notifHint">
           Hinweis: Auf dem iPhone funktionieren Benachrichtigungen erst, wenn du die App
           zum Home-Bildschirm hinzugefügt hast (Safari → Teilen → „Zum Home-Bildschirm“)
-          und sie geöffnet ist.
+          und sie geöffnet ist. Für die Hodscha-Meldungen zu Gebetszeiten wähle oben im
+          Gebets-Kompass deine Stadt.
         </p>
       </div>
     </section>
@@ -1770,32 +1795,60 @@ $('rNext').addEventListener('click', () => {
 zeigeErinnerung();
 
 let notifTimer = null;
+let hodscha = store.get('hodscha', { an: false });
+function darfNotif(){
+  return 'Notification' in window && Notification.permission === 'granted';
+}
+function holePermission(fertig){
+  if (!('Notification' in window)){
+    $('notifHint').textContent = 'Benachrichtigungen sind in dieser Ansicht nicht verfügbar. Installiere die App über Safari → Teilen → „Zum Home-Bildschirm“, dann klappt es (ab iOS 16.4).';
+    fertig(false); return;
+  }
+  if (Notification.permission === 'granted'){ fertig(true); return; }
+  Notification.requestPermission().then(p => {
+    if (p !== 'granted') $('notifHint').textContent = 'Benachrichtigungen wurden nicht erlaubt. Du kannst sie in den iPhone-Einstellungen für diese App aktivieren.';
+    fertig(p === 'granted');
+  });
+}
 function starteNotifs(){
   if (notifTimer) clearInterval(notifTimer);
   const min = parseInt($('iv').value, 10);
   notifTimer = setInterval(() => {
-    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+    if (!darfNotif()) return;
     const L = aktuelleListe();
     const r = L[Math.floor(Date.now() / 60000) % L.length];
     try { new Notification('۞ Erinnerung', { body: r.x + (r.r ? ' — ' + r.r : ''), tag: 'twk' }); } catch(e){}
   }, min * 60000);
   store.set('notif', { an: true, min });
-  $('notifBtn').textContent = 'Aktiv ✓';
 }
-$('notifBtn').addEventListener('click', () => {
-  if (!('Notification' in window)){
-    $('notifHint').textContent = 'Benachrichtigungen sind in dieser Ansicht nicht verfügbar. Installiere die App über Safari → Teilen → „Zum Home-Bildschirm“, dann klappt es (ab iOS 16.4).';
-    return;
+const hodschaCb = $('hodschaAn'), intervCb = $('intervAn');
+hodschaCb.checked = hodscha.an && darfNotif();
+hodschaCb.addEventListener('change', () => {
+  if (hodschaCb.checked){
+    holePermission(ok => {
+      hodschaCb.checked = ok;
+      hodscha = { an: ok }; store.set('hodscha', hodscha);
+      if (ok && !ort) $('notifHint').textContent = 'Fast fertig: Wähle oben im Gebets-Kompass noch deine Stadt, damit ich die Gebetszeiten für dich berechnen kann.';
+    });
+  } else {
+    hodscha = { an: false }; store.set('hodscha', hodscha);
   }
-  Notification.requestPermission().then(p => {
-    if (p === 'granted') starteNotifs();
-    else $('notifHint').textContent = 'Benachrichtigungen wurden nicht erlaubt. Du kannst sie in den iPhone-Einstellungen für diese App aktivieren.';
-  });
+});
+intervCb.addEventListener('change', () => {
+  if (intervCb.checked){
+    holePermission(ok => {
+      intervCb.checked = ok;
+      if (ok) starteNotifs();
+    });
+  } else {
+    if (notifTimer){ clearInterval(notifTimer); notifTimer = null; }
+    store.set('notif', { an: false, min: parseInt($('iv').value, 10) });
+  }
 });
 $('iv').addEventListener('change', () => { if (notifTimer) starteNotifs(); });
 const notifPref = store.get('notif', null);
-if (notifPref && notifPref.an && 'Notification' in window && Notification.permission === 'granted'){
-  $('iv').value = String(notifPref.min); starteNotifs();
+if (notifPref && notifPref.an && darfNotif()){
+  $('iv').value = String(notifPref.min); intervCb.checked = true; starteNotifs();
 }
 
 /* ---------- Gebets-Kompass: astronomische Zeiten + heilige Momente ---------- */
@@ -1925,10 +1978,24 @@ function feuerNotif(titel, text){
   try { new Notification(titel, { body: text, tag: 'twk-' + titel }); } catch(e){}
 }
 function kompassTick(){
+  if (!hodscha.an || !darfNotif()) return;
+  const jetzt = new Date();
+  const gefeuertC = store.get('gefeuert', { tag: heuteKey(), ids: {} });
+  if (gefeuertC.tag !== heuteKey()){ gefeuertC.tag = heuteKey(); gefeuertC.ids = {}; }
+  /* Checklisten-Stand: morgens anstupsen, abends erinnern */
+  const wegDone = (weg.tag === heuteKey()) ? weg.done : {};
+  const offen = WEG_ITEMS.filter(i => !wegDone[i.id]);
+  if (jetzt.getHours() === 10 && !gefeuertC.ids.c10 && offen.length){
+    gefeuertC.ids.c10 = true; store.set('gefeuert', gefeuertC);
+    feuerNotif('۞ Dein Tag bei Allah', 'Heute ' + (WEG_ITEMS.length - offen.length) + ' von ' + WEG_ITEMS.length + ' geschafft. Als Nächstes: ' + offen.slice(0, 2).map(i => i.t).join(' · '));
+  }
+  if (jetzt.getHours() === 18 && !gefeuertC.ids.c18 && offen.length){
+    gefeuertC.ids.c18 = true; store.set('gefeuert', gefeuertC);
+    feuerNotif('۞ Der Tag läuft noch', 'Noch offen auf deiner Checkliste: ' + offen.slice(0, 3).map(i => i.t).join(' · ') + (offen.length > 3 ? ' …' : ''));
+  }
   if (!ort) return;
   const p = tagesplan();
   if (!p || p.fehler) return;
-  const jetzt = new Date();
   const nowMin = jetzt.getHours() * 60 + jetzt.getMinutes();
   const gefeuert = store.get('gefeuert', { tag: heuteKey(), ids: {} });
   if (gefeuert.tag !== heuteKey()){ gefeuert.tag = heuteKey(); gefeuert.ids = {}; }
