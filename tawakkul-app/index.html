@@ -1240,7 +1240,7 @@ const DB = {
     antworten: [
       {
         t: 'Wunderbare Frage — denn Dhikr, das man versteht, wiegt tausendmal schwerer als Dhikr, das man nur ausspricht.',
-        e: 'Genau dafür gibt es im Dhikr-Bereich jetzt den Knopf „Was sage ich da? · Verstehen“: Zu jedem Dhikr bekommst du die Bedeutung Wort für Wort, die arabische Wurzel, ein Bild zum Vorstellen und deinen Lohn. Ein Vorgeschmack: „SubhanAllah“ kommt von derselben Wurzel wie „schwimmen“ — du erklärst, dass jeder Fehler und jeder Makel unendlich weit von Allah „weggeschwommen“ ist: Er vergisst nie, ist nie ungerecht, nie zu spät. Sag es das nächste Mal mit diesem Bild vor Augen — und spür den Unterschied.',
+        e: 'Genau dafür gibt es im Dhikr-Bereich den Knopf „Was sage ich da? · Verstehen“: Zu jedem Dhikr bekommst du die Bedeutung Wort für Wort, ganz einfach erklärt, mit einem Bild zum Vorstellen und deinem Lohn. Ein Vorgeschmack: „SubhanAllah“ heißt: „Allah ist perfekt — Er macht NIE Fehler.“ Menschen vergessen dich, sind müde oder unfair. Allah nie. Wenn also ein gemeiner Gedanke kommt wie „Allah hat mich vergessen“, rufst du „SubhanAllah!“ — das heißt: „Nein! Allah vergisst nie!“ Sag es das nächste Mal genau so — und spür den Unterschied.',
         q: { x: 'Und gedenke des Namens deines Herrn und widme dich Ihm ganz und gar.', r: 'Koran 73:8' },
         h: { x: 'Bittet Allah in der Gewissheit der Erhörung — und wisst, dass Allah keine Dua von einem achtlosen, abgelenkten Herzen annimmt.', r: 'Tirmidhi 3479' },
         a: { text: 'Öffne den Dhikr-Bereich, wähle ein Dhikr und tippe unter dem Zähler auf „Was sage ich da? · Verstehen“.', view: 'dhikr', btn: 'Zum Verstehen' }
@@ -1273,66 +1273,66 @@ const DB = {
 const DHIKR = {
   istighfar: { ar: 'أَسْتَغْفِرُ اللهَ', lat: 'Astaghfirullah', de: 'Ich bitte Allah um Vergebung', ziel: 70,
     tief: {
-      woerter: [ { a: 'أَسْتَغْفِرُ', b: '„ich bitte um Ghafr“ — um Zudeckung und Schutz' }, { a: 'اللهَ', b: 'Allah — den Einen, der wirklich vergeben kann' } ],
-      wurzel: 'Die Wurzel gh-f-r (غفر) bedeutet: zudecken und dadurch schützen. Der Helm des Kriegers heißt auf Arabisch „mighfar“ — aus derselben Wurzel! Du sagst also nicht nur „sorry“. Du bittest um drei Dinge auf einmal: Deck meine Sünde zu (damit sie mich nicht bloßstellt), lösch ihre Strafe, und schütze mich davor wie ein Helm, damit sie mich nicht wieder trifft.',
-      bild: 'Stell dir deine Sünde wie einen Fleck auf weißem Stoff vor. Astaghfirullah ist nicht nur „Entschuldigung sagen“ — es ist der Fleck, der rausgewaschen wird, UND eine Schutzschicht, damit der Stoff nicht wieder so leicht Flecken annimmt. Der Prophet ﷺ sagte: Wer beständig Istighfar macht, dem verwandelt Allah sogar die Enge in einen Ausweg.',
-      schild: 'Dein Schild, wenn dich Schuldgefühle erdrücken („Allah nimmt mich nie an“) — und dein Schlüssel, wenn Rizq und Wege verschlossen wirken (Koran 71:10–12: Istighfar bringt Regen, Vermögen und Kinder).',
+      woerter: [ { a: 'أَسْتَغْفِرُ', b: '„bitte vergib mir und deck es zu“' }, { a: 'اللهَ', b: 'Allah — nur Er kann das' } ],
+      wurzel: 'Astaghfirullah heißt: „Allah, ich habe etwas falsch gemacht. Bitte vergib mir — und deck es zu.“ Wie wenn du etwas verschüttet hast und Mama macht es sauber, erzählt es niemandem weiter und hilft dir, dass es nicht nochmal passiert. Alles drei auf einmal.',
+      bild: 'Stell dir vor: Du hast auf ein weißes Blatt gekritzelt. Du gehst zu Allah und sagst „Astaghfirullah“. Und Allah gibt dir ein NEUES weißes Blatt. Jedes Mal. Er sagt nie: „Schon wieder du?“ Er freut sich sogar, wenn du kommst — mehr als du dich über dein größtes Geschenk je gefreut hast.',
+      schild: 'Sag es, wenn dein Kopf sagt: „Allah nimmt mich nicht mehr an.“ Doch, Er nimmt dich an. Und noch etwas: Istighfar öffnet auch Türen — Allah gibt dadurch sogar Geld, Regen und Kinder (Koran 71:10–12).',
       lohn: 'Der Prophet ﷺ — dem alles vergeben war — machte selbst über 70× am Tag Istighfar (Bukhari 6307). Und: „Wer beständig um Vergebung bittet, dem macht Allah aus jeder Sorge einen Ausweg.“ (Abu Dawud 1518)'
     } },
-  subhan: { ar: 'سُبْحَانَ اللهِ', lat: 'SubhanAllah', de: 'Allah ist erhaben über jeden Makel', ziel: 33,
+  subhan: { ar: 'سُبْحَانَ اللهِ', lat: 'SubhanAllah', de: 'Allah ist perfekt — Er macht nie Fehler', ziel: 33,
     tief: {
-      woerter: [ { a: 'سُبْحَانَ', b: '„weit erhaben, völlig frei von jedem Fehler“' }, { a: 'اللهِ', b: 'ist Allah' } ],
-      wurzel: 'Die Wurzel s-b-h (سبح) ist dieselbe wie in „sabaha“ = schwimmen! „Subhan“ heißt wörtlich: weit weg-sein, davonschwimmen. Wenn du SubhanAllah sagst, erklärst du: Jeder Fehler, jede Schwäche, jeder Makel ist unendlich weit weg von Allah — Er vergisst nie, schläft nie, ist nie ungerecht, nie zu spät, braucht niemanden.',
-      bild: 'Stell dir vor, ein schlechter Gedanke versucht, zu Allah „hinzuschwimmen“: „Allah hat dich vergessen … Allah ist unfair zu dir …“ SubhanAllah ist deine Hand, die den Gedanken wegstößt: „Nein! Weit entfernt ist Allah davon!“ Im Koran steht: „Dein Herr ist nicht vergesslich.“ (19:64) Deshalb ist SubhanAllah die direkte Antwort auf jeden Blitzgedanken über Allah — du sprichst die Wahrheit gegen die Lüge aus.',
-      schild: 'Dein Schild gegen jeden schlechten Gedanken über Allah: „Er gibt mir nicht“ → SubhanAllah, erhaben ist Er über Geiz. „Er hat mich vergessen“ → SubhanAllah, erhaben ist Er über Vergessen.',
+      woerter: [ { a: 'سُبْحَانَ', b: '„Du bist perfekt — Du machst nie Fehler“' }, { a: 'اللهِ', b: 'Allah' } ],
+      wurzel: 'SubhanAllah heißt ganz einfach: „Allah hat KEINE Fehler. Gar keine.“ Menschen machen Fehler: Sie vergessen dich, sie werden müde, sie sind manchmal unfair. Allah nie. Er vergisst nie. Er schläft nie. Er ist nie unfair. Er kommt nie zu spät. Wenn du SubhanAllah sagst, sagst du: „Du bist perfekt, Allah.“',
+      bild: 'Stell dir vor, jemand erzählt eine Lüge über deine Mama: „Deine Mama hat dich vergessen!“ Du weißt sofort: Das stimmt nicht! Und du rufst: „NEIN! Niemals!“ — Genau das ist SubhanAllah. Wenn dein Kopf sagt: „Allah hat dich vergessen“, dann rufst du: „SubhanAllah!“ Das heißt: „Nein! Allah vergisst NIE!“ Im Koran steht: „Dein Herr ist nicht vergesslich.“ (19:64)',
+      schild: 'Sag es immer, wenn ein gemeiner Gedanke über Allah kommt: „Er gibt mir nichts“ → „SubhanAllah! Allah ist nicht geizig!“ — „Er hat mich vergessen“ → „SubhanAllah! Allah vergisst nie!“',
       lohn: '„Wer sagt: SubhanAllahil-ʿAzimi wa bi-hamdih, dem wird eine Dattelpalme im Paradies gepflanzt.“ (Tirmidhi 3464 — sahih) Bei jedem Mal. Zähl deine Palmen.'
     } },
   alhamdu: { ar: 'الْحَمْدُ لِلَّهِ', lat: 'Alhamdulillah', de: 'Alles Lob und aller Dank gehören Allah', ziel: 33,
     tief: {
-      woerter: [ { a: 'الْـ', b: '„DAS“ — das ganze, alles davon' }, { a: 'حَمْدُ', b: 'Hamd = Lob aus Liebe UND Dank zugleich' }, { a: 'لِلَّهِ', b: 'gehört Allah (li- = gehört)' } ],
-      wurzel: '„Hamd“ ist mehr als Danken. Danken (schukr) sagst du, wenn du etwas bekommst. Hamd sagst du, weil Er IST, wer Er ist — auch wenn du gerade nichts bekommen hast, auch am schweren Tag. Und das „al-“ davor heißt: nicht irgendein Lob, sondern ALLES Lob, das je existiert hat und je existieren wird — es gehört alles Ihm.',
-      bild: 'In diesem Moment laufen in dir Millionen Geschenke gleichzeitig: dein Herz schlägt (ohne dass du es steuerst), deine Augen lesen das hier, deine Lunge atmet, dein Essen von gestern wurde verdaut. Alhamdulillah heißt: „Ich sehe es. Das alles kommt von Dir.“ Der Prophet ﷺ sagte sogar in schlechten Lagen: „Alhamdulillah in jeder Lage“ — weil auch der schwere Tag von Dem kommt, Der es gut mit dir meint.',
-      schild: 'Dein Schild gegen den Neid-Blick auf andere: Sobald du zählst, was DU hast, verliert das Schaufenster der anderen seine Macht. Und Allah verspricht: „Wenn ihr dankbar seid, gebe Ich euch mehr.“ (14:7)',
+      woerter: [ { a: 'الْحَمْدُ', b: '„Danke — und Du bist der Beste!“' }, { a: 'لِلَّهِ', b: 'für Allah / gehört Allah' } ],
+      wurzel: 'Alhamdulillah heißt zwei Sachen auf einmal: „DANKE, Allah!“ und „Du bist der Beste, Allah!“ Du sagst es für alles, was du hast. Und du sagst es sogar an schlechten Tagen — weil Allah auch dann gut zu dir ist, wenn du es gerade nicht siehst.',
+      bild: 'Zähl mal mit: Deine Augen können sehen — geschenkt. Deine Beine können laufen — geschenkt. Dein Herz klopft ganz von alleine, du musst keinen Knopf drücken — geschenkt. Wer hat dir das alles gegeben? Allah. Hast du dafür bezahlt? Nein. Alhamdulillah heißt: „Ich habe deine Geschenke gesehen, Allah. Danke!“',
+      schild: 'Sag es, wenn du denkst: „Andere haben mehr als ich.“ Fang an zu zählen, was DU hast — dann merkst du: Es ist so viel, dass du gar nicht fertig wirst. Und Allah verspricht: „Wenn ihr dankbar seid, gebe Ich euch NOCH mehr.“ (14:7)',
       lohn: '„Alhamdulillah füllt die Waage.“ (Sahih Muslim 223) Ein Wort — und die Waagschale deiner guten Taten wird voll.'
     } },
   akbar: { ar: 'اللهُ أَكْبَرُ', lat: 'Allahu akbar', de: 'Allah ist größer — als alles', ziel: 34,
     tief: {
-      woerter: [ { a: 'اللهُ', b: 'Allah' }, { a: 'أَكْبَرُ', b: '„ist GRÖSSER“ — bewusst offen gelassen: größer als was? Als ALLES.' } ],
-      wurzel: '„Akbar“ ist die Steigerungsform von „kabir“ (groß). Es heißt absichtlich nicht „Allah ist groß“, sondern „Allah ist GRÖSSER“ — der Satz bleibt offen, damit du einsetzen kannst, was dich gerade erdrückt: größer als die Rechnung. Größer als der Chef. Größer als die Diagnose. Größer als deine Angst.',
-      bild: 'Halte eine Münze direkt vors Auge — sie verdeckt die ganze Sonne. So sind Sorgen: winzig, aber direkt vor deinem Gesicht wirken sie riesig. Allahu akbar nimmt die Münze vom Auge und stellt die Größenordnung wieder her. Genau deshalb beginnt jedes Gebet mit „Allahu akbar“: In diesem Moment erklärst du alles hinter dir für klein — und trittst vor den wirklich Großen.',
-      schild: 'Dein Schild, wenn ein Problem übermächtig aussieht. Sag es und setz ein: „Allah ist größer als …“ — und nenne dein Problem beim Namen.',
+      woerter: [ { a: 'اللهُ', b: 'Allah' }, { a: 'أَكْبَرُ', b: '„ist größer“ — größer als ALLES' } ],
+      wurzel: 'Allahu akbar heißt: „Allah ist größer.“ Größer als was? Als ALLES. Größer als dein Problem. Größer als deine Angst. Größer als alle Menschen auf der ganzen Welt zusammen. Es gibt nichts, was größer ist als Allah.',
+      bild: 'Mach mal dieses Spiel: Halt deinen Daumen ganz nah vor dein Auge. Siehst du? Dein kleiner Daumen verdeckt das ganze große Haus! Ist der Daumen wirklich größer als das Haus? Nein — er ist nur zu nah an deinem Auge. Genau so ist deine Sorge: Sie ist eigentlich klein, aber weil sie direkt vor deinem Gesicht klebt, sieht sie riesig aus. Wenn du „Allahu akbar“ sagst, nimmst du den Daumen weg — und siehst: Allah ist viel, viel größer als mein Problem.',
+      schild: 'Sag es, wenn ein Problem riesig aussieht. Und sag dazu: „Allah ist größer als …“ — und sag dein Problem beim Namen. „Allah ist größer als diese Rechnung. Größer als diese Angst.“',
       lohn: 'Zusammen mit SubhanAllah und Alhamdulillah nach jedem Gebet (33/33/34) — der Prophet ﷺ nannte es einen Weg, mit dem die Armen die Reichen überholen. (Sahih Muslim 595)'
     } },
   hasbuna: { ar: 'حَسْبُنَا اللهُ وَنِعْمَ الْوَكِيلُ', lat: 'Hasbunallahu wa niʿmal-wakil', de: 'Allah genügt uns — und Er ist der beste Sachwalter', ziel: 33,
     tief: {
-      woerter: [ { a: 'حَسْبُنَا', b: '„unsere Genüge“ — Er reicht uns völlig aus' }, { a: 'اللهُ', b: 'Allah' }, { a: 'وَنِعْمَ', b: 'und wie vortrefflich ist' }, { a: 'الْوَكِيلُ', b: 'der Wakil — Der, dem man seine Sache anvertraut' } ],
-      wurzel: 'Ein „Wakil“ ist der, dem du deine Angelegenheit komplett übergibst — wie ein Anwalt, ein Treuhänder, ein Verwalter. „Hasb“ heißt Genüge: Wenn Er für dich ist, brauchst du niemanden mehr dazu. Der Satz bedeutet: „Ich übergebe meine Akte — und der, der sie übernimmt, hat noch nie einen Fall verloren.“',
-      bild: 'Ibrahim (Friede sei mit ihm) sagte genau diese Worte, als man ihn ins Feuer warf — und Allah befahl dem Feuer: „Sei kühl und harmlos für Ibrahim!“ (21:69). Die Gefährten sagten sie, als man ihnen drohte: „Die Menschen haben sich gegen euch versammelt!“ — und sie kehrten unversehrt und mit Gewinn zurück (3:173–174). Feuer und Armeen — dieselben vier Worte.',
-      schild: 'Dein Schild, wenn du dich ohnmächtig fühlst: gegen Menschen, Behörden, Rechnungen, Übermacht. Du gibst die Akte ab — und schläfst.',
+      woerter: [ { a: 'حَسْبُنَا اللهُ', b: '„Allah reicht mir völlig“' }, { a: 'وَنِعْمَ الْوَكِيلُ', b: '„und Er ist der beste Kümmerer“' } ],
+      wurzel: 'Hasbunallah heißt: „Allah reicht mir. Er kümmert sich um meine Sache — ich muss es nicht alleine schaffen.“ Wie wenn du ein Problem hast, das viel zu schwer für dich ist, und du gibst es dem stärksten Helfer der Welt und sagst: „Mach du das bitte für mich.“ Und dieser Helfer macht es IMMER gut. Immer.',
+      bild: 'Kennst du das? Ein großes Kind ärgert dich — und dann kommt dein großer Bruder oder dein Papa und stellt sich einfach neben dich. Sofort ist die Angst weg. Warum? Nicht weil DU stark bist. Weil ER da ist. Genau das ist Hasbunallah: „Allah steht neben mir. Der Allerstärkste. Mir reicht das.“ Ibrahim hat genau diese Worte gesagt, als böse Menschen ihn ins Feuer geworfen haben — und Allah hat dem Feuer befohlen: „Sei kalt! Tu ihm nichts!“ Und das Feuer hat gehorcht. (21:69)',
+      schild: 'Sag es, wenn du dich klein und schwach fühlst — gegen Menschen, Ämter, Rechnungen. Du gibst Allah dein Problem — und kannst ruhig schlafen.',
       lohn: 'Ibn ʿAbbas sagte: „Hasbunallahu wa niʿmal-wakil“ sprach Ibrahim im Feuer, und Muhammad ﷺ sprach es, als man ihm mit den Armeen drohte. (Sahih al-Bukhari 4563)'
     } },
   lahawla: { ar: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ', lat: 'La hawla wa la quwwata illa billah', de: 'Kein Wandel und keine Kraft — außer durch Allah', ziel: 33,
     tief: {
-      woerter: [ { a: 'لَا حَوْلَ', b: 'kein „Hawl“ — kein Wegbewegen, kein Ändern eines Zustands' }, { a: 'وَلَا قُوَّةَ', b: 'und keine Kraft, etwas zu erreichen' }, { a: 'إِلَّا بِاللهِ', b: 'außer DURCH Allah' } ],
-      wurzel: '„Hawl“ kommt von „sich wandeln“ (wie „hal“ = Zustand): die Kraft, von etwas Schlechtem WEGzukommen. „Quwwa“ ist die Kraft, etwas Gutes zu ERREICHEN. Der Satz gibt beides ab: Ich kann weder der Sünde entkommen noch den Gehorsam schaffen, weder dem Schaden entgehen noch den Erfolg packen — außer Du gibst mir die Kraft dazu.',
-      bild: 'Du bist wie eine Lampe: wunderschön gebaut, aber ohne eigenen Strom. Alles, was du je geschafft hast, lief über Sein Kabel. La hawla sagen heißt nicht „ich bin schwach und wertlos“ — es heißt: „Ich stecke meinen Stecker in die einzige Steckdose, die es gibt.“ Danach arbeitest du mit Seiner Kraft statt mit deiner. Deshalb sagst du es, wenn etwas zu schwer für dich ist.',
-      schild: 'Dein Schild bei Überforderung: zu viel Arbeit, zu große Aufgabe, zu schwere Prüfung. Nicht aufgeben — umstecken.',
+      woerter: [ { a: 'لَا حَوْلَ وَلَا قُوَّةَ', b: '„ich habe keine eigene Kraft“' }, { a: 'إِلَّا بِاللهِ', b: '„— nur von Allah kommt Kraft“' } ],
+      wurzel: 'Dieser Satz heißt: „Ich kann es nicht alleine, Allah — aber mit Deiner Hilfe kann ich alles.“ Jede Kraft, die du je hattest, kam von Ihm: Aufstehen am Morgen, arbeiten, sogar atmen. Mit diesem Satz sagst du: „Bitte gib mir Kraft — von Dir.“',
+      bild: 'Denk an eine Lampe. Kann die Lampe alleine leuchten? Nein. Sie braucht Strom aus der Steckdose. Ohne Stecker: dunkel. Mit Stecker: hell! Du bist wie die Lampe — und Allahs Hilfe ist der Strom. Wenn etwas zu schwer für dich ist, sag diesen Satz. Das ist wie den Stecker einstecken: Danach arbeitest du mit Allahs Kraft, nicht mehr nur mit deiner.',
+      schild: 'Sag es, wenn etwas zu schwer ist: zu viel Arbeit, zu große Aufgabe, zu große Sorge. Nicht aufgeben — einstecken!',
       lohn: 'Der Prophet ﷺ sagte zu Abu Musa: „Soll ich dir einen Schatz aus den Schätzen des Paradieses zeigen? La hawla wa la quwwata illa billah.“ (Sahih al-Bukhari 4205) Ein Schatz — weil er verborgen und unbezahlbar ist.'
     } },
   salawat: { ar: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ', lat: 'Allahumma salli ʿala Muhammad', de: 'O Allah, segne Muhammad ﷺ', ziel: 10,
     tief: {
-      woerter: [ { a: 'اللَّهُمَّ', b: '„O Allah!“ — feierliche Anrede' }, { a: 'صَلِّ عَلَى', b: 'erweise Segen, Lob und Barmherzigkeit' }, { a: 'مُحَمَّدٍ', b: 'Muhammad ﷺ — „der immerfort Gelobte“' } ],
-      wurzel: 'Wenn ALLAH „Salat“ auf den Propheten spricht, heißt das: Er lobt ihn in der höchsten Versammlung der Engel und überschüttet ihn mit Barmherzigkeit. Wenn DU Salawat sprichst, bittest du Allah, genau das zu tun — und trittst damit in eine Kette ein, in der Allah und Seine Engel schon stehen (Koran 33:56).',
-      bild: 'Stell dir vor: Du schickst einen Gruß ab — und ein Engel trägt ihn persönlich zum Propheten ﷺ und sagt: „Der und der, Sohn des und des, grüßt dich.“ Mit deinem Namen! Und für jeden einen Gruß segnet Allah DICH zehnmal zurück. Du gibst 1 und bekommst 10 — bei keinem Geschäft der Welt gibt es diesen Kurs.',
-      schild: 'Dein Schild bei Kummer, dessen Grund du nicht greifen kannst. Ubayy fragte: „Soll ich meine ganze Dua-Zeit dir widmen, o Gesandter Allahs?“ Er sagte: „Dann wird deine Sorge genommen und deine Sünde vergeben.“ (Tirmidhi 2457)',
+      woerter: [ { a: 'اللَّهُمَّ صَلِّ عَلَى', b: '„O Allah, bitte segne und ehre“' }, { a: 'مُحَمَّدٍ', b: 'Muhammad ﷺ — unseren Propheten' } ],
+      wurzel: 'Salawat heißt: Du bittest Allah: „Bitte ehre und segne unseren Propheten Muhammad ﷺ.“ Warum? Weil er der beste Mensch war — und weil er DICH lieb hatte, bevor du überhaupt geboren warst: Er hat für uns geweint und für uns Dua gemacht.',
+      bild: 'Stell dir vor: Du schickst dem Propheten ﷺ einen Gruß — und ein Engel trägt deinen Gruß persönlich zu ihm und sagt deinen Namen dazu! Und weißt du, was du zurückbekommst? Für EINEN Gruß segnet Allah DICH ZEHNMAL. Du schenkst 1 und bekommst 10. So ein Geschäft gibt es nirgendwo sonst auf der Welt.',
+      schild: 'Sag es, wenn dein Herz schwer ist und du gar nicht weißt, warum. Der Prophet ﷺ hat versprochen: Wer viel Salawat macht, dem nimmt Allah die Sorgen und vergibt die Sünden. (Tirmidhi 2457)',
       lohn: '„Wer einmal Segen über mich spricht, über den spricht Allah zehnmal Segen.“ (Sahih Muslim 408)'
     } },
   lailaha: { ar: 'لَا إِلَهَ إِلَّا اللهُ', lat: 'La ilaha illallah', de: 'Es gibt nichts Anbetungswürdiges außer Allah', ziel: 100,
     tief: {
-      woerter: [ { a: 'لَا', b: '„NEIN“ — radikaler Abriss' }, { a: 'إِلَهَ', b: 'kein „Ilah“ — nichts, woran das Herz sich hängt und dem es dient' }, { a: 'إِلَّا', b: 'AUSSER' }, { a: 'اللهُ', b: 'Allah — Er allein' } ],
-      wurzel: 'Ein „Ilah“ ist nicht nur eine Götzenstatue. Ein Ilah ist ALLES, woran dein Herz hängt, worauf es hofft und wovor es zittert: Geld kann ein Ilah werden, die Meinung der Menschen, die Angst, sogar das eigene Ego. Der Satz hat zwei Schläge: Erst reißt „La ilaha“ ALLES ab — dann setzt „illallah“ den Einen ein, dem das Herz wirklich gehört.',
-      bild: 'Dein Herz ist ein Thronsaal mit genau EINEM Thron. Solange Geld, Angst und Menschen sich darauf drängeln, ist Chaos im Saal. „La ilaha“ räumt den Thron komplett leer — „illallah“ setzt den wahren König darauf. Ab dann herrscht Ordnung: Alles andere darf im Saal SEIN (Geld, Familie, Träume), aber nichts darf mehr auf dem Thron SITZEN.',
-      schild: 'Dein Schild, wenn die Dunya zu laut wird und du merkst, dass dein Herz an etwas anderem hängt als an Ihm. Sag es langsam und räum den Thron.',
+      woerter: [ { a: 'لَا إِلَهَ', b: '„es gibt keinen Gott …“' }, { a: 'إِلَّا اللهُ', b: '„… außer Allah“ — nur Er' } ],
+      wurzel: 'La ilaha illallah heißt: „Nur Allah ist mein Gott. Nichts anderes.“ Nicht das Geld. Nicht die Menschen. Nicht die Angst. Nicht das Handy. Mein Herz gehört nur Allah.',
+      bild: 'Dein Herz ist wie ein Königsstuhl. Auf einen Königsstuhl passt genau EINER. Aber manchmal wollen sich andere draufsetzen: das Geld („denk nur an mich!“), die Angst („denk nur an mich!“), das Handy. Dann ist Streit und Unruhe in deinem Herzen. Wenn du „La ilaha illallah“ sagst, machst du den Stuhl frei und setzt Allah darauf — den richtigen König. Dann wird es ruhig in dir. Geld, Familie und Träume dürfen im Zimmer bleiben — aber auf dem Stuhl sitzt nur Allah.',
+      schild: 'Sag es langsam, wenn alles zu viel wird und du merkst: Mein Herz hängt gerade am Falschen. Mit jedem Mal machst du den Stuhl wieder frei.',
       lohn: '„Das beste Dhikr ist La ilaha illallah.“ (Tirmidhi 3383 — hasan) Und der Prophet ﷺ sagte: Würde man die sieben Himmel und Erden in eine Waagschale legen und La ilaha illallah in die andere — es würde schwerer wiegen.'
     } }
 };
@@ -1605,7 +1605,7 @@ function renderVerstehen(){
     r.appendChild(el('span', 'wort-de', w.b));
     box.appendChild(r);
   }
-  box.appendChild(el('span', 'label', 'Die Wurzel — was du wirklich sagst'));
+  box.appendChild(el('span', 'label', 'Was du wirklich sagst — ganz einfach'));
   box.appendChild(el('p', 'versteh-p', t.wurzel));
   box.appendChild(el('span', 'label', 'Stell es dir so vor'));
   box.appendChild(el('p', 'versteh-p', t.bild));
