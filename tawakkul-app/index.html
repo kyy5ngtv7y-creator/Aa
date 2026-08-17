@@ -585,6 +585,23 @@
           Gebets-Kompass deine Stadt.
         </p>
       </div>
+      <div class="panel">
+        <div class="panel-row">
+          <div style="flex:1;min-width:200px">
+            <h3>Push aufs iPhone — auch wenn die App zu ist</h3>
+            <p class="hint" style="margin-top:3px">Über die kostenlose App „ntfy“ aus dem App Store.
+            Dein Hodscha klopft dann auch an, wenn Tawakkul geschlossen ist — die Meldungen werden
+            bis zu 48 Stunden im Voraus geplant.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="pushAn" aria-label="Push ein/aus"><span class="knob"></span></label>
+        </div>
+        <div class="hint" id="pushSetup" style="margin-top:10px"></div>
+        <div class="panel-row" style="margin-top:10px">
+          <button class="btn ghost" id="pushTest">Test-Push senden</button>
+          <button class="linkbtn" id="pushKopie">Kanal kopieren</button>
+        </div>
+        <p class="hint" id="pushStatus"></p>
+      </div>
     </section>
 
     <!-- ================= WISSEN ================= -->
@@ -1917,9 +1934,9 @@ function fmtZeit(min){
   const h = Math.floor(min / 60), m = min % 60;
   return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
 }
-function tagesplan(){
+function tagesplan(basis){
   if (!ort) return null;
-  const jetzt = new Date();
+  const jetzt = basis || new Date();
   const t = sonnen(ort.la, ort.lo, jetzt);
   const gestern = sonnen(ort.la, ort.lo, new Date(jetzt.getTime() - 86400000));
   const morgen = sonnen(ort.la, ort.lo, new Date(jetzt.getTime() + 86400000));
@@ -2036,6 +2053,130 @@ function kompassTick(){
 }
 setInterval(kompassTick, 60000);
 kompassTick();
+
+
+/* ---------- Push über ntfy.sh: geplant bis 48h im Voraus ---------- */
+const NTFY = 'https://ntfy.sh';
+let pushPref = store.get('push', null);
+
+function pushTopicNeu(){
+  const zeichen = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const a = new Uint8Array(14);
+  crypto.getRandomValues(a);
+  return 'tawakkul-' + Array.from(a, b => zeichen[b % 36]).join('');
+}
+function zeigePush(){
+  $('pushAn').checked = !!(pushPref && pushPref.an);
+  const setup = $('pushSetup');
+  setup.replaceChildren();
+  if (pushPref && pushPref.topic){
+    setup.appendChild(el('span', null, 'So geht es: 1. Lade „ntfy“ gratis aus dem App Store. 2. Tippe in ntfy auf „+“ und abonniere genau diesen geheimen Kanal: '));
+    const b = el('b', null, pushPref.topic);
+    b.style.wordBreak = 'break-all';
+    setup.appendChild(b);
+    setup.appendChild(el('span', null, ' 3. Fertig — sende unten einen Test. Der Kanal ist zufällig und geheim: Teile ihn mit niemandem.'));
+  } else {
+    setup.textContent = 'Schalte den Schalter ein — ich erstelle dann deinen geheimen Kanal.';
+  }
+  if (pushPref && pushPref.an && pushPref.bis){
+    $('pushStatus').textContent = 'Meldungen vorgeplant bis ' + new Date(pushPref.bis).toLocaleString('de-CH', { weekday: 'short', hour: '2-digit', minute: '2-digit' }) + '. Öffne die App ab und zu, damit ich weiterplanen kann.';
+  }
+}
+function pushAlarmliste(basis){
+  const p = tagesplan(basis);
+  if (!p || p.fehler) return [];
+  const L = [];
+  const add = (zeit, ti, tx) => { if (zeit !== null && zeit !== undefined) L.push({ zeit, ti, tx }); };
+  if (p.drittelNacht !== null){
+    add(p.drittelNacht - 30, '۞ Bald: letztes Nachtdrittel', 'In etwa 30 Minuten beginnt das letzte Drittel der Nacht — die Stunde, in der Allah fragt: „Wer ruft Mich, dass Ich ihm antworte?“ Zwei Rakʿa und dann Dua. (Bukhari 1145)');
+    add(p.drittelNacht, '۞ Jetzt: letztes Nachtdrittel', 'Es ist so weit. Steh auf, bete zwei Rakʿa und sprich mit deinem Herrn — jetzt ist die beste Stunde der Dua.');
+  }
+  add(p.duha, '۞ Duha-Zeit', 'Jetzt ist die Zeit für das Duha-Gebet: zwei Rakʿa als Sadaqa für alle 360 Gelenke deines Körpers. (Muslim 720)');
+  add(p.t.dhuhr, '۞ Dhuhr', 'Dhuhr ist da. Nach dem Adhan: vier Rakʿa Sunnah, dann das Fard — und bitte Allah im Gebet um alles, was dein Herz trägt.');
+  add(p.t.asr, '۞ ʿAsr', 'Nach dem ʿAsr-Gebet: Zeit für deine Abend-Adhkar.');
+  if (p.t.maghrib !== null) add(p.t.maghrib - 30, '۞ Dua-Zeit vor Maghrib', 'Noch etwa 30 Minuten bis Maghrib. Heb die Hände — besonders am Freitag liegt hier eine Stunde, in der Dua nicht abgewiesen wird. (Abu Dawud 1048)');
+  add(p.t.fadschr, '۞ Fadschr', 'Der Tag beginnt bei Allah: Fadschr beten, dann Morgen-Adhkar — und der Tag steht unter Seinem Schutz.');
+  return L;
+}
+const FIXPUSH = [
+  { min: 10 * 60, ti: '۞ Dein Tag bei Allah', tx: 'Checklisten-Zeit: Wie viele Haken hast du heute schon? Duha, Istighfar, drei Dinge Dankbarkeit — öffne die App und mach den nächsten.' },
+  { min: 14 * 60, ti: '۞ Dhikr-Wächter', tx: 'Halber Tag vorbei — hat dein Herz heute schon Dhikr bekommen? Ein Astaghfirullah genügt für den Anfang.' },
+  { min: 18 * 60, ti: '۞ Der Tag läuft noch', tx: 'Schau auf deine Checkliste: Was ist noch offen? Und die Abend-Adhkar nicht vergessen.' },
+  { min: 21 * 60 + 30, ti: '۞ Vor dem Schlafen', tx: 'Schließ den Tag mit Istighfar und den Schlaf-Duas — und übergib alles Al-Wakil: „Allahumma aslamtu nafsi ilayk …“ (Bukhari 247)' }
+];
+function sendeNtfy(nachricht){
+  return fetch(NTFY, { method: 'POST', body: JSON.stringify(nachricht) });
+}
+let planeLaeuft = false;
+function planePush(){
+  if (planeLaeuft) return;
+  if (!pushPref || !pushPref.an || !pushPref.topic) return;
+  const nun = Date.now();
+  const wasserm = Math.max(nun + 20000, pushPref.bis || 0);
+  const horizont = nun + 48 * 3600000;
+  if (wasserm >= horizont) return;
+  const jobs = [];
+  for (const off of [0, 1, 2]){
+    const basis = new Date(nun + off * 86400000);
+    const tagesanfang = new Date(basis.getFullYear(), basis.getMonth(), basis.getDate()).getTime();
+    if (ort) for (const a of pushAlarmliste(basis)) jobs.push({ ts: tagesanfang + Math.round(a.zeit) * 60000, ti: a.ti, tx: a.tx });
+    for (const f of FIXPUSH) jobs.push({ ts: tagesanfang + f.min * 60000, ti: f.ti, tx: f.tx });
+  }
+  const gesehen = new Set();
+  const senden = [];
+  for (const j of jobs.sort((a, b) => a.ts - b.ts)){
+    if (j.ts <= wasserm || j.ts > horizont) continue;
+    const k = j.ti + '|' + Math.round(j.ts / 300000);
+    if (gesehen.has(k)) continue;
+    gesehen.add(k);
+    senden.push(j);
+  }
+  if (!senden.length){ pushPref.bis = horizont; store.set('push', pushPref); return; }
+  planeLaeuft = true;
+  Promise.allSettled(senden.slice(0, 80).map(j =>
+    sendeNtfy({ topic: pushPref.topic, title: j.ti, message: j.tx, delay: String(Math.round(j.ts / 1000)) })
+  )).then(ergebnisse => {
+    planeLaeuft = false;
+    const ok = ergebnisse.some(r => r.status === 'fulfilled' && r.value && r.value.ok);
+    if (ok){
+      pushPref.bis = horizont; store.set('push', pushPref); zeigePush();
+    } else {
+      $('pushStatus').textContent = 'Planen hat nicht geklappt (kein Internet, oder du nutzt gerade die Vorschau-Version — in der installierten App von der Webseite funktioniert es).';
+    }
+  });
+}
+$('pushAn').addEventListener('change', () => {
+  if ($('pushAn').checked){
+    if (!pushPref) pushPref = { topic: pushTopicNeu(), an: true, bis: 0 };
+    else pushPref.an = true;
+    store.set('push', pushPref);
+    zeigePush();
+    planePush();
+  } else {
+    if (pushPref){ pushPref.an = false; store.set('push', pushPref); }
+    $('pushStatus').textContent = 'Push ist aus. Bereits geplante Meldungen der nächsten Stunden können noch ankommen.';
+  }
+});
+$('pushTest').addEventListener('click', () => {
+  if (!pushPref || !pushPref.topic){
+    $('pushStatus').textContent = 'Schalte zuerst den Push-Schalter ein.';
+    return;
+  }
+  sendeNtfy({ topic: pushPref.topic, title: '۞ Tawakkul', message: 'Es funktioniert, ma schaa Allah! Dein Hodscha erreicht dich jetzt auch bei geschlossener App.' })
+    .then(r => { $('pushStatus').textContent = r.ok ? 'Test gesendet — schau in die ntfy-App auf deinem iPhone.' : 'Senden fehlgeschlagen (Antwort ' + r.status + ').'; })
+    .catch(() => { $('pushStatus').textContent = 'Senden fehlgeschlagen — kein Internet, oder du nutzt gerade die Vorschau-Version (in der installierten App von der Webseite funktioniert es).'; });
+});
+$('pushKopie').addEventListener('click', () => {
+  if (!pushPref || !pushPref.topic) return;
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(pushPref.topic).then(() => { $('pushStatus').textContent = 'Kanalname kopiert — füge ihn in ntfy unter „+“ ein.'; });
+  } else {
+    $('pushStatus').textContent = 'Kanal: ' + pushPref.topic;
+  }
+});
+zeigePush();
+planePush();
+setInterval(planePush, 30 * 60000);
 
 </script>
 <script>

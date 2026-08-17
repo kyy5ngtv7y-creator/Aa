@@ -44,6 +44,16 @@ Die App wird automatisch auf GitHub Pages veröffentlicht:
    Vollbild, offline nutzbar). Benachrichtigungen sind ab iOS 16.4 möglich,
    sobald die App installiert ist.
 
+## Push bei geschlossener App (gratis, über ntfy)
+
+Im Tab „Erinnerung“ → „Push aufs iPhone“ erstellt die App einen zufälligen,
+geheimen Kanal auf dem freien Dienst ntfy.sh und plant ihre Hodscha-Meldungen
+bis zu 48 Stunden im Voraus (verzögerte Zustellung). Auf dem iPhone wird die
+kostenlose App „ntfy“ installiert und dieser Kanal abonniert — die Meldungen
+kommen dann auch an, wenn die Tawakkul-App geschlossen ist. Die App muss nur
+ab und zu geöffnet werden, damit sie weiterplanen kann. Der Kanalname ist das
+einzige Geheimnis: nicht weitergeben.
+
 ## Später auf eigenen/bezahlten Server umziehen
 
 Die App ist rein statisch (keine Datenbank, kein Backend): Einfach den Inhalt
