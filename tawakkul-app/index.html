@@ -1024,7 +1024,7 @@
 const DB = {
   nichtgeben: {
     prio: 10,
-    phrasen: ['gibt mir nicht','will mir nicht geben','gibt mir nichts','bekomme nicht','bekomme nie','kriege nicht','kriege nie','nie etwas','hat mich vergessen','vergisst mich','warum habe ich nicht','gibt mir nie','alte gedanken','erwische mich','ertappe mich','immer diese gedanken','schon wieder gedacht','immer wieder denke ich'],
+    phrasen: ['gibt mir nicht','gibt mir einfach nicht','will mir nicht geben','gibt mir nichts','bekomme nicht','bekomme nie','kriege nicht','kriege nie','nie etwas','hat mich vergessen','vergisst mich','warum habe ich nicht','gibt mir nie','alte gedanken','erwische mich','mich erwischt','ertappe mich','immer diese gedanken','wieder diese gedanken','schon wieder gedacht','immer wieder denke ich','mag mich nicht','liebt mich nicht','hasst mich'],
     worte: ['benachteiligt','übergangen','leer aus'],
     antworten: [
       {
@@ -1053,8 +1053,8 @@ const DB = {
 
   neid: {
     prio: 8,
-    phrasen: ['andere haben','andere leute haben','alle anderen','schönes leben','keine probleme','wieso hat er','wieso hat sie','warum hat er','warum hat sie','warum haben andere','wieso haben andere','besseres leben','mehr glück','immer glück','haben alles'],
-    worte: ['neid','neidisch','beneide','vergleiche','vergleichen','eifersüchtig','eifersucht','instagram','tiktok'],
+    phrasen: ['andere haben','andere leute haben','alle anderen','alle haben','schönes leben','keine probleme','wieso hat er','wieso hat sie','warum hat er','warum hat sie','warum haben andere','wieso haben andere','besseres leben','mehr glück','immer glück','haben alles','bei allen ausser mir','bei allen außer mir','läuft es bei allen','und ich hab nichts','und ich habe nichts','ist einfach besser','in meinem umfeld','betet nichtmal','betet nicht mal','und mich nicht','anderen und nicht mir','verdient mehr als ich','verdient doppelt','mehr als ich','jeder hat','nur ich nicht','nur ich häng'],
+    worte: ['neid','neidisch','beneide','vergleiche','vergleichen','eifersüchtig','eifersucht','instagram','tiktok','lambo','lamborghini','ferrari','porsche','millionen','million','umsatz','reichen','reiche','erfolgreicher','luxus','penthouse','villa','rolex'],
     antworten: [
       {
         t: 'Dreh den Gedanken um: Vielleicht hält Allah es nicht von dir fern — vielleicht macht Er dich gerade erst BEREIT dafür.',
@@ -1069,14 +1069,103 @@ const DB = {
         q: { x: 'Und richte deine Augen nicht auf das, was Wir manchen von ihnen als Glanz des diesseitigen Lebens gewährt haben, um sie darin zu prüfen. Die Versorgung deines Herrn ist besser und beständiger.', r: 'Koran 20:131' },
         h: { x: 'Erfolgreich ist, wer den Islam angenommen hat, wessen Versorgung ausreichend ist und wen Allah zufrieden gemacht hat mit dem, was Er ihm gab.', r: 'Sahih Muslim 1054' },
         a: { text: 'Sag 33× Alhamdulillah — und zähl dabei auf, was Allah DIR gegeben hat, ohne dass du es je bestellt hast: Augen, Iman, ein Herz, das Ihn sucht.', dhikr: 'alhamdu', btn: '33× Alhamdulillah' }
+      },
+      {
+        t: 'Mach das Gegenteil von Neid: Segne ihn. Das ist der Trick, der dein Herz befreit — und dir selbst die Tür öffnet.',
+        e: 'Neid ist wie Feuer: Er frisst deine guten Taten und lässt IHM seinen Lamborghini trotzdem (Abu Dawud 4903). Also dreh den Spieß um: Wenn du seinen Erfolg siehst, sag „Barakallahu lahu — möge Allah es ihm segnen“ und mach dann Dua für DICH: „Ya Allah, gib mir das Gleiche und Besseres — halal und mit Barakah.“ Zwei Wunder passieren: Erstens stirbt der Neid sofort, denn man kann nicht gleichzeitig für jemanden beten und ihn beneiden. Zweitens sagt der Engel bei deiner Dua für ihn: „Amin — und für dich das Gleiche!“ (Muslim 2732). Sein Ferrari macht Allahs Schatzkammer nicht leerer — für dich ist noch unendlich viel da (Muslim 2577).',
+        q: { x: 'Und wünscht euch nicht das, womit Allah die einen von euch vor den anderen bevorzugt hat … Und bittet Allah von Seiner Huld. Allah weiß über alles Bescheid.', r: 'Koran 4:32' },
+        h: { x: 'Kein Diener bittet für seinen Bruder in dessen Abwesenheit, ohne dass der Engel sagt: „Und für dich das Gleiche.“', r: 'Sahih Muslim 2732' },
+        a: { text: 'Nächstes Mal, wenn du den Lambo siehst: „Barakallahu lahu“ — und dann bitte Allah für dich um Gleiches und Besseres. Trainiere es jetzt mit einer Dua.', dhikr: 'hasbuna', btn: '33× Hasbunallah' }
+      }
+    ]
+  },
+
+  rizqwunsch: {
+    prio: 11,
+    phrasen: ['reich werden will','reich sein will','will reich werden','will reich sein','erfolgreich sein aber','fühlt sich haram an','ist das haram','schlechter muslim weil','viel geld verdienen will','vermögen aufbauen'],
+    worte: [],
+    antworten: [
+      {
+        t: 'Nein — reich werden zu wollen macht dich NICHT zu einem schlechten Muslim. Es kommt nur darauf an, wo das Geld sitzt: in der Hand oder im Herzen.',
+        e: 'Der Prophet ﷺ hat es selbst gesagt: „Wie vortrefflich ist gutes (halales) Vermögen in der Hand eines rechtschaffenen Mannes!“ (Ahmad 17763). ʿAbdur-Rahman ibn ʿAwf war einer der reichsten Männer Arabiens — und einer der zehn, denen das Paradies schon zu Lebzeiten versprochen wurde. ʿUthman hat mit seinem Reichtum Armeen ausgerüstet und Brunnen gekauft. Geld in der HAND eines Gläubigen baut Moscheen, ernährt Familien, befreit Menschen. Gefährlich wird es nur, wenn das Geld ins HERZ rutscht — auf den Thron, wo nur Allah sitzen darf. Also: Wünsch dir Reichtum, arbeite dafür, bitte Allah GROSS darum — mit der Absicht, damit Gutes zu tun. Das ist Ibadah, nicht Sünde.',
+        q: { x: 'Und strebe mit dem, was Allah dir gegeben hat, nach der jenseitigen Wohnstätte, aber vergiss nicht deinen Anteil am Diesseits. Und tu Gutes, so wie Allah dir Gutes getan hat.', r: 'Koran 28:77' },
+        h: { x: 'Wie vortrefflich ist das gute Vermögen für den rechtschaffenen Mann!', r: 'Musnad Ahmad 17763 — sahih' },
+        a: { text: 'Mach deine Absicht jetzt: „Ya Allah, gib mir halalen Reichtum, mit dem ich gebe, helfe und Dir näherkomme.“ Und dann binde das Kamel an: arbeite, lerne, plane.', dhikr: 'istighfar', btn: '70× Istighfar (öffnet Rizq)' }
+      }
+    ]
+  },
+
+  fluch: {
+    prio: 11,
+    phrasen: ['bin ich verflucht','bin verflucht','böser blick','bösen blick','jemand hat mir','schwarze magie','verhext','magie gemacht','ayn bekommen','nazar bekommen','was angetan','angetan deshalb'],
+    worte: ['verflucht','sihr','verhext','nazar','pechsträhne','angetan'],
+    antworten: [
+      {
+        t: 'Halt — bevor die Angst dich frisst: Nichts und niemand kann dich treffen ohne Allahs Erlaubnis. Kein Blick, keine Magie, kein Mensch.',
+        e: 'Ja, der böse Blick ist real — der Prophet ﷺ sagte: „Al-ʿAyn ist Wahrheit“ (Muslim 2188). ABER: Er ist ein Geschöpf wie alles andere und kann NUR wirken, wenn Allah es zulässt (9:51). Und Allah hat dir eine Festung gegeben, die stärker ist als jeder Blick: die Morgen- und Abend-Adhkar, Ayat al-Kursi und die drei Schutzsuren. Wer sie spricht, ist bewacht. Und ganz wichtig: NICHT jeder Misserfolg ist ein Fluch! Meistens ist es einfach Prüfung und Qadar — der Weg jedes Gläubigen. Wer hinter allem Magie sieht, gibt dem Shaytan genau die Angst, die er will. Und geh NIEMALS zu „Heilern“, die mit Amuletten oder Wahrsagerei arbeiten — das ist die Tür zum Schirk. Bei echtem Verdacht: Ruqya mit Koran selbst machen und einen vertrauenswürdigen Imam fragen.',
+        q: { x: 'Sag: Uns wird nur das treffen, was Allah für uns bestimmt hat. Er ist unser Beschützer.', r: 'Koran 9:51' },
+        h: { x: 'Sprich abends dreimal: „Aʿudhu bi-kalimatillahit-tammati min scharri ma khalaq“ — dann schadet dir in jener Nacht nichts.', r: 'Sahih Muslim 2708' },
+        a: { text: 'Bau deine Festung: Öffne im Wissen-Tab die Morgen- und Abend-Routine — das ist der Schutz aus der Sunnah, jeden Tag.', guide: 'morgen', btn: 'Zur Schutz-Routine' }
+      }
+    ]
+  },
+
+  rueckschlag: {
+    prio: 11,
+    phrasen: ['nichts ändert sich','ändert sich nichts','bringt doch eh nichts','bringt eh nichts','bringt nichts','seit wochen','seit 3 wochen','seit drei wochen','kein dhikr gemacht','nicht geschafft','wieder verschlafen','hab verschlafen','bin so schwach','wieder aufgehört','nicht durchgehalten','rückfall','immer noch gleich','ist noch gleich','wochen und nichts','hasse mich','hasse mich dafür','vergess ich die','vergesse die','nicht aufgestanden'],
+    worte: ['verschlafen','verpennt','durchgehalten','aufgegeben','vergess'],
+    antworten: [
+      {
+        t: 'Doch, es ändert sich — nur da, wo du nicht hinschauen kannst: unter der Erde, bei den Wurzeln.',
+        e: 'Der Bambus wächst in den ersten Jahren fast gar nicht — oben. Unten baut er ein riesiges Wurzelwerk. Dann schießt er in wenigen Wochen meterhoch. Dein Dhikr der letzten 3 Wochen ist KEIN einziges Mal verloren gegangen: „Wer auch nur ein Stäubchen Gutes tut, wird es sehen“ (Koran 99:7). Jedes Astaghfirullah ist notiert. Und merkst du es wirklich nicht? Du benutzt seit Wochen eine App, um Allah näherzukommen — der Bilal von vor einem Monat hätte das nicht getan. DAS ist die Wurzel. Der Prophet ﷺ sagte: Die liebste Tat bei Allah ist die BESTÄNDIGE, auch wenn sie klein ist. Nicht die spektakuläre. Die beständige.',
+        q: { x: 'Wer auch nur im Gewicht eines Stäubchens Gutes tut, wird es sehen.', r: 'Koran 99:7' },
+        h: { x: 'Die liebste Tat bei Allah ist die beständigste, auch wenn sie klein ist.', r: 'Sahih al-Bukhari 6464' },
+        a: { text: 'Nicht mehr machen — nur nicht aufhören. Heute nur EIN Haken auf der Checkliste. Das ist Beständigkeit.', view: 'weg', btn: 'Zur Checkliste' }
+      },
+      {
+        t: 'Zwei Tage Pause sind kein Absturz — und Selbsthass ist keine Tawba. Steh einfach wieder auf, ohne Drama.',
+        e: 'Hör genau hin, was der Prophet ﷺ gesagt hat: „ALLE Söhne Adams machen Fehler — und die besten Fehler-Macher sind die, die immer wieder zurückkehren.“ (Tirmidhi 2499) Nicht: die nie fallen. Sondern: die zurückkehren. Der Shaytan will nach 2 Tagen Pause nur eins: dass du sagst „Ich bin eh zu schwach“ und ganz aufhörst. Gib ihm das nicht. Und fürs verschlafene Nachtgebet: Wer fest vorhatte aufzustehen und verschlafen hat, dem schreibt Allah den LOHN des Nachtgebets trotzdem — und der Schlaf war ein Geschenk (an-Nasa’i 1787). Dein Konto ist voller, als dein Selbsthass dir erzählt.',
+        q: { x: 'Und diejenigen, die, wenn sie etwas Schändliches getan oder sich selbst Unrecht zugefügt haben, Allahs gedenken und um Vergebung bitten — und dann nicht beharrlich weitermachen.', r: 'Koran 3:135' },
+        h: { x: 'Alle Söhne Adams machen Fehler, und die besten der Fehlenden sind die (zu Allah) Zurückkehrenden.', r: 'Tirmidhi 2499 — hasan' },
+        a: { text: 'Kein Rückblick, kein Drama: Sag jetzt 1× Astaghfirullah und mach heute einen einzigen Haken. Morgen wieder einen.', dhikr: 'istighfar', btn: 'Istighfar starten' }
+      }
+    ]
+  },
+
+  kraenkung: {
+    prio: 9,
+    phrasen: ['fertig gemacht','vor allen blamiert','bloßgestellt','blossgestellt','bin ein versager','ich sei ein versager','gesagt ich bin','runtergemacht','klein gemacht','macht mich lächerlich','vor dem team','vor allen','vor der klasse'],
+    worte: ['versager','beleidigt','gedemütigt','blamiert','gemobbt','ausgelacht','respektlos','chef','lächerlich'],
+    antworten: [
+      {
+        t: 'Sein Wort über dich ist nicht dein Wert. Deinen Wert hat Allah festgelegt — und kein Mensch kann daran drehen.',
+        e: 'Den Propheten ﷺ — den besten Menschen, der je lebte — nannten sie Lügner, Verrückten, Zauberer. In Taif haben sie ihn mit Steinen beworfen, bis er blutete. Hat das seinen Wert bei Allah um ein Staubkorn verringert? Allah hat ihn danach höher erhoben als jeden Menschen. Merk dir: „Die Ehre (ʿIzzah) gehört Allah, Seinem Gesandten und den Gläubigen“ (63:8) — Ehre wird bei Allah abgeholt, nicht beim Chef und nicht beim Bruder. Worte können deinen Rizq nicht kürzen, deinen Rang bei Allah nicht senken und deine Zukunft nicht schreiben. Antworte mit Würde oder mit Schweigen — und lass Allah den Rest regeln. „Der Starke ist nicht der, der ringt — der Starke ist der, der sich im Zorn beherrscht.“ (Bukhari 6114)',
+        q: { x: 'Und die Ehre gehört Allah und Seinem Gesandten und den Gläubigen. Aber die Heuchler wissen es nicht.', r: 'Koran 63:8' },
+        h: { x: 'Der Starke ist nicht der, der die Leute im Ringen besiegt. Der Starke ist der, der sich selbst im Zorn beherrscht.', r: 'Sahih al-Bukhari 6114' },
+        a: { text: 'Gib die Kränkung ab, bevor sie sich festbeißt: 33× „La hawla wa la quwwata illa billah“ — und dann eine Dua für dich selbst.', dhikr: 'lahawla', btn: '33× La hawla' }
+      }
+    ]
+  },
+
+  schlaf: {
+    prio: 8,
+    phrasen: ['kann nicht schlafen','nicht einschlafen','kann nicht einschlafen','liege wach','schlaflos vor','uhr wach','kopf voll'],
+    worte: ['schlaflos','grübeln','grüble','gedankenkarussell','wach'],
+    antworten: [
+      {
+        t: 'Dein Kopf dreht Runden, weil er Lasten trägt, die nicht ihm gehören. Gib sie ab — dann darf er schlafen.',
+        e: 'Grübeln in der Nacht ist der Versuch, morgen schon heute zu tragen. Aber morgen trägt Allah — nicht du. Der Prophet ﷺ hat uns fürs Einschlafen eine Übergabe beigebracht: „O Allah, ich habe mich Dir ergeben und meine Angelegenheit DIR überlassen …“ (Bukhari 247). Das ist wie das Gepäck an der Rezeption abgeben: Du sagst Allah jede einzelne Sorge, legst sie Ihm hin — und dann lies Ayat al-Kursi (dann bewacht dich ein Wächter bis zum Morgen, Bukhari 2311) und die drei Schutzsuren in deine Hände. Im Gedenken Allahs finden die Herzen Ruhe (13:28) — das gilt besonders um 2 Uhr nachts. Und wenn du länger wach liegst: Vielleicht weckt Allah dich für zwei Rakʿa. Die schönsten Gespräche entstehen nachts.',
+        q: { x: 'Diejenigen, die glauben und deren Herzen im Gedenken Allahs Ruhe finden. Sicherlich, im Gedenken Allahs finden die Herzen Ruhe!', r: 'Koran 13:28' },
+        h: { x: 'Wenn du dich hinlegst, sprich: „O Allah, ich habe mich Dir ergeben und meine Angelegenheit Dir überlassen …“ — stirbst du in jener Nacht, stirbst du auf der Fitra.', r: 'Sahih al-Bukhari 247' },
+        a: { text: 'Öffne die Anleitung „Vor dem Schlafen“ — fünf Schritte, und dein Kopf darf loslassen.', guide: 'schlaf', btn: 'Zur Schlaf-Anleitung' }
       }
     ]
   },
 
   rizq: {
     prio: 6,
-    phrasen: ['kein geld','wenig geld','geld verdienen','keine arbeit','job verloren'],
-    worte: ['geld','franken','euro','lohn','gehalt','arbeit','job','arbeitslos','schulden','miete','rechnung','rechnungen','arm','armut','verdienen','verdiene','geschäft','business','firma','kunden','finanzen','finanziell','pleite'],
+    phrasen: ['kein geld','wenig geld','geld verdienen','keine arbeit','job verloren','der pleite bin'],
+    worte: ['geld','franken','euro','lohn','gehalt','arbeit','job','arbeitslos','schulden','miete','rechnung','rechnungen','arm','armut','verdienen','verdiene','geschäft','business','firma','kunden','finanzen','finanziell','pleite','bewerbung','bewerbungen','absage','abgelehnt','gekündigt','entlassen','zinsen','kredit','hypothek','betreibung'],
     antworten: [
       {
         t: 'Dein Rizq ist längst aufgeschrieben. Kein Mensch auf der Welt kann dir wegnehmen, was Allah für dich bestimmt hat.',
@@ -1097,8 +1186,8 @@ const DB = {
 
   dua: {
     prio: 9,
-    phrasen: ['dua wird nicht erhört','dua nicht erhört','bete seit','nicht erhört','wird nicht beantwortet','wie mache ich dua','wie macht man dua','richtig dua','dua tipps','beste dua','dua machen'],
-    worte: ['dua','bittgebet','erhört','duas','duha','hadscha','tahajjud','tahadschud'],
+    phrasen: ['dua wird nicht erhört','dua nicht erhört','bete seit','nicht erhört','wird nicht beantwortet','wie mache ich dua','wie macht man dua','richtig dua','dua tipps','beste dua','dua machen','bete und bete','situation bleibt gleich'],
+    worte: ['dua','bittgebet','erhört','duas','hadscha','tahajjud','tahadschud'],
     antworten: [
       {
         t: 'Deine Dua ist nicht abgelehnt. Sie ist in Bearbeitung — bei Dem, der keine Fehler macht.',
@@ -1200,8 +1289,8 @@ const DB = {
 
   suende: {
     prio: 6,
-    phrasen: ['fehler gemacht','schlecht gemacht','haram gemacht','sünde begangen','schäme mich'],
-    worte: ['sünde','sünden','schuld','schuldig','bereue','bereuen','vergebung','vergib','tawba','fehler'],
+    phrasen: ['fehler gemacht','schlecht gemacht','haram gemacht','sünde begangen','schäme mich','verzeiht mir','vergibt mir','altes leben'],
+    worte: ['sünde','sünden','schuld','schuldig','bereue','bereuen','vergebung','vergib','tawba','fehler','verzeiht','verzeihen'],
     antworten: [
       {
         t: 'Deine Sünde ist groß? Allahs Barmherzigkeit ist größer. Immer. Das ist keine Floskel, das ist ʿAqida.',
@@ -1215,7 +1304,7 @@ const DB = {
 
   qadar: {
     prio: 5,
-    phrasen: ['warum ich','warum passiert mir','warum immer ich','zu spät gekommen','chance verpasst','alles verloren'],
+    phrasen: ['warum ich','warum passiert mir','warum immer ich','zu spät gekommen','chance verpasst','alles verloren','ausgerechnet mich','prüft mich','prüft allah mich'],
     worte: ['schicksal','qadar','ungerecht','unfair','pech','verpasst','verloren','misserfolg','gescheitert'],
     antworten: [
       {
@@ -1245,8 +1334,8 @@ const DB = {
 
   dank: {
     prio: 3,
-    phrasen: ['gut gelaufen','hat geklappt','bin glücklich','freue mich'],
-    worte: ['danke','dankbar','alhamdulillah','elhamdulillah','geschafft','glücklich','froh'],
+    phrasen: ['gut gelaufen','hat geklappt','bin glücklich','freue mich','wünsche meinem','wünsche ihm','wünsche ihr','von herzen','dankbar für','bin dankbar'],
+    worte: ['danke','dankbar','alhamdulillah','elhamdulillah','geschafft','glücklich','froh','gönne'],
     antworten: [
       {
         t: 'Alhamdulillah! Halte diesen Moment fest — denn Dankbarkeit ist der Schlüssel zu MEHR.',
@@ -1260,7 +1349,7 @@ const DB = {
 
   unmoeglich: {
     prio: 9,
-    phrasen: ['nie passieren','eh nie','wird nie klappen','klappt nie','wird eh nichts','wird nie was','werde das nie','schaffe das nie','kann nie passieren','zu spät für mich','zu gross für mich','zu groß für mich','bleibt ein traum','nur ein traum','niemals möglich','klappt bei mir nie','bei mir nie'],
+    phrasen: ['nie passieren','eh nie','wird nie klappen','klappt nie','wird eh nichts','wird nie was','werde das nie','schaffe das nie','kann nie passieren','zu spät für mich','zu gross für mich','zu groß für mich','bleibt ein traum','wohl ein traum','traum bleibt','nur ein traum','niemals möglich','klappt bei mir nie','bei mir nie','für immer zu','tür ist zu','alle türen zu','wird das nie','das nie was','träum nicht','träume nicht so'],
     worte: ['unmöglich','aussichtslos','unrealistisch','utopisch','unerreichbar'],
     antworten: [
       {
@@ -1282,8 +1371,8 @@ const DB = {
 
   anleitung: {
     prio: 10,
-    phrasen: ['wie bete ich','wie betet man','nachtgebet','letzten drittel','letztes drittel','tahajjud beten','witr beten','duha beten','wie mache ich das gebet','morgenroutine','abendroutine','vor dem schlafen','salat al hajah','hadscha beten'],
-    worte: ['anleitung','wegweiser','schritt'],
+    phrasen: ['wie bete ich','wie betet man','nachtgebet','letzten drittel','letztes drittel','tahajjud beten','witr beten','duha beten','wie mache ich das gebet','morgenroutine','abendroutine','vor dem schlafen','salat al hajah','hadscha beten','nachts aufstehen','nacht aufstehen','wie mach ichs','wie machs richtig','richtig machen','wie war das','was sag ich','was sage ich'],
+    worte: ['anleitung','wegweiser','schritt','raka','vormittag','sadschda','sudschud','sujud','witr','duha'],
     antworten: [
       {
         t: 'Dafür habe ich dir Wegweiser gebaut — Schritt für Schritt, mit den richtigen Duas an der richtigen Stelle.',
