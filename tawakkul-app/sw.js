@@ -1,5 +1,5 @@
-const CACHE = 'tawakkul-v17';
-const DATEIEN = ['./', './index.html', './manifest.json', './icon-180.png', './icon-192.png', './icon-512.png', './lang-en.js', './lang-ar.js'];
+const CACHE = 'tawakkul-v18';
+const DATEIEN = ['./', './index.html', './manifest.json', './icon-180.png', './icon-192.png', './icon-512.png', './lang-en.js', './lang-ar.js', './lang-en2.js', './lang-ar2.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(DATEIEN)).then(() => self.skipWaiting()));

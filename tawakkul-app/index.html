@@ -652,8 +652,8 @@
       mit den passenden Duas genau an der richtigen Stelle.</p>
       <div class="guide-grid" id="guideGrid"></div>
 
-      <h2 class="sect">Mein Ziel</h2>
-      <div class="wcard" style="border-color:var(--gold-line)">
+      <h2 class="sect" id="zielH2">Mein Ziel</h2>
+      <div class="wcard" id="zielCard" style="border-color:var(--gold-line)">
         <p><strong>Ich baue 1000 % Tawakkul auf</strong> — bis kein Hauch eines schlechten
         Gedankens über Allah mehr in mir ist.</p>
         <ol>
@@ -670,10 +670,11 @@
         mein Herz, das ruhig bei Allah liegt.</p>
       </div>
 
-      <h2 class="sect">Deine Schatzkammer</h2>
+      <h2 class="sect" id="schatzH2">Deine Schatzkammer</h2>
       <p class="sub">Gebete, Zeiten und die Kunst der Dua — mit Quellen, zum sofort Anwenden.
       Tippe eine Karte an, um sie zu öffnen.</p>
 
+      <div id="schatzWrap">
       <details class="acc" open>
         <summary>So machst du Dua — Schritt für Schritt</summary>
         <div class="acc-body">
@@ -926,17 +927,19 @@
         </div>
       </details>
 
-      <h2 class="sect">Hadith-Bibliothek</h2>
+      </div>
+      <h2 class="sect" id="hadithH2">Hadith-Bibliothek</h2>
       <p class="sub">Worte des Propheten ﷺ zu allem, was dein Herz trägt — nur sahih und hasan
       eingestufte Überlieferungen, immer mit Quelle. Such nach deinem Thema.</p>
       <input class="suche" id="hadithSuche" type="search" placeholder="Suche: Geduld, Barmherzigkeit, Rizq, Dhikr …" aria-label="Hadithe durchsuchen">
       <div id="hadithLib"></div>
 
-      <h2 class="sect">Worte der Gelehrten</h2>
+      <h2 class="sect" id="gelehrtH2">Worte der Gelehrten</h2>
       <p class="sub">Weisheit der Imame und Gefährten — zum Nachdenken, klar getrennt von Koran
       und Sunnah.</p>
       <div id="gelehrtenListe"></div>
 
+      <div id="wissenRest">
       <h2 class="sect">Träume — was die Sunnah sagt</h2>
       <div class="wcard">
         <h3>Der Prophet ﷺ lehrte drei Arten von Träumen</h3>
@@ -1007,6 +1010,7 @@
         → „Zum Home-Bildschirm“. Dann ist sie wie eine normale App bei dir.</p>
       </div>
       </div>
+      </div>
     </section>
   </main>
 
@@ -1047,6 +1051,8 @@
 
 <script src="lang-en.js"></script>
 <script src="lang-ar.js"></script>
+<script src="lang-en2.js"></script>
+<script src="lang-ar2.js"></script>
 <script>
 'use strict';
 /* =============================================================
@@ -2585,14 +2591,18 @@ function showGuide(id){
   window.scrollTo(0, 0);
 }
 const gGrid = $('guideGrid');
-for (const [id, g] of Object.entries(GUIDES)){
-  const c = el('button', 'guide-card');
-  c.appendChild(el('span', 'guide-icon', g.icon));
-  c.appendChild(el('span', 'guide-t', g.titel));
-  c.appendChild(el('span', 'guide-s', g.unter));
-  c.addEventListener('click', () => showGuide(id));
-  gGrid.appendChild(c);
+function bauGuideGrid(){
+  gGrid.replaceChildren();
+  for (const [id, g] of Object.entries(GUIDES)){
+    const c = el('button', 'guide-card');
+    c.appendChild(el('span', 'guide-icon', g.icon));
+    c.appendChild(el('span', 'guide-t', g.titel));
+    c.appendChild(el('span', 'guide-s', g.unter));
+    c.addEventListener('click', () => showGuide(id));
+    gGrid.appendChild(c);
+  }
 }
+bauGuideGrid();
 
 
 /* ---------- Hadith-Bibliothek (nur sahih/hasan) ---------- */
@@ -2697,9 +2707,11 @@ const GELEHRTE = [
   { n: 'Ibn al-Dschauzi', x: 'Wer die Nacht der Prüfung geduldig durchsteht, dem geht die Morgendämmerung der Antwort auf. Die Fradsch (Erleichterung) kommt am häufigsten, wenn die Hoffnung der Menschen erschöpft ist — damit klar wird, dass sie von Allah kam.' }
 ];
 const gelWrap = $('gelehrtenListe');
-if (gelWrap){
+function renderGelehrte(liste, fussnote){
+  if (!gelWrap) return;
+  gelWrap.replaceChildren();
   const card = el('div', 'wcard');
-  for (const g of GELEHRTE){
+  for (const g of liste){
     const it = el('div', 'dua-item');
     it.appendChild(el('p', 'dua-titel', g.n));
     const t = el('p', 'versteh-p', '„' + g.x + '“');
@@ -2707,10 +2719,10 @@ if (gelWrap){
     it.appendChild(t);
     card.appendChild(it);
   }
-  const hinweis = el('p', 'quelle-klein', 'Gelehrtenworte sind Weisheit, keine Offenbarung — sinngemäß überliefert und klar getrennt von Koran und Sunnah.');
-  card.appendChild(hinweis);
+  card.appendChild(el('p', 'quelle-klein', fussnote));
   gelWrap.appendChild(card);
 }
+renderGelehrte(GELEHRTE, 'Gelehrtenworte sind Weisheit, keine Offenbarung — sinngemäß überliefert und klar getrennt von Koran und Sunnah.');
 
 
 /* ---------- Sprachwahl ---------- */
@@ -2719,6 +2731,89 @@ $('langSel').addEventListener('change', () => {
   store.set('sprache', $('langSel').value);
   location.reload();
 });
+
+/* ---------- Volle Übersetzung anwenden (EN/AR) ---------- */
+if (PACK){
+  if (PACK.dualib){
+    DUA_LIB.forEach((g, i) => {
+      const o = PACK.dualib[i]; if (!o) return;
+      if (o.kat) g.kat = o.kat;
+      if (o.duas) g.duas.forEach((d, j) => {
+        const t = o.duas[j]; if (!t) return;
+        if (t.t) d.t = t.t;
+        if (t.de) d.de = t.de;
+      });
+    });
+    renderDuaLib();
+  }
+  if (PACK.hadithlib){
+    HADITH_LIB.forEach((g, i) => {
+      const o = PACK.hadithlib[i]; if (!o) return;
+      if (o.kat) g.kat = o.kat;
+      if (o.items) g.items.forEach((d, j) => { const t = o.items[j]; if (t && t.x) d.x = t.x; });
+    });
+    renderHadithLib();
+  }
+  if (PACK.gelehrte) renderGelehrte(PACK.gelehrte, PACK.ui.gelehrtFuss || '');
+  if (PACK.guides){
+    for (const [id, g] of Object.entries(PACK.guides)){
+      const basis = GUIDES[id]; if (!basis) continue;
+      if (g.titel) basis.titel = g.titel;
+      if (g.unter) basis.unter = g.unter;
+      if (g.schritte) g.schritte.forEach((s, i) => {
+        const bs = basis.schritte[i]; if (!bs) return;
+        if (s.t) bs.t = s.t;
+        if (s.x !== undefined) bs.x = s.x;
+        if (s.x2 !== undefined) bs.x2 = s.x2;
+        if (s.duaDe && bs.dua) bs.dua.de = s.duaDe;
+      });
+    }
+    bauGuideGrid();
+  }
+  if (PACK.versteh){
+    for (const [id, t] of Object.entries(PACK.versteh)){
+      const zt = DHIKR[id] && DHIKR[id].tief; if (!zt) continue;
+      if (t.woerter) t.woerter.forEach((w, i) => { if (zt.woerter[i] && w) zt.woerter[i].b = w; });
+      for (const f of ['wurzel','bild','schild','lohn']) if (t[f]) zt[f] = t[f];
+    }
+    renderVerstehen();
+  }
+  function bauAbschnitte(zielId, daten){
+    const wrap = $(zielId); if (!wrap || !daten) return;
+    wrap.replaceChildren();
+    for (const sek of daten){
+      if (sek.h2){ wrap.appendChild(el('h2', 'sect', sek.h2)); continue; }
+      const det = document.createElement('details');
+      det.className = 'acc';
+      if (sek.offen) det.open = true;
+      const sum = document.createElement('summary');
+      sum.textContent = sek.titel;
+      det.appendChild(sum);
+      const body = el('div', 'acc-body');
+      for (const a of sek.a){
+        if (a.startsWith('AR:')) body.appendChild(el('span', 'adhkar-ar', a.slice(3)));
+        else if (a.startsWith('- ')) { const li = el('p', 'versteh-p', '• ' + a.slice(2)); body.appendChild(li); }
+        else body.appendChild(el('p', 'versteh-p', a));
+      }
+      det.appendChild(body);
+      wrap.appendChild(det);
+    }
+  }
+  if (PACK.schatz){
+    if (PACK.ui.schatzH2) $('schatzH2').textContent = PACK.ui.schatzH2;
+    bauAbschnitte('schatzWrap', PACK.schatz);
+  }
+  if (PACK.rest) bauAbschnitte('wissenRest', PACK.rest);
+  if (PACK.ziel){
+    if (PACK.ui.zielH2) $('zielH2').textContent = PACK.ui.zielH2;
+    const zc = $('zielCard');
+    zc.replaceChildren();
+    for (const a of PACK.ziel) zc.appendChild(el('p', a.startsWith('~') ? 'quelle-klein' : 'versteh-p', a.replace(/^~/, '')));
+  }
+  if (PACK.ui.hadithH2) $('hadithH2').textContent = PACK.ui.hadithH2;
+  if (PACK.ui.gelehrtH2) $('gelehrtH2').textContent = PACK.ui.gelehrtH2;
+}
+
 </script>
 <script>
 if ('serviceWorker' in navigator) {
