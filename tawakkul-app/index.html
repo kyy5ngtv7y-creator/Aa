@@ -908,6 +908,17 @@
         </div>
       </details>
 
+      <h2 class="sect">Hadith-Bibliothek</h2>
+      <p class="sub">Worte des Propheten ﷺ zu allem, was dein Herz trägt — nur sahih und hasan
+      eingestufte Überlieferungen, immer mit Quelle. Such nach deinem Thema.</p>
+      <input class="suche" id="hadithSuche" type="search" placeholder="Suche: Geduld, Barmherzigkeit, Rizq, Dhikr …" aria-label="Hadithe durchsuchen">
+      <div id="hadithLib"></div>
+
+      <h2 class="sect">Worte der Gelehrten</h2>
+      <p class="sub">Weisheit der Imame und Gefährten — zum Nachdenken, klar getrennt von Koran
+      und Sunnah.</p>
+      <div id="gelehrtenListe"></div>
+
       <h2 class="sect">Träume — was die Sunnah sagt</h2>
       <div class="wcard">
         <h3>Der Prophet ﷺ lehrte drei Arten von Träumen</h3>
@@ -1907,6 +1918,37 @@ const DUA_LIB = [
     { t: 'Alles Gute erbitten, vor allem Übel schützen', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنَ الْخَيْرِ كُلِّهِ، عَاجِلِهِ وَآجِلِهِ، مَا عَلِمْتُ مِنْهُ وَمَا لَمْ أَعْلَمْ، وَأَعُوذُ بِكَ مِنَ الشَّرِّ كُلِّهِ، عَاجِلِهِ وَآجِلِهِ، مَا عَلِمْتُ مِنْهُ وَمَا لَمْ أَعْلَمْ', lat: 'Allahumma inni as’aluka minal-khayri kullihi, ʿadschilihi wa adschilihi, ma ʿalimtu minhu wa ma lam aʿlam, wa aʿudhu bika minasch-scharri kullihi, ʿadschilihi wa adschilihi, ma ʿalimtu minhu wa ma lam aʿlam', de: 'O Allah, ich bitte Dich um das Gute — alles davon, das jetzige und das kommende, was ich davon kenne und was nicht. Und ich suche Zuflucht bei Dir vor dem Übel — allem davon … — Die Dua, die der Prophet ﷺ seiner Frau Aischa lehrte.', q: 'Ibn Madscha 3846 — sahih' },
     { t: 'Das Wichtigste überhaupt', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ', lat: 'Allahumma inni as’alukal-dschannata wa aʿudhu bika minan-nar', de: 'O Allah, ich bitte Dich um das Paradies und suche Zuflucht bei Dir vor dem Feuer. — „Darum kreisen wir alle“, sagte der Prophet ﷺ.', q: 'Abu Dawud 792 — sahih' }
   ]},
+  { kat: 'Gebet, Moschee und Adhan', duas: [
+    { t: 'Beim Betreten der Moschee', ar: 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ', lat: 'Allahumma-ftah li abwaba rahmatik', de: 'O Allah, öffne mir die Tore Deiner Barmherzigkeit.', q: 'Sahih Muslim 713' },
+    { t: 'Beim Verlassen der Moschee', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ', lat: 'Allahumma inni as’aluka min fadlik', de: 'O Allah, ich bitte Dich um Deine Gunst. — In der Moschee holst du Barmherzigkeit, draußen suchst du Seinen Rizq.', q: 'Sahih Muslim 713' },
+    { t: 'Nach dem Adhan', ar: 'اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلَاةِ الْقَائِمَةِ، آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ', lat: 'Allahumma Rabba hadhihid-daʿwatit-tammah, was-salatil-qa’imah, ati Muhammadanil-wasilata wal-fadilah, wabʿath-hu maqaman mahmudanil-ladhi waʿadtah', de: 'O Allah, Herr dieses vollkommenen Rufes und des bevorstehenden Gebets: Gib Muhammad die Wasila und die Auszeichnung und erwecke ihn zu der gepriesenen Stellung, die Du ihm versprochen hast. — Wer das nach dem Adhan spricht, dem gebührt die Fürsprache des Propheten ﷺ.', q: 'Sahih al-Bukhari 614' },
+    { t: 'Nach dem Wudu', ar: 'أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ', lat: 'Asch-hadu an la ilaha illallahu wahdahu la scharika lah, wa asch-hadu anna Muhammadan ʿabduhu wa rasuluh. Allahumma-dschʿalni minat-tawwabina wa-dschʿalni minal-mutatahhirin', de: 'Ich bezeuge, dass es keinen Gott außer Allah gibt … O Allah, mach mich zu den Reumütigen und zu den sich Reinigenden. — Dem Sprecher werden die acht Tore des Paradieses geöffnet.', q: 'Sahih Muslim 234; Tirmidhi 55' }
+  ]},
+  { kat: 'Essen, Trinken und Gäste', duas: [
+    { t: 'Vor dem Essen — und wenn du es vergessen hast', ar: 'بِسْمِ اللهِ — بِسْمِ اللهِ أَوَّلَهُ وَآخِرَهُ', lat: 'Bismillah — (vergessen:) Bismillahi awwalahu wa achirahu', de: 'Im Namen Allahs. Wenn du es am Anfang vergisst, sag: „Im Namen Allahs, am Anfang und am Ende.“', q: 'Tirmidhi 1858 — sahih' },
+    { t: 'Für den, der dich einlädt oder dir Gutes tut', ar: 'اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُمْ، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ', lat: 'Allahumma barik lahum fima razaqtahum, waghfir lahum warhamhum', de: 'O Allah, segne ihnen, was Du ihnen an Versorgung gegeben hast, vergib ihnen und erbarme Dich ihrer.', q: 'Sahih Muslim 2042' }
+  ]},
+  { kat: 'Wetter: Regen, Wind und Gewitter', duas: [
+    { t: 'Wenn es regnet — Dua-Zeit!', ar: 'اللَّهُمَّ صَيِّبًا نَافِعًا', lat: 'Allahumma sayyiban nafiʿan', de: 'O Allah, (mach es zu) einem nützlichen Regen. — Und denk daran: Unter dem Regen wird Dua nicht abgewiesen (Abu Dawud 2540).', q: 'Sahih al-Bukhari 1032' },
+    { t: 'Nach dem Regen', ar: 'مُطِرْنَا بِفَضْلِ اللهِ وَرَحْمَتِهِ', lat: 'Mutirna bi-fadlillahi wa rahmatih', de: 'Uns wurde Regen gegeben durch Allahs Gunst und Barmherzigkeit.', q: 'Sahih al-Bukhari 846' },
+    { t: 'Bei starkem Wind oder Sturm', ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا', lat: 'Allahumma inni as’aluka khayraha, wa aʿudhu bika min scharriha', de: 'O Allah, ich bitte Dich um ihr Gutes und suche Zuflucht bei Dir vor ihrem Übel.', q: 'Sahih Muslim 899 (sinngemäß gekürzt)' }
+  ]},
+  { kat: 'Zorn, Streit und schwierige Menschen', duas: [
+    { t: 'Wenn die Wut hochkocht', ar: 'أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ', lat: 'Aʿudhu billahi minasch-schaytanir-radschim', de: 'Ich suche Zuflucht bei Allah vor dem verfluchten Satan. — Der Prophet ﷺ sagte über einen Zornigen: „Ich kenne ein Wort, das ihm seinen Zorn nehmen würde, wenn er es spräche.“ Dazu: Wenn du stehst, setz dich; wenn du sitzt, leg dich hin (Abu Dawud 4782). Und schweig, solange es kocht.', q: 'Sahih al-Bukhari 3282' },
+    { t: 'Für Menschen, die dich verletzen', ar: 'اللَّهُمَّ اهْدِ قَوْمِي فَإِنَّهُمْ لَا يَعْلَمُونَ', lat: 'Allahumma-hdi qawmi fa-innahum la yaʿlamun', de: 'O Allah, leite mein Volk recht, denn sie wissen es nicht. — So betete der Prophet ﷺ blutend für die, die ihn verletzt hatten. Die stärkste Antwort auf Kränkung.', q: 'Sahih al-Bukhari 3477' }
+  ]},
+  { kat: 'Prüfungen, Termine und Auftritte', duas: [
+    { t: 'Vor einem schweren Gespräch, einer Prüfung, einem Auftritt — die Dua von Musa', ar: 'رَبِّ اشْرَحْ لِي صَدْرِي، وَيَسِّرْ لِي أَمْرِي، وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي، يَفْقَهُوا قَوْلِي', lat: 'Rabbi-schrah li sadri, wa yassir li amri, wahlul ʿuqdatan min lisani, yafqahu qawli', de: 'Mein Herr, weite mir meine Brust, mach mir meine Aufgabe leicht und löse den Knoten von meiner Zunge, damit sie meine Worte verstehen. — Musa sprach sie vor dem Gang zu Pharao, dem mächtigsten Menschen seiner Zeit.', q: 'Koran 20:25–28' },
+    { t: 'Wenn du Angst vor Menschen oder einer Übermacht hast', ar: 'اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِمْ، وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ', lat: 'Allahumma inna nadschʿaluka fi nuhurihim, wa naʿudhu bika min schururihim', de: 'O Allah, wir stellen Dich ihnen entgegen, und wir suchen Zuflucht bei Dir vor ihrem Übel.', q: 'Abu Dawud 1537 — sahih' }
+  ]},
+  { kat: 'Fasten und Ramadan', duas: [
+    { t: 'Beim Fastenbrechen', ar: 'ذَهَبَ الظَّمَأُ، وَابْتَلَّتِ الْعُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللهُ', lat: 'Dhahaba-z-zama’u, wabtallatil-ʿuruqu, wa thabatal-adschru in scha’allah', de: 'Der Durst ist gegangen, die Adern sind benetzt, und der Lohn steht fest, so Allah will. — Vergiss nicht: Die Dua direkt vor dem Fastenbrechen wird nicht abgewiesen (Tirmidhi 3598).', q: 'Abu Dawud 2357 — hasan' },
+    { t: 'In der Nacht von al-Qadr — und in den letzten zehn Nächten', ar: 'اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي', lat: 'Allahumma innaka ʿafuwwun tuhibbul-ʿafwa faʿfu ʿanni', de: 'O Allah, Du bist der Verzeihende, Du liebst das Verzeihen — so verzeih mir. — Die Dua, die der Prophet ﷺ Aischa für die beste Nacht des Jahres lehrte.', q: 'Tirmidhi 3513 — sahih' }
+  ]},
+  { kat: 'Trauer, Verlust und Beileid', duas: [
+    { t: 'Wenn dich ein Verlust oder Unglück trifft', ar: 'إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا', lat: 'Inna lillahi wa inna ilayhi radschiʿun. Allahumma’dschurni fi musibati wa achlif li khayran minha', de: 'Wir gehören Allah, und zu Ihm kehren wir zurück. O Allah, belohne mich in meinem Unglück und ersetze es mir durch Besseres. — Umm Salama sprach sie beim Tod ihres Mannes und dachte: „Wer wäre besser als Abu Salama?“ Allah gab ihr danach den Propheten ﷺ als Ehemann.', q: 'Sahih Muslim 918' },
+    { t: 'Für einen Verstorbenen', ar: 'اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ، وَعَافِهِ وَاعْفُ عَنْهُ، وَأَكْرِمْ نُزُلَهُ، وَوَسِّعْ مُدْخَلَهُ', lat: 'Allahumma-ghfir lahu warhamhu, wa ʿafihi waʿfu ʿanhu, wa akrim nuzulahu, wa wassiʿ mudchalahu', de: 'O Allah, vergib ihm und erbarme Dich seiner, verschone ihn und verzeih ihm, ehre seine Aufnahme und weite seinen Eingang.', q: 'Sahih Muslim 963 (gekürzt)' }
+  ]},
   { kat: 'Vor Entscheidungen: Istikhara', duas: [
     { t: 'Das Istikhara-Gebet — bete 2 Rakʿa und sprich dann', ar: 'اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ، وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ، وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ، فَإِنَّكَ تَقْدِرُ وَلَا أَقْدِرُ، وَتَعْلَمُ وَلَا أَعْلَمُ، وَأَنْتَ عَلَّامُ الْغُيُوبِ. اللَّهُمَّ إِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الْأَمْرَ خَيْرٌ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي فَاقْدُرْهُ لِي وَيَسِّرْهُ لِي ثُمَّ بَارِكْ لِي فِيهِ، وَإِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الْأَمْرَ شَرٌّ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي فَاصْرِفْهُ عَنِّي وَاصْرِفْنِي عَنْهُ وَاقْدُرْ لِيَ الْخَيْرَ حَيْثُ كَانَ ثُمَّ أَرْضِنِي بِهِ', lat: 'Allahumma inni astakhiruka bi-ʿilmika, wa astaqdiruka bi-qudratika, wa as’aluka min fadlikal-ʿazim, fa-innaka taqdiru wa la aqdir, wa taʿlamu wa la aʿlam, wa anta ʿallamul-ghuyub. Allahumma in kunta taʿlamu anna hadhal-amra khayrun li fi dini wa maʿaschi wa ʿaqibati amri, faqdurhu li wa yassirhu li, thumma barik li fih. Wa in kunta taʿlamu anna hadhal-amra scharrun li fi dini wa maʿaschi wa ʿaqibati amri, fasrifhu ʿanni wasrifni ʿanhu, waqdur liyal-khayra haythu kan, thumma ardini bih', de: 'O Allah, ich bitte Dich um die gute Wahl durch Dein Wissen und um Kraft durch Deine Macht … Wenn Du weißt, dass diese Sache gut für mich ist in meiner Religion, meinem Leben und meinem Ausgang, dann bestimme sie für mich, mach sie mir leicht und segne sie mir. Und wenn Du weißt, dass sie schlecht für mich ist, dann wende sie von mir ab und wende mich von ihr ab — und bestimme für mich das Gute, wo immer es ist, und mach mich damit zufrieden. — Bei „diese Sache“ nennst du dein Anliegen. Danach: geh mutig los und schau, was Allah dir leicht macht.', q: 'Sahih al-Bukhari 1162' }
   ]}
@@ -2480,6 +2522,124 @@ for (const [id, g] of Object.entries(GUIDES)){
   c.appendChild(el('span', 'guide-s', g.unter));
   c.addEventListener('click', () => showGuide(id));
   gGrid.appendChild(c);
+}
+
+
+/* ---------- Hadith-Bibliothek (nur sahih/hasan) ---------- */
+const HADITH_LIB = [
+  { kat: 'Tawakkul und Vertrauen', items: [
+    { x: 'Würdet ihr euch auf Allah verlassen, wie es Ihm wirklich gebührt, würde Er euch versorgen, wie Er die Vögel versorgt: Sie fliegen morgens mit leerem Magen los und kehren abends satt zurück.', q: 'Tirmidhi 2344 — hasan sahih' },
+    { x: 'Ein Mann fragte: „Soll ich mein Kamel anbinden und auf Allah vertrauen, oder es loslassen und vertrauen?“ Er ﷺ sagte: „Binde es an und vertraue auf Allah.“', q: 'Tirmidhi 2517 — hasan' },
+    { x: 'Wisse: Wenn sich die ganze Gemeinschaft versammelte, um dir zu nützen, würden sie dir nur nützen, was Allah bereits für dich geschrieben hat. Und wenn sie sich versammelte, um dir zu schaden, würden sie dir nur schaden, was Allah bereits über dich geschrieben hat. Die Stifte sind gehoben und die Blätter getrocknet.', q: 'Tirmidhi 2516 — hasan sahih' },
+    { x: 'Der starke Gläubige ist besser und Allah lieber als der schwache — und in beiden ist Gutes. Strebe nach dem, was dir nützt, bitte Allah um Hilfe und gib nicht auf. Und wenn dich etwas trifft, sag nicht „hätte ich doch“, sondern: „Allah hat es bestimmt, und was Er wollte, hat Er getan.“', q: 'Sahih Muslim 2664' },
+    { x: '„Hasbunallahu wa niʿmal-wakil“ — das sagte Ibrahim, als er ins Feuer geworfen wurde, und das sagte Muhammad ﷺ, als man ihm sagte: „Die Menschen haben sich gegen euch versammelt — fürchtet sie!“', q: 'Sahih al-Bukhari 4563' }
+  ]},
+  { kat: 'Allahs Barmherzigkeit', items: [
+    { x: 'Der Prophet ﷺ sah eine Mutter, die ihr wiedergefundenes Kind an ihre Brust drückte, und fragte: „Glaubt ihr, diese Frau würde ihr Kind ins Feuer werfen?“ Wir sagten: „Niemals!“ Er sagte: „Allah ist barmherziger zu Seinen Dienern als diese Mutter zu ihrem Kind.“', q: 'Sahih al-Bukhari 5999' },
+    { x: 'Allah hat die Barmherzigkeit in hundert Teile erschaffen: Einen Teil sandte Er auf die Erde herab — durch ihn haben alle Geschöpfe Mitgefühl miteinander, sogar das Tier hebt den Huf über sein Junges. Neunundneunzig Teile hat Er für den Tag der Auferstehung aufgespart.', q: 'Sahih Muslim 2752' },
+    { x: 'Als Allah die Schöpfung erschuf, schrieb Er über Seinem Thron: „Meine Barmherzigkeit hat Meinen Zorn überwogen.“', q: 'Sahih al-Bukhari 7404' },
+    { x: 'Allah freut Sich über die Reue Seines Dieners mehr als einer von euch, der in der Wüste sein Reittier mit allem Proviant verloren hat, sich zum Sterben hinlegt — und plötzlich steht es vor ihm. Vor Freude verspricht er sich: „O Allah, Du bist mein Diener und ich bin Dein Herr!“', q: 'Sahih Muslim 2747' },
+    { x: 'Allah sagt: „O Sohn Adams, würdest du Mir mit Sünden kommen, die fast die Erde füllen, und Mir dann begegnen, ohne Mir etwas beizugesellen — Ich würde dir mit ebenso viel Vergebung begegnen.“', q: 'Hadith Qudsi — Tirmidhi 3540 — hasan' }
+  ]},
+  { kat: 'Der Wert des Dhikr', items: [
+    { x: 'Zwei Worte, leicht auf der Zunge, schwer auf der Waage, geliebt vom Allerbarmer: Subhanallahi wa bi-hamdih, Subhanallahil-ʿAzim.', q: 'Sahih al-Bukhari 6682' },
+    { x: 'Wer hundertmal am Tag „Subhanallahi wa bi-hamdih“ sagt, dem werden seine Sünden vergeben, auch wenn sie wie der Schaum des Meeres wären.', q: 'Sahih al-Bukhari 6405' },
+    { x: 'Soll ich dir einen Schatz aus den Schätzen des Paradieses zeigen? La hawla wa la quwwata illa billah.', q: 'Sahih al-Bukhari 4205' },
+    { x: 'Das Gleichnis dessen, der seines Herrn gedenkt, und dessen, der Ihn nicht erwähnt, ist wie das Gleichnis des Lebendigen und des Toten.', q: 'Sahih al-Bukhari 6407' },
+    { x: 'Die Mufarridun sind vorausgeeilt! Man fragte: „Wer sind die Mufarridun, o Gesandter Allahs?“ Er sagte: „Die Männer und Frauen, die Allahs viel gedenken.“', q: 'Sahih Muslim 2676' }
+  ]},
+  { kat: 'Rizq und Zufriedenheit', items: [
+    { x: 'Reichtum besteht nicht aus vielen Gütern. Wahrer Reichtum ist der Reichtum der Seele.', q: 'Sahih al-Bukhari 6446' },
+    { x: 'Erfolgreich ist, wer den Islam angenommen hat, wessen Versorgung ausreichend ist und wen Allah zufrieden gemacht hat mit dem, was Er ihm gab.', q: 'Sahih Muslim 1054' },
+    { x: 'Schaut auf die, die unter euch stehen, und nicht auf die, die über euch stehen — das ist eher geeignet, dass ihr die Gunst Allahs nicht geringschätzt.', q: 'Sahih Muslim 2963' },
+    { x: 'Sadaqa mindert das Vermögen nicht. Und Allah erhöht einen Diener, der verzeiht, nur an Ehre. Und keiner ist bescheiden um Allahs willen, ohne dass Allah ihn erhebt.', q: 'Sahih Muslim 2588' },
+    { x: 'O Allah, segne meiner Ummah ihre frühen Morgenstunden. — Der Prophet ﷺ machte diese Dua, und deshalb liegt im frühen Arbeiten Barakah.', q: 'Abu Dawud 2606 — sahih' }
+  ]},
+  { kat: 'Prüfungen und Geduld', items: [
+    { x: 'Wem Allah Gutes will, den lässt Er von Prüfungen getroffen werden.', q: 'Sahih al-Bukhari 5645' },
+    { x: 'Keinen Muslim trifft Müdigkeit, Krankheit, Kummer, Trauer, Leid oder Sorge — nicht einmal ein Dorn, der ihn sticht — ohne dass Allah ihm damit von seinen Sünden tilgt.', q: 'Sahih al-Bukhari 5641' },
+    { x: 'Wunderbar ist die Angelegenheit des Gläubigen! Alles an ihr ist gut für ihn, und das gibt es bei niemandem außer dem Gläubigen: Trifft ihn Freude, dankt er — gut für ihn. Trifft ihn Schaden, ist er geduldig — auch gut für ihn.', q: 'Sahih Muslim 2999' },
+    { x: 'Die Größe der Belohnung entspricht der Größe der Prüfung. Und wenn Allah ein Volk liebt, prüft Er es. Wer zufrieden ist, für den ist das Wohlgefallen — und wer zürnt, für den ist der Zorn.', q: 'Tirmidhi 2396 — hasan' },
+    { x: 'Am härtesten geprüft werden die Propheten, dann die ihnen Ähnlichsten, dann die diesen Ähnlichsten. Der Mensch wird nach dem Maß seines Din geprüft.', q: 'Tirmidhi 2398 — hasan sahih' }
+  ]},
+  { kat: 'Charakter und Umgang', items: [
+    { x: 'Die Besten von euch sind die, die am besten zu ihren Familien sind — und ich bin der Beste von euch zu meiner Familie.', q: 'Tirmidhi 3895 — sahih' },
+    { x: 'Der Starke ist nicht der, der die Leute im Ringen besiegt. Der Starke ist der, der sich selbst im Zorn beherrscht.', q: 'Sahih al-Bukhari 6114' },
+    { x: 'Dein Lächeln im Gesicht deines Bruders ist eine Sadaqa für dich.', q: 'Tirmidhi 1956 — hasan' },
+    { x: 'Wer einem Gläubigen eine Sorge dieser Welt nimmt, dem nimmt Allah eine Sorge des Jüngsten Tages. Und Allah hilft dem Diener, solange der Diener seinem Bruder hilft.', q: 'Sahih Muslim 2699' },
+    { x: 'Fürchte Allah, wo immer du bist. Lass auf eine schlechte Tat eine gute folgen, die sie auslöscht. Und begegne den Menschen mit schönem Charakter.', q: 'Tirmidhi 1987 — hasan' }
+  ]},
+  { kat: 'Hoffnung und das Paradies', items: [
+    { x: 'Keiner von euch kommt durch seine Taten ins Paradies. Sie fragten: „Auch du nicht, o Gesandter Allahs?“ Er sagte: „Auch ich nicht — außer dass Allah mich mit Seiner Barmherzigkeit umhüllt. Also seid maßvoll und beständig.“', q: 'Sahih al-Bukhari 5673' },
+    { x: 'Allah sagt: „Wer sich Mir eine Handspanne nähert, dem nähere Ich Mich eine Armlänge. Wer sich Mir eine Armlänge nähert, dem nähere Ich Mich eine Klafterlänge. Und wer zu Mir gehend kommt, zu dem komme Ich laufend.“', q: 'Hadith Qudsi — Sahih al-Bukhari 7405 (Teil)' },
+    { x: 'Die Dua ist die Ibadah. — Danach las der Prophet ﷺ: „Euer Herr sagt: Ruft Mich an, so erhöre Ich euch.“ (40:60)', q: 'Tirmidhi 2969 — sahih' },
+    { x: 'Im Paradies gibt es, was kein Auge je gesehen, kein Ohr je gehört hat und was keinem Menschenherzen je in den Sinn gekommen ist.', q: 'Sahih al-Bukhari 3244' },
+    { x: 'Alle Söhne Adams machen Fehler — und die besten der Fehlenden sind die (zu Allah) Zurückkehrenden.', q: 'Tirmidhi 2499 — hasan' }
+  ]}
+];
+function renderHadithLib(filter){
+  const wrap = $('hadithLib');
+  wrap.replaceChildren();
+  const f = (filter || '').trim().toLowerCase();
+  let treffer = 0;
+  for (const g of HADITH_LIB){
+    const items = f ? g.items.filter(d => (g.kat + ' ' + d.x + ' ' + d.q).toLowerCase().includes(f)) : g.items;
+    if (!items.length) continue;
+    treffer += items.length;
+    const det = document.createElement('details');
+    det.className = 'acc';
+    if (f) det.open = true;
+    const sum = document.createElement('summary');
+    sum.textContent = g.kat + ' · ' + items.length;
+    det.appendChild(sum);
+    const body = el('div', 'acc-body');
+    for (const d of items){
+      const it = el('div', 'dua-item');
+      const bq = el('p', 'versteh-p', '„' + d.x + '“');
+      bq.style.fontFamily = 'var(--serif)';
+      it.appendChild(bq);
+      it.appendChild(el('span', 'adhkar-de', d.q));
+      body.appendChild(it);
+    }
+    det.appendChild(body);
+    wrap.appendChild(det);
+  }
+  if (!treffer) wrap.appendChild(el('p', 'sub', 'Nichts gefunden — versuch z. B. „Geduld“, „Barmherzigkeit“ oder „Rizq“.'));
+}
+$('hadithSuche').addEventListener('input', e => renderHadithLib(e.target.value));
+renderHadithLib();
+
+/* ---------- Worte der Gelehrten ---------- */
+const GELEHRTE = [
+  { n: 'ʿUmar ibn al-Chattab (2. Kalif)', x: 'Ich trage nicht die Sorge der Erhörung, sondern die Sorge der Dua. Wenn mir die Dua eingegeben wird, ist die Erhörung mit ihr.' },
+  { n: 'ʿAli ibn Abi Talib (4. Kalif)', x: 'Was dich getroffen hat, hätte dich nie verfehlen können — und was dich verfehlt hat, hätte dich nie treffen können. Wenn du das verinnerlichst, ist die Trauer leichter.' },
+  { n: 'ʿAbdullah ibn Masʿud (Gefährte)', x: 'Die Ruhe des Gläubigen liegt darin, dass er dem, was bei Allah ist, mehr vertraut als dem, was in seiner eigenen Hand ist.' },
+  { n: 'Hasan al-Basri', x: 'O Sohn Adams, du bist nichts als eine Anzahl von Tagen: Geht ein Tag, geht ein Teil von dir. — Und: Die Dunya sind drei Tage: Das Gestern ist gegangen mit allem, was darin war. Das Morgen erreichst du vielleicht nie. Also ist das Heute deins — handle darin.' },
+  { n: 'Hasan al-Basri', x: 'Ich weiß, dass mein Rizq von keinem anderen gegessen werden kann — darum ist mein Herz ruhig. Und ich weiß, dass meine Arbeit von keinem anderen getan werden kann — darum arbeite ich selbst.' },
+  { n: 'Imam asch-Schafiʿi', x: 'Lass die Tage tun, was sie wollen — und sei zufrieden mit dem, was Allah bestimmt. Sei nicht verzweifelt über das Ereignis einer Nacht: Die Ereignisse dieser Welt haben keinen Bestand.' },
+  { n: 'Ibn Taymiyya', x: 'Was können meine Feinde mir schon antun? Mein Paradies und mein Garten sind in meiner Brust — wohin ich gehe, gehen sie mit mir. Mein Gefängnis ist Zurückgezogenheit, meine Tötung ist Schahada, meine Vertreibung ist eine Reise.' },
+  { n: 'Ibn Taymiyya', x: 'Im Herzen gibt es eine Zerrissenheit, die nichts zusammenfügt außer die Hinwendung zu Allah. Und in ihm ist eine Einsamkeit, die nichts vertreibt außer die Vertrautheit mit Ihm im Alleinsein.' },
+  { n: 'Ibn al-Qayyim', x: 'Im Herzen ist eine Leere, die nichts füllt außer die Liebe zu Allah. Wer versucht, sie mit der Dunya zu füllen, gleicht einem, der seinen Durst mit Meerwasser stillt: Je mehr er trinkt, desto durstiger wird er.' },
+  { n: 'Ibn al-Qayyim', x: 'Die Dua gehört zu den stärksten Heilmitteln: Sie ist der Feind des Unglücks — sie wehrt es ab, heilt es, verhindert sein Herabkommen oder mildert es, wenn es herabgekommen ist.' },
+  { n: 'Ibn al-Qayyim', x: 'Hättest du gewusst, wie Allah deine Angelegenheiten für dich regelt, wäre dein Herz vor Liebe zu Ihm geschmolzen.' },
+  { n: 'Sufyan ath-Thawri', x: 'Ich habe nichts gesehen, das dem Schaytan schwerer fällt als das Dhikr — und nichts, das den Rizq mehr anzieht als die Sadaqa in der Not.' },
+  { n: 'Umar ibn ʿAbdulʿaziz', x: 'Ich habe keine Freude mehr außer in den Stationen des Qadar: Was Allah für mich gewählt hat, ist besser als das, was ich für mich selbst gewählt hätte.' },
+  { n: 'Ibn al-Dschauzi', x: 'Wer die Nacht der Prüfung geduldig durchsteht, dem geht die Morgendämmerung der Antwort auf. Die Fradsch (Erleichterung) kommt am häufigsten, wenn die Hoffnung der Menschen erschöpft ist — damit klar wird, dass sie von Allah kam.' }
+];
+const gelWrap = $('gelehrtenListe');
+if (gelWrap){
+  const card = el('div', 'wcard');
+  for (const g of GELEHRTE){
+    const it = el('div', 'dua-item');
+    it.appendChild(el('p', 'dua-titel', g.n));
+    const t = el('p', 'versteh-p', '„' + g.x + '“');
+    t.style.fontFamily = 'var(--serif)';
+    it.appendChild(t);
+    card.appendChild(it);
+  }
+  const hinweis = el('p', 'quelle-klein', 'Gelehrtenworte sind Weisheit, keine Offenbarung — sinngemäß überliefert und klar getrennt von Koran und Sunnah.');
+  card.appendChild(hinweis);
+  gelWrap.appendChild(card);
 }
 
 </script>
