@@ -273,6 +273,26 @@
   .wort-de{font-size:13.5px;color:var(--ink-soft);text-align:right}
   .versteh-p{font-size:14.5px;margin:2px 0 4px}
 
+  /* ---------- Wegweiser ---------- */
+  .guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .guide-card{
+    font:inherit;text-align:left;cursor:pointer;
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:14px 14px 12px;box-shadow:0 6px 20px var(--shadow);
+    display:flex;flex-direction:column;gap:4px;color:var(--ink);
+    transition:transform .15s ease, border-color .2s ease;
+  }
+  .guide-card:active{transform:scale(.97);border-color:var(--gold)}
+  .guide-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .guide-icon{font-size:22px;line-height:1.2}
+  .guide-t{font-family:var(--serif);font-size:15px;font-weight:600;line-height:1.3}
+  .guide-s{font-size:12px;color:var(--ink-soft);line-height:1.4}
+  .zurueck{
+    font:inherit;font-size:15px;font-weight:600;cursor:pointer;
+    background:none;border:none;color:var(--teal);padding:4px 0;margin-bottom:4px;
+  }
+  .zurueck:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
   /* ---------- Erinnerung (Nachthimmel-Karte) ---------- */
   .remind-card{
     position:relative;overflow:hidden;text-align:center;
@@ -475,6 +495,7 @@
         <button class="chip">Ich erwische mich wieder bei alten Gedanken</button>
         <button class="chip">Was bedeutet SubhanAllah eigentlich?</button>
         <button class="chip">Das klappt bei mir eh nie</button>
+        <button class="chip">Wie bete ich das Nachtgebet?</button>
       </div>
       <p style="text-align:center;margin-top:18px">
         <button class="linkbtn" id="clearChat">Verlauf löschen</button>
@@ -606,6 +627,13 @@
 
     <!-- ================= WISSEN ================= -->
     <section id="view-wissen" class="view">
+      <div id="guideView" hidden></div>
+      <div id="wissenHome">
+      <h2 class="sect">Was möchtest du jetzt tun?</h2>
+      <p class="sub">Tippe auf eine Karte — du bekommst eine einfache Schritt-für-Schritt-Anleitung
+      mit den passenden Duas genau an der richtigen Stelle.</p>
+      <div class="guide-grid" id="guideGrid"></div>
+
       <h2 class="sect">Deine Schatzkammer</h2>
       <p class="sub">Gebete, Zeiten und die Kunst der Dua — mit Quellen, zum sofort Anwenden.
       Tippe eine Karte an, um sie zu öffnen.</p>
@@ -931,6 +959,7 @@
         <p><strong>Auf dem iPhone installieren:</strong> Öffne die App in Safari → Teilen-Symbol
         → „Zum Home-Bildschirm“. Dann ist sie wie eine normale App bei dir.</p>
       </div>
+      </div>
     </section>
   </main>
 
@@ -1233,6 +1262,21 @@ const DB = {
     ]
   },
 
+  anleitung: {
+    prio: 10,
+    phrasen: ['wie bete ich','wie betet man','nachtgebet','letzten drittel','letztes drittel','tahajjud beten','witr beten','duha beten','wie mache ich das gebet','morgenroutine','abendroutine','vor dem schlafen','salat al hajah','hadscha beten'],
+    worte: ['anleitung','wegweiser','schritt'],
+    antworten: [
+      {
+        t: 'Dafür habe ich dir Wegweiser gebaut — Schritt für Schritt, mit den richtigen Duas an der richtigen Stelle.',
+        e: 'Im Tab „Wissen“ findest du ganz oben „Was möchtest du jetzt tun?“ — dort gibt es einfache Anleitungen für genau solche Fragen: das Nachtgebet im letzten Drittel (Wecker, Wudu, 2 Rakʿa, Dua in der Sudschda, Witr — alles der Reihe nach), Duha, richtig Dua machen, die Morgen- und Abend-Routine, vor dem Schlafen, Salat al-Hadschah und ein Plan bei Geldsorgen. Jeder Schritt ist kurz erklärt, und die Duas stehen genau da, wo du sie brauchst — du musst nichts mehr zusammensuchen.',
+        q: { x: 'Und Wir haben dir das Buch nur deshalb herabgesandt, damit du ihnen das klar machst, worüber sie uneins sind — und als Rechtleitung und Barmherzigkeit.', r: 'Koran 16:64' },
+        h: { x: 'Betet so, wie ihr mich habt beten sehen.', r: 'Sahih al-Bukhari 631' },
+        a: { text: 'Öffne die Anleitung fürs Nachtgebet im letzten Drittel — dein Gebets-Kompass sagt dir vorher, wann es beginnt.', guide: 'nacht', btn: 'Zur Anleitung' }
+      }
+    ]
+  },
+
   bedeutung: {
     prio: 9,
     phrasen: ['was bedeutet','was heisst','bedeutung von','verstehe nicht was','verstehe das wort'],
@@ -1398,6 +1442,7 @@ function showView(name){
   tabs.forEach(t => t.classList.toggle('active', t.dataset.view === name));
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
   $('composer').classList.toggle('active', name === 'chat');
+  if (name === 'wissen' && typeof guideZurueck === 'function') guideZurueck();
   window.scrollTo(0, name === 'chat' ? document.body.scrollHeight : 0);
 }
 tabs.forEach(t => t.addEventListener('click', () => showView(t.dataset.view)));
@@ -1435,7 +1480,8 @@ function renderAntwort(a, live){
   tu.appendChild(el('p', 'tu-text', a.a.text));
   const b = el('button', 'btn', a.a.btn);
   b.addEventListener('click', () => {
-    if (a.a.view){ showView(a.a.view); }
+    if (a.a.guide){ showView('wissen'); showGuide(a.a.guide); }
+    else if (a.a.view){ showView(a.a.view); }
     else { waehleDhikr(a.a.dhikr); showView('dhikr'); }
   });
   tu.appendChild(b);
@@ -2177,6 +2223,157 @@ $('pushKopie').addEventListener('click', () => {
 zeigePush();
 planePush();
 setInterval(planePush, 30 * 60000);
+
+
+/* ---------- Wegweiser: Schritt-für-Schritt-Anleitungen ---------- */
+const GUIDES = {
+  nacht: {
+    icon: '🌙', titel: 'Nachtgebet im letzten Drittel', unter: 'Die Stunde, in der Allah fragt: „Wer ruft Mich?“',
+    schritte: [
+      { t: 'Wecker stellen', x: 'Schau im Tab „Erinnerung“ auf deinen Gebets-Kompass: Dort steht, wann das letzte Nachtdrittel beginnt (z. B. 01:48). Stell deinen Wecker auf diese Zeit. Schon das Aufstehen für Allah wird belohnt.' },
+      { t: 'Aufwachen und Wudu', x: 'Wenn du aufwachst, sag zuerst:', dua: { ar: 'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ', lat: 'Alhamdulillahil-ladhi ahyana baʿda ma amatana wa ilayhin-nuschur', de: 'Alles Lob gebührt Allah, Der uns belebt hat, nachdem Er uns sterben ließ.', q: 'Bukhari 6312' }, x2: 'Dann mach in Ruhe Wudu. Der Prophet ﷺ sagte: Wer nachts aufwacht, Allah gedenkt und um Vergebung bittet, dem wird vergeben. (Bukhari 1154)' },
+      { t: 'Bete 2 Rakʿa — ruhig und einfach', x: 'Das Nachtgebet betet man immer in Zweierpaaren: 2, dann nochmal 2, so viel du magst (Bukhari 990). Der Prophet ﷺ begann mit zwei leichten, kurzen Rakʿa (Muslim 767). Kurz und mit Herz ist besser als lang und gehetzt. Lies, was du auswendig kannst — auch al-Fatiha und al-Ikhlas reichen völlig.' },
+      { t: 'Bleib lange in der Sudschda — und rede dort mit Allah', x: '„Am nächsten ist der Diener seinem Herrn in der Niederwerfung — macht darin viel Dua.“ (Muslim 482) Bleib unten, sag:', dua: { ar: 'اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ، دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ', lat: 'Allahumma-ghfir li dhanbi kullahu, diqqahu wa dschillahu, wa awwalahu wa achirahu', de: 'O Allah, vergib mir alle meine Sünden: die kleinen und die großen, die ersten und die letzten.', q: 'Muslim 483' }, x2: 'Und dann sprich mit Ihm in DEINEN Worten, auf Deutsch — über alles.' },
+      { t: 'Nach dem Gebet: Hände heben und um ALLES bitten', x: 'Jetzt ist die beste Dua-Zeit überhaupt (Bukhari 1145). Reihenfolge: Erst Allah loben (10× SubhanAllah, 10× Alhamdulillah, 10× Allahu akbar), dann Salawat, dann bitten — fang mit Vergebung an:', dua: { ar: 'رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ', lat: 'Rabbi-ghfir li wa tub ʿalayya, innaka antat-Tawwabur-Rahim', de: 'Mein Herr, vergib mir und wende Dich mir zu — Du bist der Reueannehmende, der Barmherzige.', q: 'Abu Dawud 1516' }, x2: 'Und dann: alle deine Wünsche, egal wie groß. In dieser Stunde sagt Allah: „Wer bittet Mich, dass Ich ihm gebe?“ Also bitte.' },
+      { t: 'Witr zum Abschluss', x: 'Bete am Ende 1 oder 3 Rakʿa Witr — „Macht euer letztes Gebet in der Nacht Witr.“ (Bukhari 998)' },
+      { t: 'Falls du nicht aufstehen kannst', x: 'Kein Problem: Bete Witr einfach vor dem Schlafen. Und wer fest vorhatte aufzustehen, aber verschlafen hat, bekommt den Lohn des Nachtgebets trotzdem geschrieben (an-Nasa’i 1787). Allah sieht deine Absicht.' }
+    ]
+  },
+  duha: {
+    icon: '☀️', titel: 'Duha beten (Vormittag)', unter: 'Zwei Rakʿa — Sadaqa für alle 360 Gelenke',
+    schritte: [
+      { t: 'Die richtige Zeit', x: 'Ab etwa 20 Minuten nach Sonnenaufgang bis kurz vor Mittag. Dein Gebets-Kompass (Tab „Erinnerung“) zeigt dir „Duha-Zeit beginnt“ — und die Hodscha-Meldung erinnert dich.' },
+      { t: 'Bete 2 Rakʿa', x: 'Ganz normal wie jedes Gebet, 2 Rakʿa reichen völlig (mehr geht: 4, 6 oder 8, immer in Zweierpaaren). Der Prophet ﷺ sagte: Diese zwei Rakʿa zählen als Sadaqa für jedes einzelne Gelenk deines Körpers. (Muslim 720)' },
+      { t: 'Danach kurz danken', x: 'Sag ein paar Mal Alhamdulillah und mach eine kleine Dua für deinen Tag — z. B. um halalen Rizq:', dua: { ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا', lat: 'Allahumma inni as’aluka ʿilman nafiʿan, wa rizqan tayyiban, wa ʿamalan mutaqabbalan', de: 'O Allah, ich bitte Dich um nützliches Wissen, gute Versorgung und angenommene Taten.', q: 'Ibn Madscha 925' } }
+    ]
+  },
+  duamachen: {
+    icon: '🤲', titel: 'Richtig Dua machen', unter: 'In 6 Schritten — wie der Prophet ﷺ es lehrte',
+    schritte: [
+      { t: 'Mach dich bereit', x: 'Wenn möglich: Wudu, Richtung Qibla, Hände heben. Wichtigste Grundlage: halal essen und verdienen (Muslim 1015).' },
+      { t: 'Beginne mit Lob', x: 'Zum Beispiel: 10× SubhanAllah, 10× Alhamdulillah, 10× Allahu akbar — und dann: „Alhamdulillahi Rabbil-ʿalamin.“ Wer sofort bittet, ohne zu loben, hat es zu eilig. (Abu Dawud 1481)' },
+      { t: 'Sprich Salawat', x: '„Allahumma salli ʿala Muhammad“ — die Dua bleibt zwischen Himmel und Erde stehen, bis du den Segen über den Propheten ﷺ sprichst. (Tirmidhi 486)' },
+      { t: 'Rufe Allah mit dem passenden Namen', x: 'Für Geld: „Ya Razzaq!“ (o Versorger). Für Barmherzigkeit: „Ya Arhamar-Rahimin!“ Wenn Türen zu sind: „Ya Fattah!“ (o Öffner). Bei Krankheit: „Ya Schafi!“ (o Heiler).' },
+      { t: 'Bitte — demütig, konkret, mit Gewissheit', x: 'Bitte wie ein Bedürftiger beim großzügigsten König: um Hilfe, den richtigen Weg, Sein Erbarmen. Sei dir sicher, dass Er antwortet (Tirmidhi 3479). Sag nie „wenn Du willst“ (Bukhari 6339). Wiederhole 3×. Bitte GROSS — nichts ist Ihm zu viel.' },
+      { t: 'Danach: Amin — und Geduld', x: 'Hetze nicht („Ich habe gebeten und nichts kam“ — Bukhari 6340). Deine Antwort kommt: jetzt, später oder besser. Die besten Zeiten für all das findest du in der Schatzkammer unten: „Wann Allah Duas besonders annimmt“.' }
+    ]
+  },
+  geld: {
+    icon: '💼', titel: 'Geldsorgen — dein Plan', unter: 'Was du geistlich UND praktisch tun kannst',
+    schritte: [
+      { t: 'Zuerst: Atme und wisse', x: 'Dein Rizq ist längst aufgeschrieben — kein Mensch kann dir nehmen, was Allah dir bestimmt hat (Koran 11:6). Panik ist kein Plan. Das hier ist dein Plan:' },
+      { t: '70× Istighfar — jeden Tag', x: 'Istighfar öffnet Versorgung: „Bittet euren Herrn um Vergebung … Er schickt euch Regen, Vermögen und Kinder.“ (Koran 71:10–12) Nutze den Zähler im Dhikr-Tab.' },
+      { t: 'Diese Dua jeden Tag sprechen', x: 'Der Prophet ﷺ sagte: Damit tilgt Allah selbst Schulden so groß wie ein Berg:', dua: { ar: 'اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ', lat: 'Allahumma-kfini bi-halalika ʿan haramika, wa aghnini bi-fadlika ʿamman siwak', de: 'O Allah, lass mir Dein Halal genügen, sodass ich Dein Haram nicht brauche, und mach mich durch Deine Gunst unabhängig von allen außer Dir.', q: 'Tirmidhi 3563' } },
+      { t: 'Salat al-Hadschah', x: 'Bete 2 Rakʿa und trag Allah dein Anliegen konkret vor (eigener Wegweiser: „Salat al-Hadschah“).' },
+      { t: 'Kamel anbinden', x: 'Tawakkul heißt beides: Bewirb dich, frag um Rat, mach einen Budget-Plan, verkauf Unnötiges. „Binde es an UND vertraue auf Allah.“ (Tirmidhi 2517)' },
+      { t: 'Gib Sadaqa — ja, gerade jetzt', x: 'Klingt verrückt, ist aber Sunnah-Logik: „Sadaqa mindert das Vermögen nicht.“ (Muslim 2588) Auch 1 Franken zählt. Sadaqa ist der Regenmacher des Rizq.' }
+    ]
+  },
+  sorgen: {
+    icon: '🌧️', titel: 'Sorgen & Angst — was jetzt hilft', unter: 'Fünf Schritte, die dein Herz beruhigen',
+    schritte: [
+      { t: 'Gib die Akte ab', x: 'Sag einmal langsam und bewusst: „Hasbunallahu wa niʿmal-wakil“ — Allah reicht mir, Er kümmert sich. Der Satz, den Ibrahim im Feuer sagte.' },
+      { t: 'Wudu und 2 Rakʿa', x: 'Der Prophet ﷺ suchte bei jeder Sorge Ruhe im Gebet: „O Bilal, erfrische uns mit dem Gebet.“ (Abu Dawud 4985) Wasser + Gebet = das Beruhigungsmittel der Sunnah.' },
+      { t: 'Die Kummer-Dua', x: 'Der Prophet ﷺ versprach: Wer sie spricht, dem tauscht Allah die Sorge gegen Freude:', dua: { ar: 'اللَّهُمَّ إِنِّي عَبْدُكَ … أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ … أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي وَنُورَ صَدْرِي وَجَلَاءَ حُزْنِي وَذَهَابَ هَمِّي', lat: 'Allahumma inni ʿabduka … as’aluka bi-kulli-smin huwa laka … an tadschʿalal-qur’ana rabiʿa qalbi wa nura sadri wa dschala’a huzni wa dhahaba hammi', de: 'O Allah, ich bin Dein Diener … mach den Koran zum Frühling meines Herzens, zum Licht meiner Brust, zum Vertreiber meiner Trauer und meiner Sorge.', q: 'Ahmad 3712 — sahih. Den vollen Text findest du in der Dua-Bibliothek (Tab „Weg“) unter „Sorgen“.' } },
+      { t: '33× La hawla', x: '„La hawla wa la quwwata illa billah“ — der Stecker in die Steckdose der Kraft Allahs. Nutze den Zähler im Dhikr-Tab.' },
+      { t: 'Schreib es der App', x: 'Geh in den Tab „Reden“ und schreib deinen Gedanken genau so, wie er in deinem Kopf ist. Du bekommst eine Antwort aus Koran und Sunnah — für genau diesen Gedanken.' }
+    ]
+  },
+  morgen: {
+    icon: '🌅', titel: 'Morgen-Routine nach Fadschr', unter: 'ca. 10 Minuten — und der Tag steht unter Schutz',
+    schritte: [
+      { t: 'Sitzen bleiben', x: 'Bleib nach dem Fadschr-Gebet einfach kurz sitzen — schon 5–10 Minuten sind Gold.' },
+      { t: 'Ayat al-Kursi und die drei Schutzsuren', x: 'Ayat al-Kursi 1× (Koran 2:255), dann al-Ikhlas, al-Falaq und an-Nas je 3×. (Bukhari 2311; Tirmidhi 3575)' },
+      { t: '7× Hasbiyallah', x: '', dua: { ar: 'حَسْبِيَ اللهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ', lat: 'Hasbiyallahu la ilaha illa huwa, ʿalayhi tawakkaltu, wa huwa Rabbul-ʿarschil-ʿazim', de: 'Allah genügt mir, es gibt keinen Gott außer Ihm. Auf Ihn verlasse ich mich.', q: 'Abu Dawud 5081 — 7× morgens und abends' } },
+      { t: '3× Bismillah-Schutz', x: '', dua: { ar: 'بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ', lat: 'Bismillahil-ladhi la yadurru maʿa-smihi schay’un fil-ardi wa la fis-sama’', de: 'Im Namen Allahs — mit Seinem Namen kann nichts auf der Erde und im Himmel schaden.', q: 'Tirmidhi 3388 — 3× morgens und abends' } },
+      { t: 'Sayyid al-Istighfar', x: 'Die Krone der Vergebungsbitte — wer sie morgens mit Überzeugung spricht und an dem Tag stirbt, gehört zu den Leuten des Paradieses (Bukhari 6306). Den vollen Text findest du in der Dua-Bibliothek unter „Vergebung“.' },
+      { t: 'Dua für den Tag', x: '', dua: { ar: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا', lat: 'Allahumma inni as’aluka ʿilman nafiʿan, wa rizqan tayyiban, wa ʿamalan mutaqabbalan', de: 'O Allah, ich bitte Dich um nützliches Wissen, gute Versorgung und angenommene Taten.', q: 'Ibn Madscha 925' } }
+    ]
+  },
+  abend: {
+    icon: '🌆', titel: 'Abend-Routine', unter: 'Zwischen ʿAsr und Maghrib (auch danach ist gut)',
+    schritte: [
+      { t: 'Ayat al-Kursi und die drei Schutzsuren', x: 'Genau wie am Morgen: Ayat al-Kursi 1×, al-Ikhlas, al-Falaq, an-Nas je 3×.' },
+      { t: '3× Rundum-Schutz für die Nacht', x: 'Wer es abends 3× sagt, dem schadet in jener Nacht nichts (Muslim 2708):', dua: { ar: 'أَعُوذُ بِكَلِمَاتِ اللهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ', lat: 'Aʿudhu bi-kalimatillahit-tammati min scharri ma khalaq', de: 'Ich suche Zuflucht in den vollkommenen Worten Allahs vor dem Übel dessen, was Er erschaffen hat.', q: 'Muslim 2708' } },
+      { t: '7× Hasbiyallah und 3× Bismillah-Schutz', x: 'Dieselben zwei wie am Morgen (siehe Morgen-Routine).' },
+      { t: 'Istighfar und 10× Salawat', x: 'Schließ den Abend mit Vergebung und dem Gruß an den Propheten ﷺ — für 1 Gruß bekommst du 10 Segnungen zurück (Muslim 408).' }
+    ]
+  },
+  schlaf: {
+    icon: '😴', titel: 'Vor dem Schlafen', unter: 'Beschützt einschlafen — auf der Fitra',
+    schritte: [
+      { t: 'Mit Wudu ins Bett, rechte Seite', x: 'So legte sich der Prophet ﷺ hin. (Bukhari 247)' },
+      { t: 'Ayat al-Kursi', x: 'Wer sie vor dem Schlafen liest, bekommt einen Wächter von Allah, und kein Schaytan nähert sich ihm bis zum Morgen. (Bukhari 2311)' },
+      { t: 'Die drei Schutzsuren in die Hände', x: 'Al-Ikhlas, al-Falaq, an-Nas lesen, in die Hände hauchen und über den Körper streichen — 3× wiederholen. (Bukhari 5017)' },
+      { t: 'Tasbih Fatima', x: '33× SubhanAllah, 33× Alhamdulillah, 34× Allahu akbar. Der Prophet ﷺ gab es seiner Tochter Fatima und sagte: Das ist besser für euch als ein Diener. (Bukhari 3113)' },
+      { t: 'Die Schlaf-Dua', x: '', dua: { ar: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا', lat: 'Bismika Allahumma amutu wa ahya', de: 'In Deinem Namen, o Allah, sterbe ich und lebe ich.', q: 'Bukhari 6324' }, x2: 'Und wenn du magst, die große Tawakkul-Dua „Allahumma aslamtu nafsi ilayk …“ — wer sie als Letztes spricht, stirbt auf der Fitra (Bukhari 247). Voller Text: Dua-Bibliothek → „Schlafen“.' }
+    ]
+  },
+  hajah: {
+    icon: '🕌', titel: 'Salat al-Hadschah — bei einem Anliegen', unter: 'Wenn dich etwas drückt: Arbeit, Geld, eine Entscheidung',
+    schritte: [
+      { t: 'Wudu — sorgfältig', x: 'Nimm dir Zeit, wasch dich in Ruhe.' },
+      { t: 'Bete 2 Rakʿa', x: 'Mit Ruhe und Konzentration — du stehst gleich vor dem König aller Könige.' },
+      { t: 'Lob und Salawat', x: 'Nach dem Gebet: Allah loben (z. B. 10× SubhanAllah, Alhamdulillah, Allahu akbar) und Salawat sprechen.' },
+      { t: 'Die überlieferte Dua', x: '', dua: { ar: 'لَا إِلَهَ إِلَّا اللهُ الْحَلِيمُ الْكَرِيمُ، سُبْحَانَ اللهِ رَبِّ الْعَرْشِ الْعَظِيمِ، الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', lat: 'La ilaha illallahul-Halimul-Karim, subhanallahi Rabbil-ʿarschil-ʿazim, alhamdulillahi Rabbil-ʿalamin', de: 'Es gibt keinen Gott außer Allah, dem Nachsichtigen, dem Großzügigen. Gepriesen sei Allah, der Herr des gewaltigen Throns. Alles Lob gebührt Allah, dem Herrn der Welten.', q: 'Tirmidhi 479 — die Kette gilt als schwach, aber 2 Rakʿa beten und dann bitten ist in jedem Fall richtig (vgl. Koran 2:45)' } },
+      { t: 'Dein Anliegen — konkret und 3×', x: 'Sag Allah genau, was du brauchst. In deinen Worten, auf Deutsch. Wiederhole es dreimal.' },
+      { t: 'Aufstehen und anbinden', x: 'Danach tu deinen Teil — und überlass Allah das Ergebnis. Er hat noch nie eine Akte verloren.' }
+    ]
+  }
+};
+
+function guideZurueck(){
+  $('guideView').hidden = true;
+  $('guideView').replaceChildren();
+  $('wissenHome').hidden = false;
+}
+function showGuide(id){
+  const g = GUIDES[id];
+  if (!g) return;
+  const v = $('guideView');
+  v.replaceChildren();
+  const zb = el('button', 'zurueck', '‹ Alle Anleitungen');
+  zb.addEventListener('click', guideZurueck);
+  v.appendChild(zb);
+  const kopf = el('h2', 'sect', g.icon + ' ' + g.titel);
+  kopf.style.marginTop = '0';
+  v.appendChild(kopf);
+  v.appendChild(el('p', 'sub', g.unter));
+  const card = el('div', 'wcard');
+  g.schritte.forEach((s, i) => {
+    const row = el('div', 'schritt');
+    row.appendChild(el('span', 'schritt-n', String(i + 1)));
+    const inhalt = el('div');
+    const b = el('b', null, s.t);
+    inhalt.appendChild(b);
+    if (s.x) inhalt.appendChild(el('p', 'versteh-p', s.x));
+    if (s.dua){
+      const d = el('div', 'dua-item');
+      d.style.borderTop = 'none';
+      d.appendChild(el('span', 'adhkar-ar', s.dua.ar));
+      const lt = el('em', null, s.dua.lat);
+      d.appendChild(lt);
+      d.appendChild(el('span', 'adhkar-de', '„' + s.dua.de + '“ (' + s.dua.q + ')'));
+      inhalt.appendChild(d);
+    }
+    if (s.x2) inhalt.appendChild(el('p', 'versteh-p', s.x2));
+    row.appendChild(inhalt);
+    card.appendChild(row);
+  });
+  v.appendChild(card);
+  $('wissenHome').hidden = true;
+  v.hidden = false;
+  window.scrollTo(0, 0);
+}
+const gGrid = $('guideGrid');
+for (const [id, g] of Object.entries(GUIDES)){
+  const c = el('button', 'guide-card');
+  c.appendChild(el('span', 'guide-icon', g.icon));
+  c.appendChild(el('span', 'guide-t', g.titel));
+  c.appendChild(el('span', 'guide-s', g.unter));
+  c.addEventListener('click', () => showGuide(id));
+  gGrid.appendChild(c);
+}
 
 </script>
 <script>
