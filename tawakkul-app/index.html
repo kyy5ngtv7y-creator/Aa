@@ -468,6 +468,14 @@
   .tab:active{transform:scale(.94)}
   .tab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .tab.active{color:var(--teal);background:var(--chip)}
+
+  /* ---------- RTL (Arabisch) ---------- */
+  html[dir="rtl"] body{font-family:'Geeza Pro','Damascus','Al Nile',-apple-system,sans-serif}
+  html[dir="rtl"] .msg-user{border-radius:20px 20px 20px 6px}
+  html[dir="rtl"] blockquote.quelle{border-left:none;border-right:2px solid var(--gold-line);border-radius:14px 6px 6px 14px}
+  html[dir="rtl"] .motto{margin-left:0;margin-right:auto;text-align:left}
+  html[dir="rtl"] .schritt-n{font-family:inherit}
+  html[dir="rtl"] .wort-de{text-align:left}
 </style>
 
 <div class="app">
@@ -548,6 +556,16 @@
     <section id="view-remind" class="view">
       <h2 class="sect">Erinnerung an Allah</h2>
       <p class="sub">Für den Moment, in dem das Herz eng wird.</p>
+      <div class="panel" style="margin-top:0;margin-bottom:14px">
+        <div class="panel-row">
+          <h3 id="langTitel">Sprache · Language · اللغة</h3>
+          <select class="iv" id="langSel" aria-label="Sprache wählen">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+      </div>
       <div class="remind-card">
         <span class="remind-stars" aria-hidden="true"></span>
         <span class="remind-moon" aria-hidden="true"></span>
@@ -1027,6 +1045,8 @@
   </div>
 </div>
 
+<script src="lang-en.js"></script>
+<script src="lang-ar.js"></script>
 <script>
 'use strict';
 /* =============================================================
@@ -1538,6 +1558,7 @@ const ZEIT_ERINNERUNGEN = {
   ]
 };
 function aktuelleListe(){
+  if (typeof PACK !== 'undefined' && PACK && PACK.erinnerungen) return PACK.erinnerungen;
   const h = new Date().getHours();
   const pool = (h >= 5 && h < 12) ? ZEIT_ERINNERUNGEN.morgen
     : (h >= 15 && h < 19) ? ZEIT_ERINNERUNGEN.nachmittag
@@ -1553,6 +1574,23 @@ const store = {
   get(k, d){ try { const v = localStorage.getItem('twk-' + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
   set(k, v){ try { localStorage.setItem('twk-' + k, JSON.stringify(v)); } catch(e){} }
 };
+
+/* ---------- Sprache / Language / اللغة ---------- */
+function autoSprache(){
+  const n = (navigator.language || 'de').toLowerCase();
+  if (n.startsWith('de')) return 'de';
+  if (n.startsWith('ar')) return 'ar';
+  return 'en';
+}
+const SPRACHE = store.get('sprache', null) || autoSprache();
+const PACK = (SPRACHE === 'en' && window.LANG_EN) ? window.LANG_EN
+           : (SPRACHE === 'ar' && window.LANG_AR) ? window.LANG_AR : null;
+if (PACK && SPRACHE === 'ar'){ document.documentElement.dir = 'rtl'; document.documentElement.lang = 'ar'; }
+else if (PACK && SPRACHE === 'en'){ document.documentElement.lang = 'en'; }
+function T(schluessel, fallback){
+  return (PACK && PACK.ui && PACK.ui[schluessel] !== undefined) ? PACK.ui[schluessel] : fallback;
+}
+function aktivDB(){ return (PACK && PACK.db) ? PACK.db : DB; }
 
 /* ---------- Tabs ---------- */
 const tabs = document.querySelectorAll('.tab');
@@ -1581,16 +1619,16 @@ function renderUser(text){
 function renderAntwort(a, live){
   const card = el('div', live ? 'msg-app neu' : 'msg-app');
   card.appendChild(el('p', 'korrektur', a.t));
-  const lb1 = el('span', 'label', 'Ganz einfach erklärt');
+  const lb1 = el('span', 'label', T('lblEinfach', 'Ganz einfach erklärt'));
   card.appendChild(lb1);
   card.appendChild(el('p', 'einfach', a.e));
   const bq1 = el('blockquote', 'quelle');
-  bq1.appendChild(el('span', 'label', 'Aus dem Koran'));
+  bq1.appendChild(el('span', 'label', T('lblKoran', 'Aus dem Koran')));
   bq1.appendChild(document.createTextNode('„' + a.q.x + '“'));
   bq1.appendChild(el('span', 'ref', a.q.r));
   card.appendChild(bq1);
   const bq2 = el('blockquote', 'quelle');
-  bq2.appendChild(el('span', 'label', 'Der Prophet ﷺ sagte'));
+  bq2.appendChild(el('span', 'label', T('lblHadith', 'Der Prophet ﷺ sagte')));
   bq2.appendChild(document.createTextNode('„' + a.h.x + '“'));
   bq2.appendChild(el('span', 'ref', a.h.r));
   card.appendChild(bq2);
@@ -1608,27 +1646,30 @@ function renderAntwort(a, live){
 }
 function renderWelcome(){
   const card = el('div', 'msg-app');
-  card.appendChild(el('p', 'korrektur', 'As-salamu alaykum. Ich bin dein Begleiter für Tawakkul — das Vertrauen auf Allah.'));
-  card.appendChild(el('p', 'einfach',
+  card.appendChild(el('p', 'korrektur', T('welcomeT', 'As-salamu alaykum. Ich bin dein Begleiter für Tawakkul — das Vertrauen auf Allah.')));
+  card.appendChild(el('p', 'einfach', T('welcomeE',
     'Schreib mir, was dir durch den Kopf geht — eine Sorge, ein Blitzgedanke, eine Frage an dein Herz. ' +
     'Ich antworte dir mit dem Koran und der authentischen Sunnah, so einfach erklärt, dass es jedes Herz versteht. ' +
-    'Alles bleibt nur auf deinem Gerät.'));
+    'Alles bleibt nur auf deinem Gerät.')));
   chatlog.appendChild(card);
 }
 function normalisieren(s){
   return s.toLowerCase()
     .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
-    .replace(/[^a-z0-9\s']/g,' ');
+    .replace(/[ً-ٰٟـ]/g,'')
+    .replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')
+    .replace(/[^a-z0-9؀-ۿ\s']/g,' ');
 }
 function findeKategorie(text){
   const t = ' ' + normalisieren(text) + ' ';
+  const B = aktivDB();
   let beste = 'allgemein', besteWert = 0;
-  for (const [name, kat] of Object.entries(DB)){
+  for (const [name, kat] of Object.entries(B)){
     if (name === 'allgemein') continue;
     let score = 0;
     for (const p of kat.phrasen) if (t.includes(normalisieren(p))) score += 3;
     for (const w of kat.worte) if (t.includes(' ' + normalisieren(w))) score += 1;
-    if (score > besteWert || (score === besteWert && score > 0 && kat.prio > DB[beste].prio)){
+    if (score > besteWert || (score === besteWert && score > 0 && kat.prio > B[beste].prio)){
       beste = name; besteWert = score;
     }
   }
@@ -1636,7 +1677,7 @@ function findeKategorie(text){
 }
 function antworte(text){
   const kat = findeKategorie(text);
-  const liste = DB[kat].antworten;
+  const liste = aktivDB()[kat].antworten;
   const idxKey = 'idx-' + kat;
   const idx = store.get(idxKey, 0) % liste.length;
   store.set(idxKey, idx + 1);
@@ -1656,7 +1697,7 @@ function sende(text){
   window.scrollTo(0, document.body.scrollHeight);
   setTimeout(() => {
     tip.remove();
-    renderAntwort(DB[kat].antworten[idx], true);
+    renderAntwort(aktivDB()[kat].antworten[idx], true);
     window.scrollTo(0, document.body.scrollHeight);
   }, 750);
 }
@@ -1674,8 +1715,37 @@ $('clearChat').addEventListener('click', () => {
 renderWelcome();
 for (const e of verlauf){
   renderUser(e.u);
-  const kat = DB[e.k] ? e.k : 'allgemein';
-  renderAntwort(DB[kat].antworten[e.i % DB[kat].antworten.length]);
+  const B = aktivDB();
+  const kat = B[e.k] ? e.k : 'allgemein';
+  renderAntwort(B[kat].antworten[e.i % B[kat].antworten.length]);
+}
+if (PACK && PACK.ui.chips){
+  const cs = document.querySelectorAll('#chips .chip');
+  PACK.ui.chips.forEach((txt, i) => { if (cs[i]) cs[i].textContent = txt; });
+  for (let i = PACK.ui.chips.length; i < cs.length; i++) cs[i].remove();
+  const ct = document.querySelector('.chips-titel');
+  if (ct && PACK.ui.chipsTitel) ct.textContent = PACK.ui.chipsTitel;
+}
+if (PACK && PACK.ui.statisch){
+  for (const [sel, txt] of PACK.ui.statisch){
+    const n = document.querySelector(sel);
+    if (n) n.textContent = txt;
+  }
+  if (PACK.ui.placeholder) $('input').placeholder = PACK.ui.placeholder;
+  if (PACK.ui.duaSuche && $('duaSuche')) $('duaSuche').placeholder = PACK.ui.duaSuche;
+  if (PACK.ui.hadithSuche && $('hadithSuche')) $('hadithSuche').placeholder = PACK.ui.hadithSuche;
+  document.querySelectorAll('.tab').forEach(tb => {
+    const k = tb.dataset.view;
+    if (PACK.ui.tabs && PACK.ui.tabs[k]) tb.childNodes[tb.childNodes.length - 1].textContent = PACK.ui.tabs[k];
+  });
+  if (PACK.ui.hinweis){
+    for (const vid of ['view-weg', 'view-wissen']){
+      const v = document.getElementById(vid);
+      const note = el('p', 'sub', PACK.ui.hinweis);
+      note.style.cssText = 'border:1px dashed var(--gold-line);border-radius:12px;padding:8px 12px';
+      v.insertBefore(note, v.firstChild.nextSibling);
+    }
+  }
 }
 
 /* ---------- Dhikr ---------- */
@@ -1711,8 +1781,8 @@ function waehleDhikr(id){
   const d = DHIKR[id];
   $('dAr').textContent = d.ar;
   $('dLat').textContent = d.lat;
-  $('dDe').textContent = d.de;
-  $('ziel').textContent = 'Ziel: ' + d.ziel;
+  $('dDe').textContent = (PACK && PACK.ui.dhikrDe && PACK.ui.dhikrDe[id]) || d.de;
+  $('ziel').textContent = T('ziel', 'Ziel: ') + d.ziel;
   presetsDiv.querySelectorAll('.preset').forEach(c =>
     c.classList.toggle('aktiv', c.dataset.id === id));
   zeichneZaehler();
@@ -1725,8 +1795,8 @@ function zeichneZaehler(){
   $('tap').style.setProperty('--p', Math.min(100, (n % ziel === 0 && n > 0 ? ziel : n % ziel) / ziel * 100));
   const gesternN = (store.get('dhikr-tage', {}))[gesternKey()] || 0;
   const serie = dhikrSerie();
-  $('heute').textContent = 'Heute: ' + heute.n + ' Dhikr · Gestern: ' + gesternN +
-    (serie > 1 ? ' · ' + serie + ' Tage in Folge, ma schaa Allah!' : '');
+  $('heute').textContent = T('heute', 'Heute: ') + heute.n + T('dhikrWort', ' Dhikr · ') + T('gestern', 'Gestern: ') + gesternN +
+    (serie > 1 ? ' · ' + serie + T('serie', ' Tage in Folge, ma schaa Allah!') : '');
 }
 $('tap').addEventListener('click', () => {
   counts[aktuellesDhikr] = (counts[aktuellesDhikr] || 0) + 1;
@@ -1829,7 +1899,7 @@ function renderWeg(){
       renderWeg();
     };
     cb.addEventListener('click', toggle);
-    const lb = el('label', null, item.t);
+    const lb = el('label', null, (PACK && PACK.ui.weg && PACK.ui.weg[item.id]) || item.t);
     lb.addEventListener('click', toggle);
     row.appendChild(cb); row.appendChild(lb);
     if (item.go){
@@ -1842,8 +1912,8 @@ function renderWeg(){
   $('pFill').style.width = (n / WEG_ITEMS.length * 100) + '%';
   wrap.closest('.wcard').classList.toggle('komplett', n === WEG_ITEMS.length);
   $('pText').textContent = n === WEG_ITEMS.length
-    ? 'Alle ' + WEG_ITEMS.length + ' geschafft — möge Allah es von dir annehmen! So sieht ein Tag aus, der dein Herz verändert.'
-    : n + ' von ' + WEG_ITEMS.length + ' heute geschafft.';
+    ? T('wegFertig', 'Alle ' + WEG_ITEMS.length + ' geschafft — möge Allah es von dir annehmen! So sieht ein Tag aus, der dein Herz verändert.')
+    : n + T('wegVon', ' von ') + WEG_ITEMS.length + T('wegHeute', ' heute geschafft.');
 }
 renderWeg();
 
@@ -2642,6 +2712,13 @@ if (gelWrap){
   gelWrap.appendChild(card);
 }
 
+
+/* ---------- Sprachwahl ---------- */
+$('langSel').value = SPRACHE;
+$('langSel').addEventListener('change', () => {
+  store.set('sprache', $('langSel').value);
+  location.reload();
+});
 </script>
 <script>
 if ('serviceWorker' in navigator) {
